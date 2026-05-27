@@ -9,7 +9,8 @@
     "start": "next start",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:critical": "vitest run -t smoke"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.0",

@@ -1,6 +1,5 @@
 import type { ErrorEnvelope, ResponseEnvelope } from '@xeorum/contracts';
-
-const defaultBaseUrl = 'http://localhost:3001/api/v1';
+import { publicEnv } from '../env';
 
 type ApiOptions = {
   method?: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
@@ -26,7 +25,7 @@ export class ApiError extends Error {
 }
 
 async function apiRequest<T>(path: string, options: ApiOptions = {}): Promise<T> {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL ?? defaultBaseUrl}${path}`, {
+  const response = await fetch(`${publicEnv.apiBaseUrl}${path}`, {
     method: options.method ?? 'GET',
     headers: {
       'content-type': 'application/json',
