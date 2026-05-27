@@ -1,3 +1,4 @@
+import React from 'react';
 import { XEORUM_BRAND_NAME } from '../../modules/brand';
 
 export function BrandMark() {

@@ -47,6 +47,8 @@ export type IdentityResult = {
   secondaryArchetypes: ArchetypeSlug[];
   scores: Record<ArchetypeSlug, number>;
   confidence: number;
+  narrativeTitle?: string;
+  narrative?: string;
   styleAffinity: number;
   productAffinity: number;
   promptVersion: number;

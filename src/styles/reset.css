@@ -25,6 +25,11 @@ a {
   text-decoration: none;
 }
 
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 button,
 input,
 textarea,
@@ -105,6 +110,17 @@ select {
   color: var(--textPrimary);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 .identity-result-grid {
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
@@ -142,8 +158,18 @@ select {
   gap: 1rem;
 }
 
+.product-grid,
+.drop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
 .portal-card,
-.portal-detail {
+.portal-detail,
+.product-card,
+.product-detail,
+.drop-card {
   border: 1px solid var(--border);
   background: var(--panel);
   padding: 1.25rem;
@@ -164,7 +190,9 @@ select {
 }
 
 .portal-card a,
-.portal-actions a {
+.portal-actions a,
+.product-card a,
+.drop-card a {
   display: inline-flex;
   width: fit-content;
   padding: 0.75rem 1rem;
@@ -180,6 +208,109 @@ select {
 
 .portal-mantra {
   color: var(--accent);
+}
+
+.product-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  color: var(--textSecondary);
+}
+
+.product-meta-detail span {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.product-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.product-story,
+.portal-manifesto {
+  color: var(--textPrimary);
+}
+
+.product-compatibility {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.identity-narrative-title {
+  color: var(--accent);
+  margin: 0.5rem 0 0;
+}
+
+.identity-narrative-copy,
+.identity-ai-copy {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.add-to-cart-shell,
+.field-shell,
+.checkout-shell,
+.cart-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+.field-shell span {
+  color: var(--textSecondary);
+}
+
+.field-shell select,
+.add-to-cart-shell button,
+.cart-item button,
+.checkout-shell button {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--textPrimary);
+}
+
+.cart-item,
+.cart-summary,
+.checkout-status {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.admin-grid {
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.admin-card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  text-align: left;
+}
+
+.admin-card input,
+.admin-card textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--textPrimary);
+}
+
+.admin-card textarea {
+  min-height: 160px;
+  resize: vertical;
 }
 
 .section-state {
