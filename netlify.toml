@@ -1,0 +1,2 @@
+[build.environment]
+NEXT_PUBLIC_API_BASE_URL = "https://xeorum-backend-production.up.railway.app/api/v1"
