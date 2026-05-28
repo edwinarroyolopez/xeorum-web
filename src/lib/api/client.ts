@@ -5,7 +5,6 @@ type ApiOptions = {
   method?: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
   body?: unknown;
   requestId?: string;
-  adminActor?: string;
 };
 
 function getAnonymousIdHeader() {
@@ -30,7 +29,6 @@ async function apiRequest<T>(path: string, options: ApiOptions = {}): Promise<T>
     headers: {
       'content-type': 'application/json',
       ...getAnonymousIdHeader(),
-      ...(options.adminActor ? { 'x-admin-actor': options.adminActor } : {}),
       ...(options.requestId ? { 'x-request-id': options.requestId } : {}),
     },
     ...(options.body ? { body: JSON.stringify(options.body) } : {}),
@@ -48,10 +46,10 @@ async function apiRequest<T>(path: string, options: ApiOptions = {}): Promise<T>
 
 export const apiClient = {
   get: <T>(path: string) => apiRequest<T>(path),
-  post: <T>(path: string, body?: unknown, options?: Pick<ApiOptions, 'requestId' | 'adminActor'>) =>
+  post: <T>(path: string, body?: unknown, options?: Pick<ApiOptions, 'requestId'>) =>
     apiRequest<T>(path, { method: 'POST', body, ...options }),
-  patch: <T>(path: string, body?: unknown, options?: Pick<ApiOptions, 'requestId' | 'adminActor'>) =>
+  patch: <T>(path: string, body?: unknown, options?: Pick<ApiOptions, 'requestId'>) =>
     apiRequest<T>(path, { method: 'PATCH', body, ...options }),
-  delete: <T>(path: string, body?: unknown, options?: Pick<ApiOptions, 'requestId' | 'adminActor'>) =>
+  delete: <T>(path: string, body?: unknown, options?: Pick<ApiOptions, 'requestId'>) =>
     apiRequest<T>(path, { method: 'DELETE', body, ...options }),
 };
