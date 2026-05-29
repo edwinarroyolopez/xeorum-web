@@ -1,7 +1,10 @@
 'use client';
 
+import React from 'react';
+import { EmptyState } from '../design-system';
 import { PortalCard } from './PortalCard';
 import { usePantheonArchetypes } from './pantheon.queries';
+import { orderPantheonArchetypes } from './pantheon.types';
 
 export function PantheonGrid() {
   const query = usePantheonArchetypes();
@@ -14,9 +17,15 @@ export function PantheonGrid() {
     return <p className="section-state">Portals unavailable.</p>;
   }
 
+  if (query.data.length === 0) {
+    return <EmptyState>No public archetypes are published yet.</EmptyState>;
+  }
+
+  const archetypes = orderPantheonArchetypes(query.data);
+
   return (
     <section className="portal-grid">
-      {query.data.map((archetype) => (
+      {archetypes.map((archetype) => (
         <PortalCard key={archetype.slug} archetype={archetype} />
       ))}
     </section>

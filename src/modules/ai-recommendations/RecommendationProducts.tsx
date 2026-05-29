@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import type { ProductContract } from '@xeorum/contracts';
+import { ProductCard, SectionHeader } from '../design-system';
 
 export function RecommendationProducts({
   title,
@@ -9,22 +9,9 @@ export function RecommendationProducts({
 
   return (
     <section className="section-stack">
-      <div className="section-heading">
-        <p className="portal-card-kicker">Recommendations</p>
-        <h2>{title}</h2>
-      </div>
+      <SectionHeader kicker="Recommendations" title={title} />
       <div className="product-grid">
-        {products.map((product) => (
-          <article key={product.slug} className="product-card">
-            <p className="portal-card-kicker">{product.energy}</p>
-            <h3>{product.name}</h3>
-            <p>{product.narrative}</p>
-            <div className="product-bottom">
-              <strong>{product.identityCompatibility}% match</strong>
-              <Link href={`/products/${product.slug}`}>View Product</Link>
-            </div>
-          </article>
-        ))}
+        {products.map((product) => <ProductCard key={product.slug} product={product} />)}
       </div>
     </section>
   );

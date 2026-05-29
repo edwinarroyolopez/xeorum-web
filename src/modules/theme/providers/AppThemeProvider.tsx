@@ -1,24 +1,50 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { createContext, useContext, useMemo, useState } from 'react';
-import type { Theme } from '../contracts/theme.types';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import type { AccessibilitySettings, Theme, ThemeName } from '../contracts/theme.types';
 import { ThemeCssVariables } from './ThemeCssVariables';
-import { resolveTheme, xeorumDarkTheme } from '../utils/resolve-theme';
+import { resolvePageTheme } from '../utils/compose-theme';
+import { xeorumDarkTheme } from '../utils/resolve-theme';
 
 type ThemeContextValue = {
   theme: Theme;
-  setThemeName: (themeName: string) => void;
+  accessibility: AccessibilitySettings;
+  setThemeName: (themeName: ThemeName) => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function AppThemeProvider({ children }: Readonly<{ children: ReactNode }>) {
-  const [themeName, setThemeName] = useState('xeorum-dark');
-  const theme = useMemo(() => resolveTheme(themeName), [themeName]);
+  const [themeName, setThemeName] = useState<ThemeName>('xeorum-dark');
+  const [accessibility, setAccessibility] = useState<AccessibilitySettings>({});
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updateAccessibility = () => {
+      setAccessibility((current) => ({
+        ...current,
+        reduceMotion: mediaQuery.matches,
+      }));
+    };
+
+    updateAccessibility();
+    mediaQuery.addEventListener('change', updateAccessibility);
+
+    return () => mediaQuery.removeEventListener('change', updateAccessibility);
+  }, []);
+
+  const theme = useMemo(
+    () =>
+      resolvePageTheme({
+        themeName,
+        accessibility,
+      }),
+    [accessibility, themeName]
+  );
 
   return (
-    <ThemeContext.Provider value={{ theme, setThemeName }}>
+    <ThemeContext.Provider value={{ theme, accessibility, setThemeName }}>
       <ThemeCssVariables theme={theme}>{children}</ThemeCssVariables>
     </ThemeContext.Provider>
   );
@@ -26,5 +52,5 @@ export function AppThemeProvider({ children }: Readonly<{ children: ReactNode }>
 
 export function useAppTheme() {
   const value = useContext(ThemeContext);
-  return value ?? { theme: xeorumDarkTheme, setThemeName: () => undefined };
+  return value ?? { theme: xeorumDarkTheme, accessibility: {}, setThemeName: () => undefined };
 }

@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAnswerIdentitySession, useCompleteIdentitySession, useCreateIdentitySession, useIdentityQuestions } from '../identity.queries';
 import type { IdentityAnswer } from '../identity.types';
+import { Button, Card, ErrorState, LoadingState } from '../../design-system';
 
 export function IdentityTestFlow() {
   const router = useRouter();
@@ -44,11 +45,11 @@ export function IdentityTestFlow() {
   }
 
   if (questionsQuery.isLoading) {
-    return <p className="identity-state">Loading identity questions.</p>;
+    return <LoadingState>Loading identity questions.</LoadingState>;
   }
 
   if (questionsQuery.isError) {
-    return <p className="identity-state">Identity system unavailable.</p>;
+    return <ErrorState>Identity system unavailable.</ErrorState>;
   }
 
   return (
@@ -58,19 +59,19 @@ export function IdentityTestFlow() {
         <span>Identity Test</span>
       </div>
       {currentQuestion ? (
-        <article className="identity-card">
+        <Card className="identity-card">
           <p className="identity-kicker">Version {currentQuestion.version}</p>
           <h1>{currentQuestion.prompt}</h1>
           <div className="identity-options">
             {currentQuestion.options.map((option) => (
-              <button key={option.id} type="button" onClick={() => void onChoose(currentQuestion.id, option.id)}>
+              <Button key={option.id} type="button" variant="ghost" onClick={() => void onChoose(currentQuestion.id, option.id)}>
                 {option.label}
-              </button>
+              </Button>
             ))}
           </div>
-        </article>
+        </Card>
       ) : (
-        <p className="identity-state">{isComplete ? 'Preparing result.' : 'No questions available.'}</p>
+        <LoadingState>{isComplete ? 'Preparing result.' : 'No questions available.'}</LoadingState>
       )}
     </section>
   );

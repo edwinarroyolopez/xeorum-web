@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useAddCartItem } from './cart.queries';
+import { Button, Select } from '../design-system';
 
 export function AddToCartButton({
   productSlug,
@@ -12,23 +13,15 @@ export function AddToCartButton({
 
   return (
     <div className="add-to-cart-shell">
-      <label className="field-shell">
-        <span>Size</span>
-        <select value={size} onChange={(event) => setSize(event.target.value)}>
-          {availableSizes.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </label>
-      <button
-        type="button"
-        onClick={() => addItem.mutate({ productSlug, size, quantity: 1 })}
-        disabled={addItem.isPending}
-      >
+      <Select
+        label="Size"
+        value={size}
+        onChange={(event) => setSize(event.target.value)}
+        options={availableSizes.map((option) => ({ label: option, value: option }))}
+      />
+      <Button type="button" onClick={() => addItem.mutate({ productSlug, size, quantity: 1 })} loading={addItem.isPending}>
         {addItem.isPending ? 'Adding' : 'Add to Cart'}
-      </button>
+      </Button>
     </div>
   );
 }

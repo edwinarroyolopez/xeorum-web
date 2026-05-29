@@ -1,4 +1,4 @@
-import type { Theme } from './theme.types';
+import type { ThemeTokenContract } from './theme.types';
 
 export const themeSchema = {} as const satisfies Record<string, never>;
-export type ThemeSchema = Theme;
+export type ThemeSchema = ThemeTokenContract;

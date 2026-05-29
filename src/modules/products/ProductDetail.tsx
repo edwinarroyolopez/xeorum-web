@@ -6,19 +6,20 @@ import { AddToCartButton } from '../cart/AddToCartButton';
 import { useRecommendationsForProduct } from '../ai-recommendations/recommendations.queries';
 import { RecommendationProducts } from '../ai-recommendations/RecommendationProducts';
 import { RecommendationDrops } from '../ai-recommendations/RecommendationDrops';
+import { Card, ErrorState, LoadingState } from '../design-system';
 
 export function ProductDetail({ slug }: Readonly<{ slug: string }>) {
   const query = useProduct(slug);
   const recommendations = useRecommendationsForProduct(query.data?.slug ?? '');
 
-  if (query.isLoading) return <p className="section-state">Loading product.</p>;
-  if (query.isError || !query.data) return <p className="section-state">Product unavailable.</p>;
+  if (query.isLoading) return <LoadingState>Loading product.</LoadingState>;
+  if (query.isError || !query.data) return <ErrorState>Product unavailable.</ErrorState>;
 
   const product = query.data;
 
   return (
     <section className="section-stack">
-      <article className="product-detail">
+      <Card className="product-detail">
         <p className="portal-card-kicker">{product.energy}</p>
         <h1>{product.name}</h1>
         <p className="product-story">{product.story}</p>
@@ -42,14 +43,14 @@ export function ProductDetail({ slug }: Readonly<{ slug: string }>) {
           <Link href={`/pantheon/${product.archetypeSlug}`}>Enter {product.archetypeSlug} portal</Link>
           <Link href="/products">Back to products</Link>
         </div>
-      </article>
+      </Card>
       {recommendations.data ? (
         <>
-          <article className="identity-ai-copy">
+          <Card className="identity-ai-copy">
             <p className="portal-card-kicker">AI Explanation</p>
             <p>{recommendations.data.explanation}</p>
             <p>{recommendations.data.outfitExplanation}</p>
-          </article>
+          </Card>
           <RecommendationProducts title="Complete the look" products={recommendations.data.completeTheLook} />
           <RecommendationProducts title="Same archetype" products={recommendations.data.sameArchetype} />
           <RecommendationProducts title="Contrasting archetype" products={recommendations.data.contrastingArchetype} />

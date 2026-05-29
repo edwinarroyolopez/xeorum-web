@@ -1,7 +1,7 @@
 import { apiClient } from '../../lib/api';
-import type { PantheonArchetype } from './pantheon.types';
+import { parsePantheonArchetype, parsePantheonArchetypes } from './pantheon.types';
 
 export const pantheonApi = {
-  getArchetypes: () => apiClient.get<PantheonArchetype[]>('/pantheon/archetypes'),
-  getArchetype: (slug: string) => apiClient.get<PantheonArchetype>(`/pantheon/archetypes/${slug}`),
+  getArchetypes: async () => parsePantheonArchetypes(await apiClient.get<unknown>('/pantheon/archetypes')),
+  getArchetype: async (slug: string) => parsePantheonArchetype(await apiClient.get<unknown>(`/pantheon/archetypes/${slug}`)),
 };
