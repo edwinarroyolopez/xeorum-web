@@ -9,7 +9,7 @@ export function RecommendationProducts({
 
   return (
     <section className="section-stack">
-      <SectionHeader kicker="Recommendations" title={title} />
+      <SectionHeader kicker="Recomendaciones" title={title} />
       <div className="product-grid">
         {products.map((product) => <ProductCard key={product.slug} product={product} />)}
       </div>

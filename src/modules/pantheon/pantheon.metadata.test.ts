@@ -63,7 +63,19 @@ const archetype: PantheonArchetypeLanding = {
     openGraphDescription: 'Dominio visible.',
     openGraphImage: 'https://cdn.example.com/zeus-og.jpg',
   },
-  theme: { overlaySlug: 'zeus', intensityDefault: 'subtle', allowedContexts: ['pantheon'] },
+  theme: {
+    overlaySlug: 'zeus',
+    intensityDefault: 'subtle',
+    allowedContexts: ['pantheon'],
+    heroEffectProfile: 'imperial-electric',
+    heroEffect: {
+      auraColor: 'rgba(120, 180, 255, 0.18)',
+      floatDistance: 12,
+      portraitTilt: 0.8,
+      profileLift: 14,
+      signalLift: 18,
+    },
+  },
   products: [],
   drops: [],
 };

@@ -6,8 +6,8 @@ import { useDrops } from './drops.queries';
 export function DropsGrid({ archetype }: Readonly<{ archetype?: string }>) {
   const query = useDrops(archetype ? { archetype } : {});
 
-  if (query.isLoading) return <p className="section-state">Loading drops.</p>;
-  if (query.isError || !query.data) return <p className="section-state">Drops unavailable.</p>;
+  if (query.isLoading) return <p className="section-state">Cargando drops.</p>;
+  if (query.isError || !query.data) return <p className="section-state">Drops no disponibles.</p>;
 
   return (
     <section className="drop-grid">

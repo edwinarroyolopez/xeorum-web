@@ -35,20 +35,20 @@ export function CheckoutTrustPanel({ reservedUntil, paymentStatus, orderStatus }
   return (
     <Card className="checkout-trust-panel">
       <Text tone="muted" className="portal-card-kicker">
-        Checkout Trust
+        Confianza de checkout
       </Text>
-      <h2>Clarity first through reservation, payment and order state.</h2>
-      <div className="checkout-trust-badges" aria-label="Checkout status summary">
-        <Badge tone={normalizeStatusTone(paymentStatus)}>Payment {paymentStatus ?? 'pending'}</Badge>
-        <Badge tone={normalizeStatusTone(orderStatus)}>Order {orderStatus ?? 'pending_payment'}</Badge>
+      <h2>Claridad primero a traves de reserva, pago y estado de orden.</h2>
+      <div className="checkout-trust-badges" aria-label="Resumen de estado del checkout">
+        <Badge tone={normalizeStatusTone(paymentStatus)}>Pago {paymentStatus ?? 'pending'}</Badge>
+        <Badge tone={normalizeStatusTone(orderStatus)}>Orden {orderStatus ?? 'pending_payment'}</Badge>
         <Badge tone={reservedUntil ? 'accent' : 'default'}>
-          {reservedUntil ? `Reserved until ${new Date(reservedUntil).toLocaleTimeString()}` : 'Reservation opens at session creation'}
+          {reservedUntil ? `Reservada hasta ${new Date(reservedUntil).toLocaleTimeString()}` : 'La reserva abre al crear la sesion'}
         </Badge>
       </div>
       <ul className="checkout-trust-list">
-        <li>Secure session creation is explicit before payment starts.</li>
-        <li>Payment and order states remain visible as text, not color alone.</li>
-        <li>Critical checkout UI stays sober even if archetype theming exists elsewhere.</li>
+        <li>La sesion segura se crea de forma explicita antes del pago.</li>
+        <li>Pago y orden permanecen visibles como texto, no solo como color.</li>
+        <li>El checkout se mantiene sobrio aunque exista tematizacion arquetipica en otras vistas.</li>
       </ul>
     </Card>
   );

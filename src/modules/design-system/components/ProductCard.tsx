@@ -9,22 +9,29 @@ export function ProductCard({ product }: Readonly<{ product: ProductContract }>)
   const price = product.pricing.salePrice ?? product.pricing.price;
   const compareAt = product.pricing.compareAtPrice;
   const available = product.variants.some((variant) => variant.available);
+  const archetypeLabel = product.archetypes.primary?.slug ?? 'shop all';
 
   return (
     <Card className="product-card">
-      {coverImage ? <div className="product-card-image"><Text tone="muted">{coverImage}</Text></div> : null}
-      <Text tone="muted" className="portal-card-kicker">{product.archetypes.primary?.slug ?? 'shop all'}</Text>
-      <h3>{product.name}</h3>
-      <p>{product.shortDescription ?? product.description}</p>
+      <div className="product-card-image" aria-hidden="true">
+        {coverImage ? <Text tone="muted">{coverImage}</Text> : <Text tone="muted">XEORUM artifact</Text>}
+      </div>
+      <div className="product-card-header">
+        <Text tone="muted" className="portal-card-kicker">{archetypeLabel}</Text>
+        <h3>{product.name}</h3>
+        <p>{product.shortDescription ?? product.description}</p>
+      </div>
       <div className="product-meta">
         <span>{product.productDetails.fit}</span>
         <span>{product.productDetails.material}</span>
-        <span>{available ? 'In stock' : 'Sold out'}</span>
+        <span>{available ? 'Disponible' : 'Agotado'}</span>
       </div>
       <div className="product-bottom">
-        <strong>{price} {product.pricing.currency}</strong>
-        {compareAt && compareAt > price ? <span>{compareAt} {product.pricing.currency}</span> : null}
-        <LinkButton href={`/products/${product.slug}`}>View Product</LinkButton>
+        <div className="product-pricing">
+          <strong>{price} {product.pricing.currency}</strong>
+          {compareAt && compareAt > price ? <span>{compareAt} {product.pricing.currency}</span> : null}
+        </div>
+        <LinkButton href={`/products/${product.slug}`}>Ver pieza</LinkButton>
       </div>
     </Card>
   );

@@ -3,17 +3,21 @@ import { LinkButton } from '../../../modules/design-system';
 
 export default function DropsPage() {
   return (
-    <main className="page-shell">
-      <section className="hero-shell">
-        <p className="portal-card-kicker">Drops</p>
-        <h1>Limited releases, high symbolic concentration.</h1>
-        <p>XEØRUM grows through few, deliberate drops with clear identity ownership.</p>
-        <div className="portal-actions">
-          <LinkButton href="/products">Browse Products</LinkButton>
-          <LinkButton href="/identity" variant="ghost">Run Identity Test</LinkButton>
+    <main className="page-shell xeorum-pantheon-page">
+      <section className="hero-shell xeorum-pantheon-hero">
+        <div className="xeorum-home-frame xeorum-pantheon-frame">
+          <p className="portal-card-kicker">Drops</p>
+          <h1>Lanzamientos limitados, alta concentracion simbolica.</h1>
+          <p className="xeorum-home-copy">XEORUM crece a traves de pocos drops, deliberados y con una identidad claramente custodiada.</p>
+          <div className="portal-actions xeorum-home-actions">
+            <LinkButton href="/products">Ver productos</LinkButton>
+            <LinkButton href="/identity" variant="ghost">Iniciar test de identidad</LinkButton>
+          </div>
         </div>
       </section>
-      <DropsGrid />
+      <section className="section-stack xeorum-pantheon-grid-shell">
+        <DropsGrid />
+      </section>
     </main>
   );
 }

@@ -14,27 +14,27 @@ export function CheckoutView() {
   const order = useOrder(checkoutSession?.orderId ?? '');
   const idempotencyKey = useMemo(() => `xeorum-${crypto.randomUUID()}`, []);
 
-  if (cart.isLoading) return <LoadingState>Loading checkout.</LoadingState>;
-  if (cart.isError || !cart.data) return <ErrorState>Checkout unavailable.</ErrorState>;
-  if (cart.data.items.length === 0) return <EmptyState>Add products before checkout.</EmptyState>;
+  if (cart.isLoading) return <LoadingState>Cargando checkout.</LoadingState>;
+  if (cart.isError || !cart.data) return <ErrorState>Checkout no disponible.</ErrorState>;
+  if (cart.data.items.length === 0) return <EmptyState>Agrega productos antes de abrir checkout.</EmptyState>;
 
   return (
-    <section className="checkout-shell">
-      <Card className="cart-summary">
+    <section className="checkout-shell xeorum-checkout-shell">
+      <Card className="cart-summary xeorum-checkout-card">
         <p className="portal-card-kicker">Checkout</p>
-        <h1>Confirm the pieces aligned to your identity.</h1>
+        <h1>Confirma las piezas alineadas con tu identidad.</h1>
         <p>Subtotal {cart.data.subtotal} {cart.data.currency}</p>
         {!checkoutSession ? (
           <Button type="button" onClick={() => createSession.mutate({ idempotencyKey })} loading={createSession.isPending}>
-            {createSession.isPending ? 'Creating Session' : 'Create Secure Checkout'}
+            {createSession.isPending ? 'Creando sesion' : 'Crear checkout seguro'}
           </Button>
         ) : (
-          <div className="checkout-status">
-            <p>Checkout Session {checkoutSession.checkoutSessionId}</p>
-            <p>Reserved until {new Date(checkoutSession.reservedUntil).toLocaleTimeString()}</p>
-            <p>Payment status: {payment.data?.status ?? 'pending'}</p>
-            <p>Order status: {order.data?.status ?? 'PENDING_PAYMENT'}</p>
-            {payment.data?.status === 'succeeded' ? <Link href={`/orders/${checkoutSession.orderId}`}>View Order</Link> : null}
+          <div className="checkout-status xeorum-checkout-status">
+            <p>Sesion {checkoutSession.checkoutSessionId}</p>
+            <p>Reservada hasta {new Date(checkoutSession.reservedUntil).toLocaleTimeString()}</p>
+            <p>Estado del pago: {payment.data?.status ?? 'pending'}</p>
+            <p>Estado de la orden: {order.data?.status ?? 'PENDING_PAYMENT'}</p>
+            {payment.data?.status === 'succeeded' ? <Link href={`/orders/${checkoutSession.orderId}`}>Ver orden</Link> : null}
           </div>
         )}
       </Card>

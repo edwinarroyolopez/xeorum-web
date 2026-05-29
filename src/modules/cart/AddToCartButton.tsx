@@ -14,13 +14,13 @@ export function AddToCartButton({
   return (
     <div className="add-to-cart-shell">
       <Select
-        label="Size"
+        label="Talla"
         value={size}
         onChange={(event) => setSize(event.target.value)}
         options={availableSizes.map((option) => ({ label: option, value: option }))}
       />
       <Button type="button" onClick={() => addItem.mutate({ productSlug, size, quantity: 1 })} loading={addItem.isPending}>
-        {addItem.isPending ? 'Adding' : 'Add to Cart'}
+        {addItem.isPending ? 'Agregando' : 'Agregar al carrito'}
       </Button>
     </div>
   );

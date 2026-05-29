@@ -6,7 +6,7 @@ export function RecommendationDrops({ drops }: Readonly<{ drops: DropContract[] 
 
   return (
     <section className="section-stack">
-      <SectionHeader kicker="Drop Match" title="Live or upcoming drops aligned to your force." />
+      <SectionHeader kicker="Drop alineado" title="Drops activos o proximos para tu fuerza." />
       <div className="drop-grid">
         {drops.map((drop) => <DropCard key={drop.slug} drop={drop} />)}
       </div>

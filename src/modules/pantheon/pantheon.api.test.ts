@@ -85,7 +85,13 @@ describe('pantheonApi', () => {
         openGraphTitle: 'Zeus',
         openGraphDescription: 'Leadership.',
       },
-      theme: { overlaySlug: 'zeus', intensityDefault: 'subtle', allowedContexts: ['pantheon'] },
+      theme: {
+        overlaySlug: 'zeus',
+        intensityDefault: 'subtle',
+        allowedContexts: ['pantheon'],
+        heroEffectProfile: 'imperial-electric',
+        heroEffect: { auraColor: 'rgba(76, 107, 255, 0.22)', floatDistance: 18, portraitTilt: 1.2, profileLift: 16, signalLift: 22 },
+      },
       products: [],
       drops: [],
     });

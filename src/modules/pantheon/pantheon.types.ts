@@ -101,6 +101,14 @@ export type PantheonArchetypeLanding = {
     overlaySlug?: string;
     intensityDefault: 'subtle' | 'medium';
     allowedContexts: string[];
+    heroEffectProfile: 'editorial-float' | 'imperial-electric' | 'lucid-orbit' | 'underworld-drift';
+    heroEffect: {
+      auraColor: string;
+      floatDistance: number;
+      portraitTilt: number;
+      profileLift: number;
+      signalLift: number;
+    };
   };
   products: Product[];
   drops: Drop[];
@@ -274,6 +282,7 @@ export function parsePantheonArchetypeLanding(value: unknown): PantheonArchetype
   const cta = isRecord(value.cta) ? value.cta : {};
   const seo = isRecord(value.seo) ? value.seo : {};
   const theme = isRecord(value.theme) ? value.theme : {};
+  const heroEffect = isRecord(theme.heroEffect) ? theme.heroEffect : {};
   const openGraphImage = readOptionalString(seo.openGraphImage);
   const overlaySlug = readOptionalString(theme.overlaySlug);
 
@@ -358,6 +367,14 @@ export function parsePantheonArchetypeLanding(value: unknown): PantheonArchetype
       ...(overlaySlug ? { overlaySlug } : {}),
       intensityDefault: (readString(theme.intensityDefault ?? 'subtle', 'theme.intensityDefault') as 'subtle' | 'medium'),
       allowedContexts: readStringArray(theme.allowedContexts ?? [], 'theme.allowedContexts'),
+      heroEffectProfile: readString(theme.heroEffectProfile ?? 'editorial-float', 'theme.heroEffectProfile') as PantheonArchetypeLanding['theme']['heroEffectProfile'],
+      heroEffect: {
+        auraColor: readString(heroEffect.auraColor ?? 'rgba(120, 180, 255, 0.18)', 'theme.heroEffect.auraColor'),
+        floatDistance: typeof heroEffect.floatDistance === 'number' ? heroEffect.floatDistance : 12,
+        portraitTilt: typeof heroEffect.portraitTilt === 'number' ? heroEffect.portraitTilt : 0.8,
+        profileLift: typeof heroEffect.profileLift === 'number' ? heroEffect.profileLift : 14,
+        signalLift: typeof heroEffect.signalLift === 'number' ? heroEffect.signalLift : 18,
+      },
     },
     products: readProducts(value.products),
     drops: readDrops(value.drops),

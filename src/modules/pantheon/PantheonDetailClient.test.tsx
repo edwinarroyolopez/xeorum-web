@@ -110,7 +110,13 @@ describe('PantheonDetailClient', () => {
           openGraphTitle: 'Zeus',
           openGraphDescription: 'Dominio visible.',
         },
-        theme: { overlaySlug: 'zeus', intensityDefault: 'subtle', allowedContexts: ['pantheon'] },
+        theme: {
+          overlaySlug: 'zeus',
+          intensityDefault: 'subtle',
+          allowedContexts: ['pantheon'],
+          heroEffectProfile: 'imperial-electric',
+          heroEffect: { auraColor: 'rgba(76, 107, 255, 0.22)', floatDistance: 18, portraitTilt: 1.2, profileLift: 16, signalLift: 22 },
+        },
         products: [
           {
             id: 'product-1',
@@ -154,6 +160,8 @@ describe('PantheonDetailClient', () => {
     expect(html).toContain('Zeus Night');
     expect(html).toContain('Enter Zeus Portal');
     expect(html).toContain('Zeus pilot active');
+    expect(html).toContain('Imperial Electric');
+    expect(html).toContain('data-effect-profile="imperial-electric"');
     expect(html.indexOf('Manifesto')).toBeLessThan(html.indexOf('Pieces shaped by Zeus'));
   });
 
@@ -230,7 +238,12 @@ describe('PantheonDetailClient', () => {
           openGraphTitle: 'Athena',
           openGraphDescription: 'Athena.',
         },
-        theme: { intensityDefault: 'subtle', allowedContexts: ['pantheon'] },
+        theme: {
+          intensityDefault: 'subtle',
+          allowedContexts: ['pantheon'],
+          heroEffectProfile: 'lucid-orbit',
+          heroEffect: { auraColor: 'rgba(125, 196, 255, 0.18)', floatDistance: 10, portraitTilt: 0.4, profileLift: 10, signalLift: 14 },
+        },
         products: [],
         drops: [],
       },
