@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import { useProduct } from './products.queries';
 import { AddToCartButton } from '../cart/AddToCartButton';
@@ -16,31 +17,32 @@ export function ProductDetail({ slug }: Readonly<{ slug: string }>) {
   if (query.isError || !query.data) return <ErrorState>Product unavailable.</ErrorState>;
 
   const product = query.data;
+  const availableSizes = product.variants.filter((variant) => variant.available).map((variant) => variant.size);
+  const cover = product.media.coverImage?.url ?? product.media.gallery[0]?.url;
+  const price = product.pricing.salePrice ?? product.pricing.price;
 
   return (
     <section className="section-stack">
       <Card className="product-detail">
-        <p className="portal-card-kicker">{product.energy}</p>
+        {cover ? <p className="portal-card-kicker">{cover}</p> : null}
         <h1>{product.name}</h1>
-        <p className="product-story">{product.story}</p>
+        <strong>{price} {product.pricing.currency}</strong>
         <div className="product-meta product-meta-detail">
-          <span>{product.fit}</span>
-          <span>{product.material}</span>
-          <span>{product.gsm} GSM</span>
-          <span>{product.printTechnique}</span>
-          <span>{product.color}</span>
+          <span>{product.variants.map((variant) => variant.size).join(' / ')}</span>
+          <span>{product.variants.some((variant) => variant.available) ? 'Available' : 'Sold out'}</span>
         </div>
-        <div className="product-compatibility">
-          <strong>{product.identityCompatibility}% Identity Match</strong>
-          <p>{product.narrative}</p>
+        <AddToCartButton productSlug={product.slug} availableSizes={availableSizes} />
+        <div className="product-meta product-meta-detail">
+          <span>{product.productDetails.material}</span>
+          <span>{product.productDetails.fit}</span>
+          {product.productDetails.gsm ? <span>{product.productDetails.gsm} GSM</span> : null}
+          {product.productDetails.color ? <span>{product.productDetails.color}</span> : null}
         </div>
-        <div className="product-bottom">
-          <strong>{product.price} {product.currency}</strong>
-          <span>{product.availableSizes?.join(' / ')}</span>
-        </div>
-        <AddToCartButton productSlug={product.slug} availableSizes={product.availableSizes ?? []} />
+        <p>{product.description}</p>
+        {product.narrative ? <div className="product-compatibility"><p>{product.narrative}</p></div> : null}
+        {product.archetypes.primary?.slug ? <p className="portal-card-kicker">Archetype: {product.archetypes.primary.slug}</p> : null}
         <div className="portal-actions">
-          <Link href={`/pantheon/${product.archetypeSlug}`}>Enter {product.archetypeSlug} portal</Link>
+          {product.archetypes.primary?.slug ? <Link href={`/pantheon/${product.archetypes.primary.slug}`}>Enter {product.archetypes.primary.slug} portal</Link> : null}
           <Link href="/products">Back to products</Link>
         </div>
       </Card>
@@ -51,9 +53,14 @@ export function ProductDetail({ slug }: Readonly<{ slug: string }>) {
             <p>{recommendations.data.explanation}</p>
             <p>{recommendations.data.outfitExplanation}</p>
           </Card>
+          <RecommendationProducts title="Recommended for you" products={recommendations.data.identityMatch} />
+          <RecommendationProducts title="Similar products" products={recommendations.data.similarProducts} />
           <RecommendationProducts title="Complete the look" products={recommendations.data.completeTheLook} />
+          <RecommendationProducts title="Popular now" products={recommendations.data.popularNow} />
+          <RecommendationProducts title="New in this drop" products={recommendations.data.newInThisDrop} />
           <RecommendationProducts title="Same archetype" products={recommendations.data.sameArchetype} />
           <RecommendationProducts title="Contrasting archetype" products={recommendations.data.contrastingArchetype} />
+          <RecommendationProducts title="Open market picks" products={recommendations.data.openMarketPicks} />
           <RecommendationDrops drops={recommendations.data.recommendedDrops} />
         </>
       ) : null}

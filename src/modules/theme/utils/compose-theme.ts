@@ -8,59 +8,14 @@ import type {
   ThemeContextName,
   ThemeIntensity,
   ThemePartial,
+  ThemeResolverContextName,
 } from '../contracts/theme.types';
 import { getPublishedArchetypeOverlay, getZeusPilotOverlay } from '../overlays/archetype-overlays';
+import { themeContextOverrides } from '../tokens/context.tokens';
 import { isOverlaySafe } from '../validators/theme-accessibility';
 import { resolveTheme, xeorumDarkTheme } from './resolve-theme';
 
 const restrictedContexts = new Set<ThemeContextName>(['checkout-payment-critical', 'legal']);
-
-const contextOverrides: Record<ThemeContextName, ThemePartial> = {
-  default: {},
-  home: {
-    overlay: {
-      archetype: {
-        backgroundWash: 'radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.03), transparent 42%)',
-      },
-    },
-  },
-  pantheon: {
-    elevation: {
-      overlay: '0 28px 80px rgba(0, 0, 0, 0.46)',
-    },
-  },
-  'identity-result': {
-    semantic: {
-      surfaceGlass: 'rgba(20, 22, 26, 0.78)',
-    },
-  },
-  profile: {
-    semantic: {
-      backgroundElevated: '#111622',
-    },
-  },
-  'product-detail': {
-    semantic: {
-      accentMuted: 'rgba(216, 180, 106, 0.1)',
-    },
-  },
-  recommendations: {
-    semantic: {
-      accentMuted: 'rgba(216, 180, 106, 0.14)',
-    },
-  },
-  'checkout-payment-critical': {
-    semantic: {
-      surfaceGlass: 'rgba(20, 22, 26, 0.9)',
-      accentMuted: 'rgba(216, 180, 106, 0.08)',
-    },
-  },
-  legal: {
-    semantic: {
-      surfaceGlass: 'rgba(20, 22, 26, 0.92)',
-    },
-  },
-};
 
 function isCompleteArchetypeOverlay(
   value: Partial<NonNullable<Theme['overlay']['archetype']>>
@@ -260,7 +215,7 @@ export function resolveZeusPilotOverlay(slug: string | null | undefined, context
 
 function resolveOverlayByStrategy(
   archetypeSlug: string | null | undefined,
-  context: ThemeContextName,
+  context: ThemeResolverContextName,
   strategy: OverlayResolutionStrategy
 ) {
   if (strategy === 'zeus-pilot') {
@@ -274,6 +229,20 @@ function resolveOverlayByStrategy(
   return resolveArchetypeOverlay(archetypeSlug);
 }
 
+export function isOverlayAllowedForContext(
+  overlay: ArchetypeThemeOverlay | null | undefined,
+  context: ThemeResolverContextName,
+  intensity: ThemeIntensity,
+) {
+  return Boolean(
+    overlay &&
+      intensity !== 'none' &&
+      !restrictedContexts.has(context as ThemeContextName) &&
+      overlay.usage.allowedContexts.includes(context as ThemeContextName) &&
+      !overlay.usage.forbiddenContexts.includes(context as ThemeContextName),
+  );
+}
+
 export function composeTheme({
   baseTheme,
   brandTheme = null,
@@ -284,21 +253,49 @@ export function composeTheme({
 }: ComposeThemeOptions): Theme {
   let resolvedTheme = mergeTheme(baseTheme, brandTheme);
   const requestedIntensity = intensity ?? overlay?.intensity.default ?? 'none';
-  const overlayAllowed =
-    overlay &&
-    requestedIntensity !== 'none' &&
-    !restrictedContexts.has(context) &&
-    overlay.usage.allowedContexts.includes(context) &&
-    !overlay.usage.forbiddenContexts.includes(context);
+  const overlayAllowed = isOverlayAllowedForContext(overlay, context, requestedIntensity);
 
-  if (overlayAllowed && isOverlaySafe(overlay)) {
+  if (overlay && overlayAllowed && isOverlaySafe(overlay)) {
     resolvedTheme = applyOverlay(resolvedTheme, overlay, requestedIntensity);
   }
 
-  resolvedTheme = mergeTheme(resolvedTheme, contextOverrides[context]);
+  resolvedTheme = mergeTheme(resolvedTheme, themeContextOverrides[context]);
   resolvedTheme = applyAccessibility(resolvedTheme, accessibility);
 
   return resolvedTheme;
+}
+
+export function withReducedMotionOverrides(theme: Theme, accessibility: AccessibilitySettings | undefined) {
+  return applyAccessibility(theme, accessibility?.reduceMotion ? { ...accessibility, reduceMotion: true } : accessibility);
+}
+
+export function getThemeContext(input?: string | null): ThemeContextName {
+  switch (input) {
+    case 'pantheon':
+    case '/pantheon':
+      return 'pantheon';
+    case 'identity-result':
+    case '/identity/result':
+      return 'identity-result';
+    case 'profile':
+    case '/profile':
+      return 'profile';
+    case 'product-detail':
+    case '/products/[slug]':
+      return 'product-detail';
+    case 'recommendations':
+    case '/recommendations':
+      return 'recommendations';
+    case 'checkout-payment-critical':
+    case '/checkout':
+      return 'checkout-payment-critical';
+    case 'legal':
+    case '/legal':
+      return 'legal';
+    case 'home':
+    default:
+      return 'home';
+  }
 }
 
 export function resolveComposedTheme(options?: Partial<Omit<ComposeThemeOptions, 'baseTheme'>>) {

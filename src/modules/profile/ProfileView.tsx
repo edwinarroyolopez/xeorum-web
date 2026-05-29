@@ -20,7 +20,7 @@ function buildProfileTheme(dominantArchetype: string | null | undefined) {
     archetypeSlug: dominantArchetype ?? null,
     context: 'profile',
     intensity: dominantArchetype ? 'medium' : 'none',
-    overlayStrategy: 'zeus-pilot',
+    overlayStrategy: dominantArchetype === 'zeus' ? 'zeus-pilot' : 'published',
   });
 }
 
@@ -49,6 +49,7 @@ export function ProfileView() {
               {dominantArchetype ? `Dominant archetype ${dominantArchetype.toUpperCase()}` : 'Base XEORUM dark theme'}
             </Badge>
             {zeusPilotActive ? <Badge tone="accent">Zeus pilot active</Badge> : null}
+            <Badge tone="default">Context profile</Badge>
             <Button
               type="button"
               variant="ghost"

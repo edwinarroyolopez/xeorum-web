@@ -9,6 +9,7 @@ import { xeorumTypographyTokens } from '../tokens/typography.tokens';
 
 export const xeorumDarkTheme: Theme = {
   name: 'xeorum-dark',
+  purpose: 'public-experience',
   mode: 'dark',
   primitive: xeorumPrimitiveTokens,
   semantic: xeorumSemanticColorTokens,

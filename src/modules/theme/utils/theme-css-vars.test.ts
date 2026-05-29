@@ -7,6 +7,7 @@ describe('themeToCssVariables', () => {
     const cssVars = themeToCssVariables(xeorumDarkTheme);
 
     expect(cssVars['--xe-semantic-background']).toBe(xeorumDarkTheme.semantic.background);
+    expect(cssVars['--theme-background']).toBe(xeorumDarkTheme.semantic.background);
     expect(cssVars['--xe-typography-font-family']).toBe(xeorumDarkTheme.typography.fontFamily);
     expect(cssVars['--xe-space-4']).toBe(xeorumDarkTheme.spacing['4']);
     expect(cssVars['--xe-radius-md']).toBe(xeorumDarkTheme.radius.md);
@@ -42,5 +43,7 @@ describe('themeToCssVariables', () => {
 
     expect(cssVars['--xe-overlay-archetype-background-wash']).toBe('wash');
     expect(cssVars['--xe-overlay-archetype-shadow-tint']).toBe('#888888');
+    expect(cssVars['--archetype-background-wash']).toBe('wash');
+    expect(cssVars['--archetype-shadow-tint']).toBe('#888888');
   });
 });

@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { zeusOverlay } from '../overlays/archetype-overlays';
-import { composeTheme, resolveArchetypeOverlay, resolveComposedTheme, resolvePageTheme, resolveZeusPilotOverlay } from './compose-theme';
+import {
+  composeTheme,
+  getThemeContext,
+  isOverlayAllowedForContext,
+  resolveArchetypeOverlay,
+  resolveComposedTheme,
+  resolvePageTheme,
+  resolveZeusPilotOverlay,
+} from './compose-theme';
 import { xeorumDarkTheme } from './resolve-theme';
 
 describe('composeTheme', () => {
@@ -31,6 +39,18 @@ describe('composeTheme', () => {
     expect(theme.semantic.surfaceGlass).toBe('rgba(20, 22, 26, 0.9)');
   });
 
+  it('does not apply overlay in legal context', () => {
+    const theme = composeTheme({
+      baseTheme: xeorumDarkTheme,
+      overlay: zeusOverlay,
+      context: 'legal',
+      intensity: 'medium',
+    });
+
+    expect(theme.semantic.accent).toBe(xeorumDarkTheme.semantic.accent);
+    expect(theme.overlay.archetype).toBeUndefined();
+  });
+
   it('applies accessibility overrides after context and overlay', () => {
     const theme = composeTheme({
       baseTheme: xeorumDarkTheme,
@@ -46,6 +66,19 @@ describe('composeTheme', () => {
     expect(theme.motion.durationBase).toBe('0ms');
     expect(theme.semantic.focusRing).toBe(theme.semantic.textPrimary);
     expect(theme.overlay.archetype?.motionFeel).toBe('still');
+  });
+});
+
+describe('theme context helpers', () => {
+  it('maps paths into stable theme contexts', () => {
+    expect(getThemeContext('/checkout')).toBe('checkout-payment-critical');
+    expect(getThemeContext('/legal')).toBe('legal');
+    expect(getThemeContext('/products/[slug]')).toBe('product-detail');
+  });
+
+  it('enforces overlay context rules explicitly', () => {
+    expect(isOverlayAllowedForContext(zeusOverlay, 'profile', 'medium')).toBe(true);
+    expect(isOverlayAllowedForContext(zeusOverlay, 'checkout-payment-critical', 'medium')).toBe(false);
   });
 });
 
@@ -100,5 +133,17 @@ describe('resolvePageTheme', () => {
     expect(theme.name).toBe('xeorum-dark');
     expect(theme.semantic.accent).toBe(xeorumDarkTheme.semantic.accent);
     expect(theme.overlay.archetype).toBeUndefined();
+  });
+
+  it('respects reduced motion by disabling ambient motion', () => {
+    const theme = resolvePageTheme({
+      archetypeSlug: 'zeus',
+      context: 'profile',
+      intensity: 'medium',
+      accessibility: { reduceMotion: true },
+    });
+
+    expect(theme.motion.durationSlow).toBe('0ms');
+    expect(theme.overlay.archetype?.motionFeel).toBe('still');
   });
 });

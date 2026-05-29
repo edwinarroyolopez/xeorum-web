@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Product } from './products.types';
 import { ProductCard as DSProductCard } from '../design-system';
 

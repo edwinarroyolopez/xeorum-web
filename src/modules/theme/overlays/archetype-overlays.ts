@@ -1,4 +1,4 @@
-import type { ArchetypeThemeOverlay, ThemeContextName } from '../contracts/theme.types';
+import type { ArchetypeThemeOverlay, ThemeResolverContextName } from '../contracts/theme.types';
 
 const zeusOverlay: ArchetypeThemeOverlay = {
   archetypeSlug: 'zeus',
@@ -38,7 +38,7 @@ const zeusOverlay: ArchetypeThemeOverlay = {
   },
   usage: {
     allowedContexts: ['home', 'pantheon', 'identity-result', 'profile', 'product-detail', 'recommendations'],
-    forbiddenContexts: ['checkout-payment-critical', 'legal'],
+    forbiddenContexts: ['checkout-payment-critical', 'legal', 'admin'],
   },
   accessibility: {
     contrastValidated: true,
@@ -56,9 +56,9 @@ export function getPublishedArchetypeOverlay(slug: string) {
   return overlays[slug] ?? null;
 }
 
-const zeusPilotContexts = new Set<ThemeContextName>(['profile', 'pantheon']);
+const zeusPilotContexts = new Set<ThemeResolverContextName>(['profile', 'pantheon']);
 
-export function getZeusPilotOverlay(slug: string | null | undefined, context: ThemeContextName) {
+export function getZeusPilotOverlay(slug: string | null | undefined, context: ThemeResolverContextName) {
   if (slug !== 'zeus') {
     return null;
   }

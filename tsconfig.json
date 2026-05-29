@@ -22,7 +22,7 @@
     "jsx": "preserve",
     "paths": {
       "@xeorum/contracts": [
-        "./src/lib/contracts.ts"
+        "../packages/contracts/index.d.ts"
       ]
     },
     "noEmit": true,

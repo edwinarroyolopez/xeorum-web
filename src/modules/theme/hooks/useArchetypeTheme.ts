@@ -1,5 +1,10 @@
 import { useAppTheme } from '../providers/AppThemeProvider';
 
 export function useArchetypeTheme() {
-  return useAppTheme().theme;
+  const { archetypeSlug, theme } = useAppTheme();
+  return {
+    archetypeSlug,
+    overlay: theme.overlay.archetype,
+    theme,
+  };
 }

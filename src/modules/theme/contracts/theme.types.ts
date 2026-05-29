@@ -1,5 +1,9 @@
 export type ThemeMode = 'dark';
 export type ThemeName = 'xeorum-dark';
+export type ThemePurpose = 'public-experience' | 'operational-command-center';
+export type ThemeStatus = 'draft' | 'published' | 'archived';
+export type ThemeIntensityLevel = 'none' | 'subtle' | 'medium' | 'extreme';
+export type ThemeValidationStatus = 'valid' | 'warning' | 'blocked';
 
 export type PrimitiveColorTokens = {
   black: {
@@ -101,7 +105,6 @@ export type MotionTokens = {
 };
 
 export type ThemeContextName =
-  | 'default'
   | 'home'
   | 'pantheon'
   | 'identity-result'
@@ -110,6 +113,9 @@ export type ThemeContextName =
   | 'recommendations'
   | 'checkout-payment-critical'
   | 'legal';
+
+export type ThemeResolverContextName = ThemeContextName | 'default';
+export type ThemeUsageContextName = ThemeContextName | 'admin';
 
 export type ThemeIntensity = 'none' | 'subtle' | 'medium';
 
@@ -123,7 +129,7 @@ export type AccessibilitySettings = {
 export type ArchetypeThemeOverlay = {
   archetypeSlug: string;
   name: string;
-  status: 'draft' | 'published' | 'archived';
+  status: ThemeStatus;
   intensity: {
     default: 'subtle';
     allowed: Array<'subtle' | 'medium'>;
@@ -157,8 +163,8 @@ export type ArchetypeThemeOverlay = {
     allowAmbientMotion: boolean;
   };
   usage: {
-    allowedContexts: ThemeContextName[];
-    forbiddenContexts: ThemeContextName[];
+    allowedContexts: ThemeUsageContextName[];
+    forbiddenContexts: ThemeUsageContextName[];
   };
   accessibility: {
     contrastValidated: boolean;
@@ -193,6 +199,7 @@ export type ThemeOverlayTokens = {
 
 export type ThemeTokenContract = {
   name: ThemeName;
+  purpose: ThemePurpose;
   mode: ThemeMode;
   primitive: PrimitiveTokens;
   semantic: SemanticTokens;
@@ -222,7 +229,7 @@ export type ComposeThemeOptions = {
   baseTheme: Theme;
   brandTheme?: ThemePartial | null;
   overlay?: ArchetypeThemeOverlay | null;
-  context?: ThemeContextName;
+  context?: ThemeResolverContextName;
   accessibility?: AccessibilitySettings;
   intensity?: ThemeIntensity;
 };
@@ -231,8 +238,45 @@ export type ResolvePageThemeOptions = {
   themeName?: string;
   brandTheme?: ThemePartial | null;
   archetypeSlug?: string | null;
-  context?: ThemeContextName;
+  context?: ThemeResolverContextName;
   accessibility?: AccessibilitySettings;
   intensity?: ThemeIntensity;
   overlayStrategy?: OverlayResolutionStrategy;
+};
+
+export type ThemeValidationReportItem = {
+  id: string;
+  label: string;
+  status: 'pass' | 'warning' | 'fail';
+  message?: string;
+};
+
+export type ThemeValidationReport = {
+  status: ThemeValidationStatus;
+  publishReady: boolean;
+  contrastStatus: 'valid' | 'invalid' | 'not_checked';
+  checks: ThemeValidationReportItem[];
+  warnings: string[];
+  errors: string[];
+};
+
+export type PublicThemeContract = {
+  baseTheme: ThemeTokenContract;
+  overlays: ArchetypeThemeOverlay[];
+  fallbackThemeName: string;
+};
+
+export type AdminThemeContract = {
+  baseTheme: ThemeTokenContract;
+  overlays: ArchetypeThemeOverlay[];
+  validationReports: Record<string, ThemeValidationReport>;
+  draftsEnabled: boolean;
+  publishGuardrailsEnabled: boolean;
+};
+
+export type CustomerProfileThemeContract = {
+  dominantArchetype?: string;
+  baseTheme: ThemeTokenContract;
+  overlay?: ArchetypeThemeOverlay;
+  fallbackThemeName: string;
 };
