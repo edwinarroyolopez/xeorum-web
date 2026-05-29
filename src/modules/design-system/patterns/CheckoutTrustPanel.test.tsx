@@ -9,9 +9,9 @@ describe('CheckoutTrustPanel', () => {
       <CheckoutTrustPanel reservedUntil="2026-05-28T21:45:00.000Z" paymentStatus="pending" orderStatus="PENDING_PAYMENT" />
     );
 
-    expect(html).toContain('Checkout Trust');
-    expect(html).toContain('Payment pending');
-    expect(html).toContain('Order PENDING_PAYMENT');
-    expect(html).toContain('Reserved until');
+    expect(html).toContain('Confianza de checkout');
+    expect(html).toContain('Pago pending');
+    expect(html).toContain('Orden PENDING_PAYMENT');
+    expect(html).toContain('Reservada hasta');
   });
 });
