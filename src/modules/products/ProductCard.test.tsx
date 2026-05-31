@@ -25,9 +25,9 @@ describe('ProductCard', () => {
   it('renders cover and sale price information', () => {
     const html = renderToStaticMarkup(<ProductCard product={product} />);
     expect(html).toContain('Hades Heavy Tee');
-    expect(html).toContain('92');
     expect(html).toContain('120');
-    expect(html).toContain('Disponible');
+    expect(html).not.toContain('92% off');
+    expect(html).not.toContain('Disponible');
     expect(html).toContain('cdn.example.com/cover-image.jpg');
   });
 

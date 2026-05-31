@@ -3411,7 +3411,7 @@ select {
 .product-card .ds-product-visual-badge .ds-editorial-pill {
   min-height: 1.65rem;
   padding: 0.32rem 0.68rem;
-  background: rgba(17, 16, 15, 0.6);
+  background: rgba(17, 16, 15, 0.92);
   color: color-mix(in srgb, var(--xe-semantic-accent) 74%, white 26%);
 }
 
@@ -3571,6 +3571,7 @@ select {
 .product-card {
   gap: 0.78rem;
   padding: 1rem;
+  grid-template-rows: auto 1fr auto;
 }
 
 .product-card-visual-frame {
@@ -3792,12 +3793,28 @@ select {
   color: color-mix(in srgb, white 56%, var(--xe-semantic-text-secondary) 44%);
 }
 
+.product-card .product-card-material-note {
+  margin: 0;
+  max-width: 34ch;
+  color: color-mix(in srgb, var(--xe-semantic-accent) 74%, white 26%);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.product-card .product-card-header h3 {
+  background: linear-gradient(180deg, color-mix(in srgb, white 88%, var(--xe-semantic-accent) 12%), color-mix(in srgb, var(--xe-semantic-accent) 62%, white 38%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .product-card .product-price-main-row {
   justify-content: flex-start;
 }
 
 .product-card .product-price-block strong {
-  font-size: 1.4rem;
+  font-size: 1.22rem;
 }
 
 .product-card .product-price-block {
@@ -3808,8 +3825,75 @@ select {
   justify-items: start;
 }
 
+.product-card .product-price-compare,
+.product-card .product-price-supporting {
+  font-size: 0.78rem;
+  color: color-mix(in srgb, white 42%, var(--xe-semantic-text-secondary) 58%);
+}
+
+.product-card .product-price-compare {
+  display: none;
+}
+
+.product-card .product-price-supporting {
+  display: none;
+}
+
 .product-card .product-card-footer-copy>*+* {
-  margin-top: -0.05rem;
+  margin-top: -0.02rem;
+}
+
+.product-card-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: color-mix(in srgb, white 38%, var(--xe-semantic-text-secondary) 62%);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+}
+
+.product-card-stats-row span:last-child {
+  color: color-mix(in srgb, white 34%, var(--xe-semantic-text-secondary) 66%);
+}
+
+.product-card .product-card-header {
+  gap: 0.4rem;
+}
+
+.product-card .product-card-body {
+  gap: 0.6rem;
+  min-height: 0;
+}
+
+.product-card .product-card-footer-copy {
+  gap: 0.2rem;
+}
+
+.product-card .product-card-footer {
+  margin-top: auto;
+}
+
+.product-card .product-price-block strong {
+  color: color-mix(in srgb, white 76%, var(--xe-semantic-accent) 24%);
+}
+
+.product-card .product-card-stock-note,
+.product-card .product-card-stats-row {
+  text-transform: lowercase;
+}
+
+.product-card .product-card-actions {
+  align-self: end;
+}
+
+.product-card .product-card-actions .ds-button:last-child {
+  min-width: 10.2rem;
+}
+
+.product-card .product-inline-link {
+  min-width: 8.2rem;
 }
 
 .product-card .product-card-image-media,
@@ -3864,6 +3948,10 @@ select {
 .product-availability-row span:last-child {
   color: color-mix(in srgb, white 66%, var(--xe-semantic-text-secondary) 34%);
   line-height: 1.72;
+}
+
+.product-card .ds-eyebrow-muted {
+  color: color-mix(in srgb, white 34%, var(--xe-semantic-text-secondary) 66%);
 }
 
 .product-card-header p {
@@ -4002,6 +4090,20 @@ select {
 
 .product-card .ds-product-visual-meta strong {
   font-size: 1rem;
+}
+
+.product-card .ds-product-visual-meta {
+  gap: 0.55rem;
+  padding: 0.62rem 0.85rem;
+}
+
+.product-card .ds-product-visual-meta span {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.44);
+}
+
+.product-card .ds-product-visual-meta strong {
+  color: color-mix(in srgb, var(--xe-semantic-accent) 68%, white 32%);
 }
 
 .product-card .product-card-image-media,
