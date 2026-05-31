@@ -1,3 +1,5 @@
+import type { HomeEntryPoint, HomeJourneyStep, HomePortalFallback, HomeQuestion, HomeValuePillar } from './home.types';
+
 export const homeIdentitySignals = [
   'Preferencia por silueta estructurada',
   'Atraccion por simbolos de autoridad',
@@ -5,9 +7,15 @@ export const homeIdentitySignals = [
   'Afinidad con piezas oscuras y pesadas',
 ] as const;
 
-export const homeEntryPoints = ['Compra directa', 'Ritual opcional', 'Portal personal'] as const;
+export const heroSignals: readonly string[] = ['Streetwear premium', 'Compra directa sin friccion', 'Ritual opcional'] as const;
 
-export const homeJourneySteps = [
+export const homeEntryPoints: readonly HomeEntryPoint[] = [
+  { label: 'Compra directa' },
+  { label: 'Ritual opcional' },
+  { label: 'Portal personal' },
+] as const;
+
+export const homeJourneySteps: readonly HomeJourneyStep[] = [
   {
     step: '01',
     title: 'Producto',
@@ -30,7 +38,7 @@ export const homeJourneySteps = [
   },
 ] as const;
 
-export const homeQuestions = [
+export const homeQuestions: readonly HomeQuestion[] = [
   {
     id: '01',
     title: 'Que fuerza moldea tu presencia?',
@@ -48,7 +56,7 @@ export const homeQuestions = [
   },
 ] as const;
 
-export const homeDetailTiles = [
+export const homeDetailTiles: readonly HomeValuePillar[] = [
   {
     icon: 'ruler',
     title: 'Materialidad',
@@ -73,7 +81,7 @@ export const homeCheckoutSignals = [
   'Confirmacion + ruta de seguimiento',
 ] as const;
 
-export const homePortalFallbacks = [
+export const homePortalFallbacks: readonly HomePortalFallback[] = [
   {
     slug: 'zeus',
     name: 'ZEUS',

@@ -1,5 +1,5 @@
-import { HomePage as HomeModulePage } from '../modules/home';
+import { HomeView } from '../modules/home';
 
 export default function HomePage() {
-  return <HomeModulePage />;
+  return <HomeView />;
 }

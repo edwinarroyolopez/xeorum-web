@@ -51,8 +51,31 @@ describe('ProductDetail', () => {
     expect(html.indexOf('92')).toBeLessThan(html.indexOf('Narrative later'));
     expect(html).toContain('AddToCart:M:active');
     expect(html).toContain('Talla y disponibilidad');
-    expect(html).toContain('disabled=""');
-    expect(html).toContain('Agotado');
+    expect(html).toContain('Esenciales tecnicos');
+    expect(html).toContain('Ver por que esta pieza pertenece a Hades');
+    expect(html).toContain('Detalles sin ruido.');
+    expect(html).toContain('Contexto comercial');
     expect(html).not.toContain('ratingAverage');
+  });
+
+  it('disables the CTA when no variant is available and hides narrative when absent', () => {
+    useProduct.mockReturnValue({
+      isLoading: false,
+      isError: false,
+      data: {
+        ...product,
+        narrative: undefined,
+        variants: [
+          { id: 'variant-2', sku: 'SKU-L', size: 'L', stockOnHand: 0, stockReserved: 0, stockAvailable: 0, lowStockThreshold: 2, status: 'out_of_stock' as const, available: false, lowStock: true },
+        ],
+      },
+    });
+    useRecommendationsForProduct.mockReturnValue({ data: null });
+
+    const html = renderToStaticMarkup(<ProductDetail slug="hades-heavy-tee" />);
+    expect(html).toContain('AddToCart:none:disabled');
+    expect(html).toContain('Agotado');
+    expect(html).not.toContain('Narrative later');
+    expect(html).not.toContain('Marco identitario');
   });
 });

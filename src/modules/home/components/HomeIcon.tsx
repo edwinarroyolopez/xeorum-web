@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function HomeIcon({ name, className = 'home-icon', color = 'currentColor' }: Readonly<{ name: 'arrow' | 'check' | 'crown' | 'ruler' | 'shield' | 'sparkles'; className?: string; color?: string }>) {
+export function HomeIcon({ name, className = 'home-icon', color = 'currentColor' }: Readonly<{ name: 'arrow' | 'bag' | 'check' | 'crown' | 'ruler' | 'search' | 'shield' | 'sparkles' | 'user'; className?: string; color?: string }>) {
   const common = {
     className,
     width: 24,
@@ -31,6 +31,15 @@ export function HomeIcon({ name, className = 'home-icon', color = 'currentColor'
     );
   }
 
+  if (name === 'bag') {
+    return (
+      <svg {...common}>
+        <path d="M6.5 8.5h11l1 11h-13l1-11Z" />
+        <path d="M9 8.5a3 3 0 0 1 6 0" />
+      </svg>
+    );
+  }
+
   if (name === 'crown') {
     return (
       <svg {...common}>
@@ -56,6 +65,24 @@ export function HomeIcon({ name, className = 'home-icon', color = 'currentColor'
       <svg {...common}>
         <path d="M12 3 19 6v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3Z" />
         <path d="m8.5 12 2.2 2.2L15.8 9" />
+      </svg>
+    );
+  }
+
+  if (name === 'search') {
+    return (
+      <svg {...common}>
+        <circle cx="11" cy="11" r="6" />
+        <path d="m16 16 4 4" />
+      </svg>
+    );
+  }
+
+  if (name === 'user') {
+    return (
+      <svg {...common}>
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4.5 21a7.5 7.5 0 0 1 15 0" />
       </svg>
     );
   }

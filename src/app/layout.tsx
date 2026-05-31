@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { BrandMark } from '../components/ui/BrandMark';
+import { HomeIcon } from '../modules/home/components/HomeIcon';
 import '../styles/reset.css';
 import '../modules/home/styles/home.css';
 import '../modules/products/styles/products.css';
@@ -24,11 +25,23 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
                   <BrandMark as="span" />
                 </Link>
                 <nav className="site-nav" aria-label="Navegacion principal">
-                  <Link href="/products">Mercado</Link>
-                  <Link href="/identity">Mi fuerza</Link>
+                  <Link href="/products">Productos</Link>
                   <Link href="/pantheon">Portales</Link>
-                  <Link href="/cart">Carrito</Link>
+                  <Link href="/drops">Drops</Link>
+                  <Link href="/identity">Test de identidad</Link>
                 </nav>
+                <div className="site-header-actions">
+                  <Link href="/products" className="site-header-icon-link" aria-label="Buscar productos">
+                    <HomeIcon name="search" />
+                  </Link>
+                  <Link href="/identity" className="site-header-icon-link" aria-label="Ir a mi fuerza">
+                    <HomeIcon name="user" />
+                  </Link>
+                  <Link href="/cart" className="site-header-icon-link site-header-cart-link" aria-label="Ir al carrito">
+                    <HomeIcon name="bag" />
+                    <span className="site-header-cart-badge">1</span>
+                  </Link>
+                </div>
               </header>
               {children}
               <footer className="site-footer">

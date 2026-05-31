@@ -1469,3 +1469,485 @@
   }.product-card-image {
     min-height: 19rem;
   }}
+
+.ds-editorial-hero-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: clamp(1.25rem, 3vw, 3rem);
+  align-items: start;
+}
+
+.ds-editorial-hero-media,
+.ds-editorial-hero-aside,
+.xeorum-product-decision-card,
+.xeorum-product-decision-card-main,
+.xeorum-product-detail-flow,
+.xeorum-product-detail-panel,
+.xeorum-product-purchase-hero,
+.xeorum-product-hero-gallery,
+.xeorum-product-technical-tabs,
+.xeorum-product-story-card,
+.xeorum-product-commercial-context,
+.xeorum-product-context-row {
+  display: grid;
+  gap: 1rem;
+}
+
+.ds-editorial-hero-aside {
+  align-content: start;
+  position: sticky;
+  top: 1.5rem;
+}
+
+.xeorum-product-detail-card {
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+}
+
+.xeorum-product-purchase-hero,
+.xeorum-product-decision-card-main {
+  justify-items: center;
+}
+
+.xeorum-product-purchase-hero .xeorum-product-title-block,
+.xeorum-product-purchase-hero .ds-product-title-block-start {
+  justify-items: start;
+  text-align: left;
+}
+
+.xeorum-product-purchase-hero .ds-product-title-block {
+  gap: 0.85rem;
+  max-width: 34rem;
+}
+
+.xeorum-product-purchase-hero .ds-product-title-block .ds-eyebrow {
+  letter-spacing: 0.22em;
+}
+
+.xeorum-product-purchase-hero .ds-product-title-block .ds-display-title {
+  font-size: clamp(2.2rem, 4.2vw, 3.35rem);
+  line-height: 0.98;
+}
+
+.xeorum-product-purchase-hero .ds-product-title-block .ds-ornamental-line {
+  width: min(12rem, 100%);
+}
+
+.xeorum-product-purchase-hero .ds-product-title-subtitle {
+  max-width: 30rem;
+  color: var(--xe-semantic-text-secondary);
+  line-height: 1.82;
+}
+
+.xeorum-product-purchase-hero > *,
+.xeorum-product-decision-card-main > *,
+.xeorum-product-detail-flow > * {
+  width: 100%;
+}
+
+.xeorum-product-purchase-hero .ds-product-presence-grid {
+  width: 100%;
+  max-width: 34rem;
+}
+
+.xeorum-product-hero-gallery {
+  gap: 1.25rem;
+}
+
+.xeorum-product-gallery-stage,
+.xeorum-product-media-fallback {
+  min-height: clamp(32rem, 72vh, 44rem);
+  border-radius: calc(var(--xe-radius-editorial-xl) - 0.15rem);
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.38);
+}
+
+.xeorum-product-gallery-stage .ds-product-visual-brand {
+  top: 1.4rem;
+  right: 1.4rem;
+  padding: 0.85rem 1rem;
+}
+
+.xeorum-product-gallery-stage .ds-product-visual-brand span {
+  letter-spacing: 0.28em;
+}
+
+.xeorum-product-gallery-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), transparent 22%, transparent 72%, rgba(0,0,0,0.52)),
+    radial-gradient(circle at 50% 46%, transparent 0 32%, rgba(0,0,0,0.18) 60%, rgba(0,0,0,0.54) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.xeorum-product-gallery-stage .ds-product-visual-media,
+.xeorum-product-gallery-stage .ds-product-visual-brand {
+  position: relative;
+  z-index: 1;
+}
+
+.xeorum-product-hero-gallery-note {
+  max-width: 26rem;
+}
+
+.xeorum-product-hero-gallery-note .ds-editorial-body {
+  line-height: 1.82;
+}
+
+.xeorum-product-hero-gallery-note .product-meta {
+  margin-bottom: 0.35rem;
+}
+
+.xeorum-product-purchase-hero .ds-product-presence-panel,
+.xeorum-product-quick-read-card,
+.xeorum-product-commercial-context,
+.xeorum-product-story-card,
+.xeorum-product-detail-panel,
+.xeorum-product-technical-tabs .ds-product-construction-panel,
+.xeorum-product-decision-card {
+  border-color: color-mix(in srgb, var(--xe-semantic-accent) 10%, var(--xe-semantic-border-subtle));
+  background: color-mix(in srgb, var(--xe-semantic-surface) 70%, transparent);
+}
+
+.xeorum-product-quick-read-card,
+.xeorum-product-commercial-context {
+  min-height: 8rem;
+}
+
+.xeorum-product-quick-read-card {
+  max-width: 29rem;
+  padding: 1.05rem 1.15rem;
+}
+
+.xeorum-product-decision-card {
+  padding: clamp(1.2rem, 2.1vw, 1.8rem);
+  border: 1px solid color-mix(in srgb, var(--xe-semantic-accent) 12%, var(--xe-semantic-border-subtle));
+  border-radius: var(--xe-radius-editorial-xl);
+  background:
+    radial-gradient(circle at top, color-mix(in srgb, var(--xe-semantic-accent) 10%, transparent), transparent 35%),
+    linear-gradient(180deg, color-mix(in srgb, var(--xe-semantic-surface-editorial-soft) 82%, transparent), color-mix(in srgb, var(--xe-semantic-background-elevated) 94%, transparent));
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+}
+
+.xeorum-product-decision-card-main {
+  gap: 1.35rem;
+}
+
+.xeorum-product-purchase-hero {
+  gap: 1.1rem;
+}
+
+.xeorum-product-purchase-hero .ds-product-presence-grid,
+.xeorum-product-purchase-hero .product-signal-strip,
+.xeorum-product-purchase-hero .product-price-block,
+.xeorum-product-purchase-hero .product-price-supporting,
+.xeorum-product-purchase-hero .product-purchase-intro,
+.xeorum-product-purchase-hero .product-availability-row {
+  justify-items: start;
+  justify-content: start;
+  margin-inline: 0;
+}
+
+.xeorum-product-purchase-hero .product-signal-strip,
+.xeorum-product-purchase-hero .product-meta {
+  justify-content: flex-start;
+}
+
+.xeorum-product-purchase-hero .product-purchase-intro {
+  text-align: left;
+}
+
+.xeorum-product-purchase-hero .product-price-block strong {
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  letter-spacing: 0.03em;
+}
+
+.xeorum-product-purchase-hero .product-price-compare {
+  font-size: 1.1rem;
+}
+
+.xeorum-product-purchase-hero .product-price-block,
+.xeorum-product-purchase-hero .product-price-supporting {
+  justify-items: center;
+}
+
+.xeorum-product-purchase-hero .product-variant-block,
+.xeorum-product-purchase-hero .product-purchase-intro,
+.xeorum-product-purchase-hero .add-to-cart-shell,
+.xeorum-product-purchase-hero .product-availability-row,
+.xeorum-product-decision-card .ds-product-construction-panel,
+.xeorum-product-identity-link {
+  max-width: 34rem;
+}
+
+.xeorum-product-purchase-hero .add-to-cart-shell button {
+  min-height: 3.6rem;
+  box-shadow: 0 20px 54px color-mix(in srgb, var(--xe-semantic-accent) 20%, transparent);
+}
+
+.xeorum-product-purchase-hero .product-availability-row {
+  align-items: center;
+}
+
+.xeorum-product-identity-link {
+  justify-content: center;
+  min-height: 3.3rem;
+  border-radius: 1.1rem;
+  letter-spacing: 0.16em;
+}
+
+.xeorum-product-decision-card .ds-product-construction-panel {
+  padding-top: 0.3rem;
+}
+
+.xeorum-product-decision-card .ds-product-construction-header {
+  gap: 0.45rem;
+}
+
+.xeorum-product-decision-card .ds-product-construction-header .ds-editorial-body {
+  line-height: 1.74;
+}
+
+.xeorum-product-decision-card .ds-product-construction-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.xeorum-product-decision-card .ds-product-construction-item {
+  min-height: 6.4rem;
+}
+
+.xeorum-product-detail-flow {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+  align-items: start;
+  gap: clamp(1.25rem, 3vw, 4rem);
+}
+
+.xeorum-product-detail-panel {
+  gap: 1.5rem;
+}
+
+.xeorum-product-detail-panel-copy {
+  padding-top: 0.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--xe-semantic-accent) 10%, var(--xe-semantic-border-subtle));
+}
+
+.xeorum-product-detail-panel-copy h2 {
+  margin: 0;
+  font-family: var(--xe-typography-display-family);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.xeorum-product-detail-panel-copy p {
+  max-width: 36rem;
+  margin: 1rem 0 0;
+  color: var(--xe-semantic-text-secondary);
+  line-height: 1.85;
+}
+
+.xeorum-product-detail-panel .xeorum-product-technical-tabs {
+  gap: 1.2rem;
+}
+
+.xeorum-product-technical-tab-list,
+.xeorum-product-story-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.xeorum-product-technical-tab {
+  padding: 0.75rem 1.05rem;
+  border: 1px solid color-mix(in srgb, var(--xe-semantic-accent) 10%, var(--xe-semantic-border-subtle));
+  border-radius: var(--xe-radius-pill);
+  background: color-mix(in srgb, var(--xe-semantic-surface) 72%, transparent);
+  color: var(--xe-semantic-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+}
+
+.xeorum-product-technical-tab.is-active {
+  border-color: color-mix(in srgb, var(--xe-semantic-accent) 24%, var(--xe-semantic-border-subtle));
+  color: var(--xe-semantic-text-primary);
+  background: color-mix(in srgb, var(--xe-semantic-accent) 8%, var(--xe-semantic-surface));
+}
+
+.xeorum-product-technical-tabs .ds-product-construction-panel {
+  padding: 1.2rem;
+}
+
+.xeorum-product-technical-tabs [role='tabpanel'] {
+  min-height: 100%;
+}
+
+.xeorum-product-technical-tabs .ds-product-construction-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.xeorum-product-story-card-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.xeorum-product-story-card {
+  min-height: 100%;
+  padding: clamp(1.4rem, 2.4vw, 2.2rem);
+  border: 1px solid color-mix(in srgb, var(--xe-semantic-accent) 16%, var(--xe-semantic-border-subtle));
+  border-radius: var(--xe-radius-editorial-xl);
+  background:
+    radial-gradient(circle at 80% 12%, color-mix(in srgb, var(--xe-semantic-accent) 12%, transparent), transparent 26%),
+    linear-gradient(180deg, color-mix(in srgb, var(--xe-semantic-surface-editorial-soft) 84%, transparent), color-mix(in srgb, var(--xe-semantic-background-elevated) 96%, transparent));
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.24);
+}
+
+.xeorum-product-story-card .product-section-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+}
+
+.xeorum-product-story-card-copy {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.xeorum-product-story-card-copy p {
+  margin: 0;
+  color: var(--xe-semantic-text-secondary);
+  line-height: 1.9;
+}
+
+.xeorum-product-story-card-actions {
+  margin-top: auto;
+}
+
+.xeorum-product-story-card-actions .ds-button {
+  width: fit-content;
+}
+
+.ds-ornamental-mark {
+  display: inline-flex;
+  align-items: center;
+  color: color-mix(in srgb, var(--xe-semantic-accent) 84%, var(--xe-semantic-text-secondary));
+  font-family: var(--xe-typography-display-family);
+  font-size: clamp(2.3rem, 4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+
+.ds-ornamental-mark-start {
+  justify-content: flex-start;
+}
+
+.ds-ornamental-mark-center {
+  justify-content: center;
+}
+
+.xeorum-product-context-row {
+  padding-top: 0.2rem;
+}
+
+.xeorum-product-commercial-context {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: auto;
+  padding: 1.5rem 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--xe-semantic-accent) 10%, var(--xe-semantic-border-subtle));
+  border-bottom: 1px solid color-mix(in srgb, var(--xe-semantic-accent) 10%, var(--xe-semantic-border-subtle));
+  background: transparent;
+}
+
+.xeorum-product-commercial-context .product-meta {
+  justify-content: flex-end;
+}
+
+.xeorum-product-commercial-context .product-meta .ds-badge {
+  background: transparent;
+  border-radius: var(--xe-radius-pill);
+  letter-spacing: 0.12em;
+}
+
+.product-media-rail {
+  gap: 0.95rem;
+}
+
+.product-media-thumb {
+  width: 5.4rem;
+  height: 6.7rem;
+  border-radius: 1.15rem;
+  border-color: color-mix(in srgb, var(--xe-semantic-accent) 8%, var(--xe-semantic-border-subtle));
+  background: linear-gradient(180deg, rgba(24, 23, 21, 0.94), rgba(11, 11, 12, 0.98));
+  transition: transform 180ms ease, border-color 180ms ease, opacity 180ms ease;
+  opacity: 0.72;
+}
+
+.product-media-thumb:hover,
+.product-media-thumb:focus-visible {
+  opacity: 0.96;
+  transform: translateY(-1px);
+}
+
+.product-media-thumb.is-active {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--xe-semantic-accent) 40%, var(--xe-semantic-border-subtle));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--xe-semantic-accent) 18%, transparent);
+}
+
+@media (max-width: 960px) {
+  .ds-editorial-hero-shell,
+  .xeorum-product-detail-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .ds-editorial-hero-aside {
+    position: static;
+  }
+
+  .xeorum-product-commercial-context {
+    grid-template-columns: 1fr;
+  }
+
+  .xeorum-product-commercial-context .product-meta {
+    justify-content: flex-start;
+  }
+
+  .xeorum-product-purchase-hero .ds-product-presence-grid {
+    max-width: 100%;
+  }
+
+  .xeorum-product-purchase-hero .product-signal-strip,
+  .xeorum-product-purchase-hero .product-meta,
+  .xeorum-product-purchase-hero .product-availability-row {
+    justify-content: flex-start;
+  }
+
+  .xeorum-product-story-card-actions .ds-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 720px) {
+  .xeorum-product-gallery-stage,
+  .xeorum-product-media-fallback {
+    min-height: 24rem;
+  }
+
+  .xeorum-product-decision-card .ds-product-construction-grid,
+  .xeorum-product-technical-tabs .ds-product-construction-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-media-thumb {
+    width: 4.2rem;
+    height: 5.4rem;
+  }
+}

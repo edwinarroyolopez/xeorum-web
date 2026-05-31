@@ -13,12 +13,16 @@ export function HomeSectionHeading({
 }>) {
   return (
     <div className="home-section-heading">
-      <div>
+      <div className="home-section-copy">
         <p className="home-kicker">{kicker}</p>
         <h2 className="home-section-title">{title}</h2>
       </div>
-      {description ? <p className="home-section-description">{description}</p> : null}
-      {action ? <div className="home-section-action">{action}</div> : null}
+      {description || action ? (
+        <div className="home-section-side">
+          {description ? <p className="home-section-description">{description}</p> : null}
+          {action ? <div className="home-section-action">{action}</div> : null}
+        </div>
+      ) : null}
     </div>
   );
 }

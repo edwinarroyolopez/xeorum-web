@@ -1,22 +1,24 @@
 import React from 'react';
 import { describe, expect, it } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { DisplayTitle, EditorialBody, EditorialCard, EditorialPill, Eyebrow, IdentityInsightPanel, JourneyCard, OrnamentalLine, ProductConstructionPanel, ProductPresenceGrid, ProductSummaryPanel, ProductTitleBlock, ProductVariantPanel, ProductVisualFrame } from '..';
+import { DisplayTitle, EditorialBody, EditorialCard, EditorialHeroShell, EditorialPill, Eyebrow, IdentityInsightPanel, JourneyCard, OrnamentalLine, OrnamentalMark, ProductConstructionPanel, ProductPresenceGrid, ProductSummaryPanel, ProductTitleBlock, ProductVariantPanel, ProductVisualFrame } from '..';
 
 describe('editorial design system', () => {
   it('renders editorial primitives', () => {
     const html = renderToStaticMarkup(
-      <EditorialCard>
-        <Eyebrow>Pieza curada</Eyebrow>
-        <DisplayTitle as="h2">Silencio visible</DisplayTitle>
-        <OrnamentalLine />
-        <EditorialBody>Lectura sobria y clara.</EditorialBody>
-        <EditorialPill>Curado</EditorialPill>
+        <EditorialCard>
+          <Eyebrow>Pieza curada</Eyebrow>
+          <DisplayTitle as="h2">Silencio visible</DisplayTitle>
+          <OrnamentalMark symbol="*" />
+          <OrnamentalLine />
+          <EditorialBody>Lectura sobria y clara.</EditorialBody>
+          <EditorialPill>Curado</EditorialPill>
       </EditorialCard>,
     );
 
     expect(html).toContain('ds-eyebrow');
     expect(html).toContain('ds-display-title');
+    expect(html).toContain('ds-ornamental-mark');
     expect(html).toContain('ds-ornamental-line');
     expect(html).toContain('ds-editorial-pill');
   });
@@ -34,6 +36,7 @@ describe('editorial design system', () => {
           <div>Tallas</div>
         </ProductVariantPanel>
         <ProductConstructionPanel label="Construccion" items={[{ label: 'Material', value: 'Cotton' }]} />
+        <EditorialHeroShell media={<div>Media</div>} supporting={<div>Supporting</div>} aside={<div>Aside</div>} />
       </>,
     );
 
@@ -41,6 +44,7 @@ describe('editorial design system', () => {
     expect(html).toContain('Best Seller');
     expect(html).toContain('M seleccionada');
     expect(html).toContain('Material');
+    expect(html).toContain('Supporting');
   });
 
   it('renders supporting editorial patterns', () => {
