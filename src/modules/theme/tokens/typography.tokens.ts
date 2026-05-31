@@ -1,7 +1,15 @@
 export const xeorumTypographyTokens = {
   fontFamily: 'Inter, ui-sans-serif, system-ui, sans-serif',
-  displayFamily: 'Iowan Old Style, Palatino Linotype, Book Antiqua, Georgia, ui-serif, serif',
-  letterSpacing: '-0.01em',
-  headingWeight: 600,
+  displayFamily: 'Baskerville, Iowan Old Style, Palatino Linotype, Book Antiqua, Georgia, ui-serif, serif',
+  readingFamily: 'Inter, ui-sans-serif, system-ui, sans-serif',
+  letterSpacing: '0',
+  headingWeight: 500,
   bodyWeight: 400,
+  kickerSize: '0.72rem',
+  titleXl: 'clamp(2.8rem, 6vw, 4.9rem)',
+  titleLg: 'clamp(1.9rem, 3vw, 2.8rem)',
+  bodyMd: '1rem',
+  bodySm: '0.92rem',
+  trackingKicker: '0.24em',
+  trackingDisplay: '0.025em',
 };

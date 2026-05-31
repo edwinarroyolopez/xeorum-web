@@ -1,7 +1,7 @@
 export const xeorumMotionTokens = {
-  durationFast: '120ms',
-  durationBase: '180ms',
-  durationSlow: '280ms',
-  easingStandard: 'cubic-bezier(0.2, 0, 0, 1)',
-  easingEmphasized: 'cubic-bezier(0.2, 0, 0, 1.12)',
+  durationFast: '160ms',
+  durationBase: '240ms',
+  durationSlow: '420ms',
+  easingStandard: 'cubic-bezier(0.22, 1, 0.36, 1)',
+  easingEmphasized: 'cubic-bezier(0.16, 1, 0.3, 1)',
 } as const;

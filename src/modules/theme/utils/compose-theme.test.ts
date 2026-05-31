@@ -23,7 +23,7 @@ describe('composeTheme', () => {
     expect(theme.semantic.accent).toBe(zeusOverlay.colors.accent);
     expect(theme.semantic.focusRing).toBe(zeusOverlay.accessibility.focusRing);
     expect(theme.overlay.archetype?.backgroundWash).toBe(zeusOverlay.surfaces.backgroundWash);
-    expect(theme.elevation.overlay).toBe('0 28px 80px rgba(0, 0, 0, 0.46)');
+    expect(theme.elevation.overlay).toBe('0 35px 120px rgba(0, 0, 0, 0.65)');
   });
 
   it('skips overlay in restricted contexts and keeps the safe base', () => {
@@ -36,7 +36,7 @@ describe('composeTheme', () => {
 
     expect(theme.semantic.accent).toBe(xeorumDarkTheme.semantic.accent);
     expect(theme.overlay.archetype).toBeUndefined();
-    expect(theme.semantic.surfaceGlass).toBe('rgba(20, 22, 26, 0.9)');
+    expect(theme.semantic.surfaceGlass).toBe('rgba(7, 7, 7, 0.9)');
   });
 
   it('does not apply overlay in legal context', () => {

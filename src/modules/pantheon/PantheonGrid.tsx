@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { EmptyState } from '../design-system';
+import { EmptyState, ErrorState, LoadingState } from '../design-system';
 import { PortalCard } from './PortalCard';
 import { usePantheonArchetypes } from './pantheon.queries';
 import { orderPantheonArchetypes } from './pantheon.types';
@@ -10,11 +10,11 @@ export function PantheonGrid() {
   const query = usePantheonArchetypes();
 
   if (query.isLoading) {
-    return <p className="section-state">Cargando portales.</p>;
+    return <LoadingState title="Cargando portales" description="Preparando las fuerzas publicadas del pantheon." />;
   }
 
   if (query.isError || !query.data) {
-    return <p className="section-state">Los portales no estan disponibles.</p>;
+    return <ErrorState title="Portales no disponibles" description="La capa editorial del pantheon no esta disponible ahora." />;
   }
 
   if (query.data.length === 0) {

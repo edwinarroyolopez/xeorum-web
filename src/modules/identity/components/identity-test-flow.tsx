@@ -1,13 +1,12 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAnswerIdentitySession, useCompleteIdentitySession, useCreateIdentitySession, useIdentityQuestions } from '../identity.queries';
 import type { IdentityAnswer } from '../identity.types';
-import { Button, Card, ErrorState, LoadingState } from '../../design-system';
+import { ActionRow, Badge, Button, Card, ErrorState, Kicker, LinkButton, LoadingState, SectionLabel, SupportingText } from '../../design-system';
 
-export function IdentityTestFlow() {
+export function IdentityTestFlow({ showIntro = true }: Readonly<{ showIntro?: boolean }>) {
   const router = useRouter();
   const questionsQuery = useIdentityQuestions();
   const createSession = useCreateIdentitySession();
@@ -47,29 +46,34 @@ export function IdentityTestFlow() {
   }
 
   if (questionsQuery.isLoading) {
-    return <LoadingState>Cargando lectura de identidad.</LoadingState>;
+    return <LoadingState title="Cargando lectura de identidad" description="Preparando preguntas, progresion y acceso al resultado." />;
   }
 
   if (questionsQuery.isError) {
-    return <ErrorState>El sistema de identidad no esta disponible.</ErrorState>;
+    return <ErrorState title="Sistema no disponible" description="El sistema de identidad no esta disponible." />;
   }
 
-  if (!hasStarted) {
+  if (showIntro && !hasStarted) {
     return (
       <section className="identity-flow">
         <Card className="identity-card identity-card-intro">
-          <p className="identity-kicker">Descubrir mi fuerza</p>
+          <Kicker tone="muted" className="identity-kicker">Descubrir mi fuerza</Kicker>
           <h1>Un test breve para reconocer que energia gobierna tu presencia.</h1>
-          <p className="identity-intro-copy">Responde sin sobrepensar. Al final recibes tu fuerza dominante, acceso a tu portal y una primera seleccion de piezas alineadas.</p>
-          <div className="identity-intro-signals" aria-label="Senales del test de identidad">
-            <span>{questions.length} preguntas</span>
-            <span>Sin bloquear la compra</span>
-            <span>Resultado inmediato</span>
+          <div className="editorial-ornament" aria-hidden="true">
+            <span />
+            <i />
+            <span />
           </div>
-          <div className="portal-actions">
+          <SupportingText className="identity-intro-copy">Responde sin sobrepensar. Al final recibes tu fuerza dominante, acceso a tu portal y una primera seleccion de piezas alineadas.</SupportingText>
+          <ActionRow className="identity-intro-signals" aria-label="Senales del test de identidad">
+            <Badge tone="default">{questions.length} preguntas</Badge>
+            <Badge tone="default">Sin bloquear la compra</Badge>
+            <Badge tone="accent">Resultado inmediato</Badge>
+          </ActionRow>
+          <ActionRow className="portal-actions">
             <Button type="button" variant="primary" onClick={() => setHasStarted(true)}>Comenzar test</Button>
-            <Link href="/products" className="ds-button ds-button-ghost">Ver productos primero</Link>
-          </div>
+            <LinkButton href="/products" variant="ghost">Ver productos primero</LinkButton>
+          </ActionRow>
         </Card>
       </section>
     );
@@ -77,24 +81,25 @@ export function IdentityTestFlow() {
 
   return (
     <section className="identity-flow">
-      <div className="identity-progress">
-        <span>{questions.filter((question) => answers[question.id]).length}/{questions.length}</span>
-        <span>Test de identidad</span>
-      </div>
+      <ActionRow className="identity-progress" justify="between">
+        <Badge tone="accent">{questions.filter((question) => answers[question.id]).length}/{questions.length}</Badge>
+        <Badge tone="default">Test de identidad</Badge>
+      </ActionRow>
       {currentQuestion ? (
         <Card className="identity-card">
-          <p className="identity-kicker">Lectura {currentQuestion.version}</p>
+          <Kicker tone="muted" className="identity-kicker">Lectura {currentQuestion.version}</Kicker>
           <h1>{currentQuestion.prompt}</h1>
-          <div className="identity-options">
+          <SectionLabel>Tipo {currentQuestion.type}</SectionLabel>
+          <ActionRow className="identity-options" align="start">
             {currentQuestion.options.map((option) => (
-              <Button key={option.id} type="button" variant="ghost" onClick={() => void onChoose(currentQuestion.id, option.id)}>
+              <Button key={option.id} type="button" variant="ghost" fullWidth onClick={() => void onChoose(currentQuestion.id, option.id)}>
                 {option.label}
               </Button>
             ))}
-          </div>
+          </ActionRow>
         </Card>
       ) : (
-        <LoadingState>{isComplete ? 'Preparando resultado.' : 'No hay preguntas publicadas.'}</LoadingState>
+        <LoadingState description={isComplete ? 'Preparando resultado.' : 'No hay preguntas publicadas.'} />
       )}
     </section>
   );

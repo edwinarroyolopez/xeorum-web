@@ -4,13 +4,17 @@ import React from 'react';
 import type { ReactNode } from 'react';
 import { Button } from './Button';
 import { useDialogAccessibility } from './dialog.shared';
+import { ActionRow } from './ActionRow';
 
 export function Drawer({
   open,
   title,
+  description,
   onClose,
+  footer,
+  closeLabel = 'Cerrar',
   children,
-}: Readonly<{ open: boolean; title: string; onClose: () => void; children: ReactNode }>) {
+}: Readonly<{ open: boolean; title: string; description?: ReactNode; onClose: () => void; footer?: ReactNode; closeLabel?: string; children: ReactNode }>) {
   const containerRef = useDialogAccessibility(open, onClose);
 
   if (!open) {
@@ -29,13 +33,19 @@ export function Drawer({
         onClick={(event) => event.stopPropagation()}
       >
         <div className="ds-dialog-header">
-          <h2>{title}</h2>
-          <Button type="button" variant="ghost" onClick={onClose} aria-label={`Close ${title}`}>
-            Close
+          <div className="ds-dialog-heading">
+            <h2>{title}</h2>
+            {description ? <p>{description}</p> : null}
+          </div>
+          <Button type="button" variant="ghost" size="sm" onClick={onClose} aria-label={`${closeLabel} ${title}`}>
+            {closeLabel}
           </Button>
         </div>
         <div className="ds-dialog-body">{children}</div>
+        {footer ? <ActionRow className="ds-dialog-footer" justify="end">{footer}</ActionRow> : null}
       </aside>
     </div>
   );
 }
+
+export const SidePanel = Drawer;

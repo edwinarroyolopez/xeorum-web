@@ -1,7 +1,8 @@
 import React from 'react';
 import { Badge } from '../components/Badge';
 import { Card } from '../components/Card';
-import { Text } from '../primitives/Text';
+import { ActionRow } from '../components/ActionRow';
+import { Kicker } from '../primitives/Kicker';
 
 type CheckoutTrustPanelProps = {
   reservedUntil?: string;
@@ -9,7 +10,7 @@ type CheckoutTrustPanelProps = {
   orderStatus?: string;
 };
 
-function normalizeStatusTone(status: string | undefined): 'default' | 'accent' | 'success' | 'warning' {
+ function normalizeStatusTone(status: string | undefined): 'default' | 'accent' | 'success' | 'danger' {
   if (!status) {
     return 'default';
   }
@@ -25,7 +26,7 @@ function normalizeStatusTone(status: string | undefined): 'default' | 'accent' |
   }
 
   if (normalizedStatus.includes('failed') || normalizedStatus.includes('cancelled')) {
-    return 'warning';
+    return 'danger';
   }
 
   return 'default';
@@ -34,17 +35,15 @@ function normalizeStatusTone(status: string | undefined): 'default' | 'accent' |
 export function CheckoutTrustPanel({ reservedUntil, paymentStatus, orderStatus }: Readonly<CheckoutTrustPanelProps>) {
   return (
     <Card className="checkout-trust-panel">
-      <Text tone="muted" className="portal-card-kicker">
-        Confianza de checkout
-      </Text>
+      <Kicker>Confianza de checkout</Kicker>
       <h2>Reserva, pago y estado visibles en todo momento.</h2>
-      <div className="checkout-trust-badges" aria-label="Resumen de estado del checkout">
+      <ActionRow className="checkout-trust-badges" aria-label="Resumen de estado del checkout">
         <Badge tone={normalizeStatusTone(paymentStatus)}>Pago {paymentStatus ?? 'pending'}</Badge>
         <Badge tone={normalizeStatusTone(orderStatus)}>Orden {orderStatus ?? 'pending_payment'}</Badge>
         <Badge tone={reservedUntil ? 'accent' : 'default'}>
           {reservedUntil ? `Reservada hasta ${new Date(reservedUntil).toLocaleTimeString()}` : 'La reserva abre al crear la sesion'}
         </Badge>
-      </div>
+      </ActionRow>
       <ul className="checkout-trust-list">
         <li>La sesion segura se crea de forma explicita antes del pago.</li>
         <li>Pago y orden permanecen visibles como texto, no solo como color.</li>

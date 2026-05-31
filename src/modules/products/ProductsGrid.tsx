@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import type { ProductSort } from '@xeorum/contracts';
-import { ActiveFilterChips, FilterBar, SectionHeader, Select } from '../design-system';
+import { ActiveFilterChips, EmptyState, ErrorState, FilterBar, Kicker, LoadingState, Select, SupportingText, Toolbar, ToolbarGroup } from '../design-system';
 import { ProductCard } from './ProductCard';
 import { useProducts } from './products.queries';
 
@@ -50,8 +50,8 @@ export function ProductsGrid({ archetype, drop }: Readonly<{ archetype?: string;
     ...(sort ? { sort } : {}),
   });
 
-  if (query.isLoading) return <p className="section-state">Cargando productos.</p>;
-  if (query.isError || !query.data) return <p className="section-state">Productos no disponibles.</p>;
+  if (query.isLoading) return <LoadingState title="Cargando productos" description="Preparando piezas, disponibilidad y refinamiento." />;
+  if (query.isError || !query.data) return <ErrorState title="Productos no disponibles" description="La seleccion publica no esta disponible ahora." />;
 
   const activeFilters = [
     archetype ? `Fuerza ${archetype.toUpperCase()}` : null,
@@ -72,28 +72,26 @@ export function ProductsGrid({ archetype, drop }: Readonly<{ archetype?: string;
   return (
     <section className="section-stack">
       <div className="product-grid-intro">
-        <SectionHeader
-          kicker="Shop All"
-          title="Mercado abierto. Curaduria intacta."
-          description="Producto primero, identidad despues. Cada pieza entra con materialidad, precio, disponibilidad y una lectura sobria de fuerza."
-        />
-        <p className="product-grid-editorial-copy">Usa los filtros para recortar la seleccion, no para descifrar la pagina.</p>
-        <p className="product-grid-count">{query.data.length} piezas en circulacion.</p>
+        <Kicker>Selección abierta</Kicker>
+        <SupportingText className="product-grid-editorial-copy">Usa los filtros para recortar la seleccion, no para descifrar la pagina.</SupportingText>
+        <SupportingText className="product-grid-count">{query.data.length} piezas en circulacion.</SupportingText>
       </div>
       <FilterBar
         title="Refina por linea, talla, disponibilidad o criterio de lectura."
         description="La seleccion sigue abierta. Tu refinamiento solo la vuelve mas precisa."
         controls={
-          <div className="product-filters">
-            <Select label="Linea" aria-label="Filtrar por linea" value={category} onChange={(event) => setCategory(event.target.value)} options={categoryOptions} />
-            <Select label="Talla" aria-label="Filtrar por talla" value={size} onChange={(event) => setSize(event.target.value)} options={sizeOptions} />
-            <Select label="Disponibilidad" aria-label="Filtrar por disponibilidad" value={availability} onChange={(event) => setAvailability(event.target.value as 'in_stock' | 'out_of_stock' | '')} options={availabilityOptions} />
-            <Select label="Leer por" aria-label="Ordenar productos" value={sort} onChange={(event) => setSort(event.target.value as ProductSort)} options={sortOptions} />
-          </div>
+          <Toolbar className="product-filters">
+            <ToolbarGroup>
+              <Select label="Linea" aria-label="Filtrar por linea" size="sm" value={category} onChange={(event) => setCategory(event.target.value)} options={categoryOptions} />
+              <Select label="Talla" aria-label="Filtrar por talla" size="sm" value={size} onChange={(event) => setSize(event.target.value)} options={sizeOptions} />
+              <Select label="Disponibilidad" aria-label="Filtrar por disponibilidad" size="sm" value={availability} onChange={(event) => setAvailability(event.target.value as 'in_stock' | 'out_of_stock' | '')} options={availabilityOptions} />
+              <Select label="Leer por" aria-label="Ordenar productos" size="sm" value={sort} onChange={(event) => setSort(event.target.value as ProductSort)} options={sortOptions} />
+            </ToolbarGroup>
+          </Toolbar>
         }
         summary={<ActiveFilterChips items={activeFilters} onClear={resetFilters} />}
       />
-      {query.data.length === 0 ? <p className="section-state">No hay piezas disponibles bajo ese criterio.</p> : (
+      {query.data.length === 0 ? <EmptyState>No hay piezas disponibles bajo ese criterio.</EmptyState> : (
         <section className="product-grid">
           {query.data.map((product) => (
             <ProductCard key={product.slug} product={product} />

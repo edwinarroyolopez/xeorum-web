@@ -5,44 +5,44 @@ export const themeContextOverrides: Record<ThemeResolverContextName, ThemePartia
   home: {
     overlay: {
       archetype: {
-        backgroundWash: 'radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.03), transparent 42%)',
+        backgroundWash: 'radial-gradient(circle at 20% 10%, rgba(216, 183, 107, 0.13), transparent 30%), radial-gradient(circle at 82% 6%, rgba(36, 89, 112, 0.14), transparent 28%)',
       },
     },
   },
   pantheon: {
     elevation: {
-      overlay: '0 28px 80px rgba(0, 0, 0, 0.46)',
+      overlay: '0 35px 120px rgba(0, 0, 0, 0.65)',
     },
   },
   'identity-result': {
     semantic: {
-      surfaceGlass: 'rgba(20, 22, 26, 0.78)',
+      surfaceGlass: 'rgba(7, 7, 7, 0.82)',
     },
   },
   profile: {
     semantic: {
-      backgroundElevated: '#111622',
+      backgroundElevated: '#0b0b0d',
     },
   },
   'product-detail': {
     semantic: {
-      accentMuted: 'rgba(216, 180, 106, 0.1)',
+      accentMuted: 'rgba(216, 183, 107, 0.1)',
     },
   },
   recommendations: {
     semantic: {
-      accentMuted: 'rgba(216, 180, 106, 0.14)',
+      accentMuted: 'rgba(216, 183, 107, 0.14)',
     },
   },
   'checkout-payment-critical': {
     semantic: {
-      surfaceGlass: 'rgba(20, 22, 26, 0.9)',
-      accentMuted: 'rgba(216, 180, 106, 0.08)',
+      surfaceGlass: 'rgba(7, 7, 7, 0.9)',
+      accentMuted: 'rgba(216, 183, 107, 0.08)',
     },
   },
   legal: {
     semantic: {
-      surfaceGlass: 'rgba(20, 22, 26, 0.92)',
+      surfaceGlass: 'rgba(7, 7, 7, 0.92)',
     },
   },
 };

@@ -27,6 +27,7 @@ describe('ProductCard', () => {
     expect(html).toContain('Hades Heavy Tee');
     expect(html).toContain('92');
     expect(html).toContain('120');
+    expect(html).toContain('Disponible');
     expect(html).toContain('cdn.example.com/cover-image.jpg');
   });
 

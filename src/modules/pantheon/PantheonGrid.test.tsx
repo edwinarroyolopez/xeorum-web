@@ -18,7 +18,8 @@ describe('PantheonGrid', () => {
 
     const html = renderToStaticMarkup(<PantheonGrid />);
 
-    expect(html).toContain('Cargando portales.');
+    expect(html).toContain('Cargando portales');
+    expect(html).toContain('Preparando las fuerzas publicadas del pantheon.');
   });
 
   it('renders error state', () => {
@@ -26,7 +27,8 @@ describe('PantheonGrid', () => {
 
     const html = renderToStaticMarkup(<PantheonGrid />);
 
-    expect(html).toContain('Los portales no estan disponibles.');
+    expect(html).toContain('Portales no disponibles');
+    expect(html).toContain('La capa editorial del pantheon no esta disponible ahora.');
   });
 
   it('renders empty state when no public archetypes exist', () => {

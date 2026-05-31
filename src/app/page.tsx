@@ -1,30 +1,30 @@
 import { BrandMark } from '../components/ui/BrandMark';
 import { CuratedProductsRail } from '../modules/products/CuratedProductsRail';
 import { PantheonGrid } from '../modules/pantheon/PantheonGrid';
-import { EditorialHero, LinkButton, SectionHeader } from '../modules/design-system';
+import { Card, EditorialHero, Kicker, LinkButton, SectionHeader, SignalRow } from '../modules/design-system';
 
 const entryPoints = [
   {
-    title: 'Ver productos',
-    body: 'Entrada directa al mercado curado: piezas premium, disponibilidad real y compra sin prerrequisitos.',
+    title: 'Entrar al mercado',
+    body: 'Piezas premium, disponibilidad real y compra limpia antes de cualquier mito.',
     href: '/products',
-    cta: 'Entrar al mercado',
+    cta: 'Ver piezas',
   },
   {
-    title: 'Explorar portales',
-    body: 'Recorre fuerzas, simbolos y atmosferas sin perder salida comercial. Cada portal conduce a piezas reales.',
+    title: 'Abrir portales',
+    body: 'Fuerzas, simbolos y atmosfera alineados a producto real, no a decoracion vacia.',
     href: '/pantheon',
-    cta: 'Abrir portales',
+    cta: 'Explorar fuerzas',
   },
   {
-    title: 'Descubrir mi fuerza',
-    body: 'Un test breve para traducir deseo, presencia y simbolo en una lectura util para elegir mejor.',
+    title: 'Reclamar mi fuerza',
+    body: 'Un test breve para traducir deseo, presencia y simbolo en criterio de seleccion.',
     href: '/identity',
-    cta: 'Hacer el test',
+    cta: 'Iniciar lectura',
   },
 ] as const;
 
-const homeSignals = ['Streetwear premium', 'Compra directa sin test', 'Identidad cuando aporta criterio'] as const;
+const homeSignals = ['Streetwear premium', 'Compra directa sin friccion', 'Identidad cuando aporta criterio'] as const;
 
 export default function HomePage() {
   return (
@@ -33,30 +33,28 @@ export default function HomePage() {
         <div className="xeorum-home-frame">
           <BrandMark />
           <EditorialHero
-            kicker="XEORUM"
-            title="Piezas premium con identidad profunda."
-            description="XEORUM une producto deseable, simbolo y lectura arquetipica sin bloquear la compra. Puedes entrar por mercado abierto, por portales o por tu propia fuerza."
-            align="center"
+             kicker="XEORUM"
+             title="No compras ropa. Reclamas presencia."
+             description="XEORUM une producto visible, deseo inmediato y lectura arquetipica sin bloquear la compra. Puedes entrar por mercado abierto, por portales o por tu propia fuerza."
+             align="center"
             actions={
               <>
-                <LinkButton href="/products" variant="primary">Ver productos</LinkButton>
-                <LinkButton href="/identity" variant="ghost">Descubrir mi fuerza</LinkButton>
-              </>
-            }
-            supporting={
-              <div className="hero-signal-row" aria-label="Senales clave de la experiencia XEORUM">
-                {homeSignals.map((signal) => <span key={signal}>{signal}</span>)}
-              </div>
-            }
-          />
+                 <LinkButton href="/products" variant="primary">Ver coleccion</LinkButton>
+                 <LinkButton href="/identity" variant="ghost">Iniciar lectura</LinkButton>
+               </>
+             }
+              supporting={
+              <SignalRow ariaLabel="Senales clave de la experiencia XEORUM" items={[...homeSignals]} />
+             }
+           />
           <section className="xeorum-flow-grid" aria-label="Entradas principales de XEORUM">
             {entryPoints.map((item) => (
-              <article key={item.title} className="xeorum-flow-card xeorum-entry-card">
-                <p className="xeorum-flow-step">Entrada</p>
+              <Card key={item.title} className="xeorum-entry-card" variant="soft">
+                 <Kicker className="xeorum-flow-step">Portal de entrada</Kicker>
                 <h3>{item.title}</h3>
                 <p>{item.body}</p>
                 <LinkButton href={item.href} variant={item.href === '/products' ? 'primary' : 'ghost'}>{item.cta}</LinkButton>
-              </article>
+              </Card>
             ))}
           </section>
         </div>
@@ -66,7 +64,7 @@ export default function HomePage() {
         <SectionHeader
           kicker="Entrada comercial"
           title="Producto visible desde el primer recorrido."
-          description="El deseo no necesita una explicacion larga. Empieza viendo piezas reales y profundiza en identidad solo cuando te aporte contexto."
+          description="El deseo no necesita una explicacion larga. Primero ves piezas reales. La identidad entra solo cuando mejora la decision."
         />
         <CuratedProductsRail
           kicker="Seleccion abierta"
@@ -79,7 +77,7 @@ export default function HomePage() {
         <SectionHeader
           kicker="Profundidad editorial"
           title="El panteon organiza fuerzas, no decoracion."
-          description="Cada portal traduce una energia en simbolo, tono y piezas curadas sin romper la arquitectura base de la experiencia."
+          description="Cada portal traduce una energia en simbolo, tono y piezas curadas sin romper la claridad comercial de la experiencia."
         />
         <PantheonGrid />
       </section>

@@ -10,4 +10,5 @@ export const xeorumSpacingTokens = {
   10: '2.5rem',
   12: '3rem',
   16: '4rem',
+  20: '5rem',
 } as const;

@@ -3,11 +3,12 @@ import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
 type CardProps = {
   children: ReactNode;
+  variant?: 'default' | 'soft' | 'emphasis';
 } & ComponentPropsWithoutRef<'article'>;
 
-export function Card({ children, className, ...props }: CardProps) {
+export function Card({ children, variant = 'default', className, ...props }: CardProps) {
   return (
-    <article {...props} className={className ? `ds-card ${className}` : 'ds-card'}>
+    <article {...props} className={className ? `ds-card ds-card-${variant} ${className}` : `ds-card ds-card-${variant}`}>
       {children}
     </article>
   );

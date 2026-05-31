@@ -70,14 +70,18 @@ export type SemanticTokens = {
   surface: string;
   surfaceMuted: string;
   surfaceGlass: string;
+  surfaceEditorial: string;
+  surfaceEditorialSoft: string;
   textPrimary: string;
   textSecondary: string;
   textMuted: string;
   borderSubtle: string;
   borderStrong: string;
+  borderEditorial: string;
   accent: string;
   accentSoft: string;
   accentMuted: string;
+  accentGoldSoft: string;
   focusRing: string;
   danger: string;
   warning: string;
@@ -87,9 +91,17 @@ export type SemanticTokens = {
 export type TypographyTokens = {
   fontFamily: string;
   displayFamily: string;
+  readingFamily: string;
   letterSpacing: string;
   headingWeight: number;
   bodyWeight: number;
+  kickerSize: string;
+  titleXl: string;
+  titleLg: string;
+  bodyMd: string;
+  bodySm: string;
+  trackingKicker: string;
+  trackingDisplay: string;
 };
 
 export type SpacingTokens = Record<string, string>;

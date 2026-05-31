@@ -6,13 +6,15 @@ import { ThemeCssVariables } from '../theme/providers/ThemeCssVariables';
 import { resolvePageTheme } from '../theme';
 import {
   Badge,
-  Button,
   Card,
   EmptyState,
   ErrorState,
   IdentityResultPanel,
   SectionHeader,
   Skeleton,
+  ToggleSwitch,
+  Toolbar,
+  ToolbarGroup,
 } from '../design-system';
 
 function buildProfileTheme(dominantArchetype: string | null | undefined) {
@@ -44,21 +46,24 @@ export function ProfileView() {
         <div className="profile-atmosphere" aria-hidden="true" />
         <div className="section-stack profile-content">
           <SectionHeader kicker="Profile" title="Customer identity and account controls." />
-          <div className="profile-toolbar">
-            <Badge tone={dominantArchetype ? 'accent' : 'default'}>
-              {dominantArchetype ? `Dominant archetype ${dominantArchetype.toUpperCase()}` : 'Base XEORUM dark theme'}
-            </Badge>
-            {zeusPilotActive ? <Badge tone="accent">Zeus pilot active</Badge> : null}
-            <Badge tone="default">Context profile</Badge>
-            <Button
-              type="button"
-              variant="ghost"
-              aria-pressed={!ambientMotionEnabled}
-              onClick={() => setAmbientMotionEnabled((value) => !value)}
-            >
-              {ambientMotionEnabled ? 'Ambient motion on' : 'Ambient motion off'}
-            </Button>
-          </div>
+          <Toolbar className="profile-toolbar">
+            <ToolbarGroup>
+              <Badge tone={dominantArchetype ? 'accent' : 'default'}>
+                {dominantArchetype ? `Dominant archetype ${dominantArchetype.toUpperCase()}` : 'Base XEORUM dark theme'}
+              </Badge>
+              {zeusPilotActive ? <Badge tone="accent">Zeus pilot active</Badge> : null}
+              <Badge tone="default">Context profile</Badge>
+            </ToolbarGroup>
+            <ToolbarGroup>
+              <ToggleSwitch
+                active={ambientMotionEnabled}
+                activeLabel="Ambient motion on"
+                inactiveLabel="Ambient motion off"
+                aria-label="Toggle ambient motion"
+                onClick={() => setAmbientMotionEnabled((value) => !value)}
+              />
+            </ToolbarGroup>
+          </Toolbar>
           {profileQuery.isLoading ? (
             <div className="profile-grid">
               <Card className="profile-panel">
@@ -93,7 +98,10 @@ export function ProfileView() {
               ) : (
                 <Card className="profile-panel">
                   <h2>Identity not resolved yet</h2>
-                  <EmptyState>Run the identity test to unlock a subtle archetype atmosphere in this profile.</EmptyState>
+                  <EmptyState
+                  >
+                    Run the identity test to unlock a subtle archetype atmosphere in this profile.
+                  </EmptyState>
                 </Card>
               )}
               <Card className="profile-panel">

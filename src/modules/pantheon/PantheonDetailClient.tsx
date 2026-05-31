@@ -10,11 +10,11 @@ export function PantheonDetailClient({ slug, initialData }: Readonly<{ slug: str
   const query = usePantheonArchetypeLanding(slug, initialData);
 
   if (query.isLoading) {
-    return <LoadingState>Loading archetype landing.</LoadingState>;
+    return <LoadingState title="Preparando el portal" description="Cargando narrativa, producto curado y sistema visual." />;
   }
 
   if (query.isError || !query.data) {
-    return <ErrorState>Archetype landing unavailable.</ErrorState>;
+    return <ErrorState title="Portal no disponible" description="El portal no esta disponible ahora." />;
   }
 
   return <ArchetypeLanding archetype={query.data} />;

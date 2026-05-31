@@ -10,7 +10,7 @@ const FOCUSABLE_SELECTOR = [
 ].join(', ');
 
 export function useDialogAccessibility(open: boolean, onClose: () => void) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!open) {

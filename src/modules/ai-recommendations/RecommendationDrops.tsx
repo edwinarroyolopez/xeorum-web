@@ -1,5 +1,6 @@
+import React from 'react';
 import type { DropContract } from '@xeorum/contracts';
-import { DropCard, SectionHeader } from '../design-system';
+import { DropCard, EditorialCollectionIntro, SectionHeader } from '../design-system';
 
 export function RecommendationDrops({
   drops,
@@ -13,7 +14,7 @@ export function RecommendationDrops({
     <section className="section-stack">
       <div className="product-rail-header">
         <SectionHeader kicker={kicker} title={title} />
-        {reason ? <p className="product-rail-reason">{reason}</p> : null}
+        {reason ? <EditorialCollectionIntro eyebrow="Continuidad" title="Drops que prolongan la misma lectura de presencia." description={reason} /> : null}
       </div>
       <div className="drop-grid">
         {drops.map((drop) => <DropCard key={drop.slug} drop={drop} />)}

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ProductContract } from '@xeorum/contracts';
-import { SectionHeader } from '../design-system';
+import { EditorialCollectionIntro, SectionHeader } from '../design-system';
 import { ProductCard } from './ProductCard';
 
 export function RelatedProductsRail({
@@ -20,7 +20,7 @@ export function RelatedProductsRail({
     <section className="section-stack">
       <div className="product-rail-header">
         <SectionHeader kicker={kicker} title={title} />
-        {reason ? <p className="product-rail-reason">{reason}</p> : null}
+        {reason ? <EditorialCollectionIntro eyebrow="Lectura editorial" title="Por que esta seleccion sigue el mismo eje." description={reason} /> : null}
       </div>
       <div className="product-grid">
         {products.map((product) => (

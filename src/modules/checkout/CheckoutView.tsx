@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import Link from 'next/link';
 import { useCart } from '../cart/cart.queries';
 import { useCreateCheckoutSession, useOrder, usePaymentStatus } from './checkout.queries';
-import { Button, Card, CheckoutTrustPanel, EmptyState, ErrorState, LoadingState } from '../design-system';
+import { Button, Card, CheckoutTrustPanel, EmptyState, ErrorState, Kicker, LoadingState } from '../design-system';
 import { ThemeCssVariables } from '../theme/providers/ThemeCssVariables';
 import { resolvePageTheme } from '../theme';
 
@@ -25,7 +25,7 @@ export function CheckoutView() {
     <ThemeCssVariables theme={theme}>
       <section className="checkout-shell xeorum-checkout-shell">
         <Card className="cart-summary xeorum-checkout-card">
-          <p className="portal-card-kicker">Checkout</p>
+          <Kicker>Checkout</Kicker>
           <h1>Paga con total claridad.</h1>
           <p>Subtotal {cart.data.subtotal} {cart.data.currency}</p>
           <div className="checkout-line-items" aria-label="Resumen de piezas en checkout">

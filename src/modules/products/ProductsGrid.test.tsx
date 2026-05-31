@@ -35,7 +35,7 @@ describe('ProductsGrid', () => {
 
     const html = renderToStaticMarkup(<ProductsGrid />);
 
-    expect(html).toContain('Mercado abierto. Curaduria intacta.');
+    expect(html).toContain('Selección abierta');
     expect(html).toContain('Curaduria XEORUM');
     expect(html).toContain('Hades Heavy Tee');
     expect(html).toContain('92');

@@ -1,5 +1,6 @@
+import React from 'react';
 import type { ProductContract } from '@xeorum/contracts';
-import { ProductCard, SectionHeader } from '../design-system';
+import { EditorialCollectionIntro, ProductCard, SectionHeader } from '../design-system';
 
 export function RecommendationProducts({
   kicker = 'Curaduria editorial',
@@ -13,7 +14,7 @@ export function RecommendationProducts({
     <section className="section-stack">
       <div className="product-rail-header">
         <SectionHeader kicker={kicker} title={title} />
-        {reason ? <p className="product-rail-reason">{reason}</p> : null}
+        {reason ? <EditorialCollectionIntro eyebrow="Criterio XEORUM" title="La seleccion sigue continuidad, no acumulacion." description={reason} /> : null}
       </div>
       <div className="product-grid">
         {products.map((product) => <ProductCard key={product.slug} product={product} />)}

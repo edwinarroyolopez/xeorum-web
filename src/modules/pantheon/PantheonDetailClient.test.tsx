@@ -18,7 +18,8 @@ describe('PantheonDetailClient', () => {
 
     const html = renderToStaticMarkup(<PantheonDetailClient slug="zeus" />);
 
-    expect(html).toContain('Loading archetype landing.');
+    expect(html).toContain('Preparando el portal');
+    expect(html).toContain('Cargando narrativa, producto curado y sistema visual.');
   });
 
   it('renders error state', () => {
@@ -26,7 +27,7 @@ describe('PantheonDetailClient', () => {
 
     const html = renderToStaticMarkup(<PantheonDetailClient slug="zeus" />);
 
-    expect(html).toContain('Archetype landing unavailable.');
+    expect(html).toContain('El portal no esta disponible ahora.');
   });
 
   it('renders the mature archetype landing in the documented order', () => {
