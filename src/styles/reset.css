@@ -270,6 +270,45 @@ select {
   gap: 0.5rem;
 }
 
+.page-header,
+.page-header-copy {
+  display: grid;
+  gap: 1rem;
+}
+
+.page-header {
+  width: 100%;
+  justify-items: center;
+  text-align: center;
+}
+
+.page-header-copy {
+  width: min(920px, 100%);
+  justify-items: center;
+  text-align: center;
+}
+
+.page-header-copy h1 {
+  margin: 0;
+  font-family: var(--xe-typography-display-family);
+  font-size: clamp(2.2rem, 4.2vw, 3.6rem);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: 0.03em;
+  color: var(--xe-semantic-text-primary);
+}
+
+.page-header-copy p {
+  width: min(760px, 100%);
+  margin: 0;
+  color: var(--xe-semantic-text-secondary);
+  line-height: 1.8;
+}
+
+.page-header-actions {
+  width: 100%;
+}
+
 .section-heading-center {
   justify-items: center;
   text-align: center;
@@ -882,7 +921,8 @@ select {
 
 .filter-bar {
   position: relative;
-  padding: 1.25rem;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 1.15rem 1.2rem;
   border: 1px solid color-mix(in srgb, var(--xe-semantic-accent) 12%, var(--xe-semantic-border-subtle));
   background: linear-gradient(180deg, color-mix(in srgb, var(--xe-semantic-surface) 86%, transparent), color-mix(in srgb, var(--xe-semantic-background) 92%, transparent));
   border-radius: var(--xe-radius-lg);
@@ -913,6 +953,35 @@ select {
 
 .filter-bar-ornament {
   margin: 0.15rem 0;
+}
+
+.product-filters-summary-shell {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.product-filters-advanced {
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .filter-bar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 1.25rem;
+  }
+
+  .filter-bar-copy {
+    max-width: 28rem;
+  }
+
+  .filter-bar-controls {
+    justify-items: end;
+  }
+
+  .filter-bar-summary {
+    grid-column: 1 / -1;
+  }
 }
 
 .product-price-main-row {
@@ -3618,24 +3687,11 @@ select {
   padding: 0.62rem 0.85rem;
 }
 
-.product-card .ds-product-visual-meta span {
-  font-size: 0.6rem;
-  color: rgba(255, 255, 255, 0.44);
-}
-
-.product-card .ds-product-visual-meta strong {
-  color: color-mix(in srgb, var(--xe-semantic-accent) 68%, white 32%);
-}
-
 .product-card .product-card-image-media,
 .product-card .product-card-image-hover {
   transform-origin: center center;
   transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 420ms ease;
   will-change: transform, opacity;
-}
-
-.product-card:hover {
-  animation: product-card-heartbeat 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .product-card:hover .product-card-image-media,

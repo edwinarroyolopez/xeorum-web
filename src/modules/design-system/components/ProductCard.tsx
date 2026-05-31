@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ActionRow } from './ActionRow';
 import { EditorialCard } from './EditorialCard';
 import { LinkButton } from './Button';
+import styles from './ProductCard.module.css';
 import { Eyebrow } from '../primitives/Eyebrow';
 import { Text } from '../primitives/Text';
 import { ProductVisualFrame } from '../patterns/ProductVisualFrame';
@@ -34,41 +35,41 @@ export function ProductCard({ product }: Readonly<{ product: ProductContract }>)
   const stockLabel = defaultVariant ? `${Math.max(defaultVariant.stockAvailable, 0)} piezas` : 'Sin stock';
 
   return (
-    <EditorialCard className="product-card">
+    <EditorialCard className={styles.card}>
       <ProductVisualFrame
-        className="product-card-visual-frame"
+        className={styles.visualFrame}
         badge={primaryBadge}
-        meta={<div className="product-card-visual-meta-row">{product.productDetails?.color ? <span>{product.productDetails.color}</span> : <span>Seleccion XEORUM</span>}<strong>{formatProductPrice(price.basePrice, price.currency)}</strong><span hidden>{formatProductPrice(price.currentPrice, price.currency)}</span></div>}
+        meta={<div className={styles.visualMetaRow}>{product.productDetails?.color ? <span>{product.productDetails.color}</span> : <span>Seleccion XEORUM</span>}<strong>{formatProductPrice(price.basePrice, price.currency)}</strong><span hidden>{formatProductPrice(price.currentPrice, price.currency)}</span></div>}
         >
         {coverImage ? (
-          <img src={coverImage.url} alt={coverImage.alt || ''} className="product-card-image-media" />
+          <img src={coverImage.url} alt={coverImage.alt || ''} className={styles.imageMedia} />
         ) : (
-          <div className="product-card-image-fallback">
+          <div className={styles.visualFallback}>
             <Text tone="muted">Media pendiente de publicacion</Text>
           </div>
         )}
-        {hoverImage && hoverImage.url !== coverImage?.url ? <img src={hoverImage.url} alt={hoverImage.alt || ''} className="product-card-image-hover" /> : null}
+        {hoverImage && hoverImage.url !== coverImage?.url ? <img src={hoverImage.url} alt={hoverImage.alt || ''} className={styles.imageHover} /> : null}
       </ProductVisualFrame>
-      <div className="product-card-body">
-        <div className="product-card-header">
+      <div className={styles.body}>
+        <div className={styles.header}>
           <Eyebrow tone="muted">{archetypeLabel}</Eyebrow>
-          <div className="product-card-title-row">
-            <h3>{product.name}</h3>
+          <div className={styles.titleRow}>
+            <h3 className={styles.title}>{product.name}</h3>
           </div>
-          {primarySignals ? <p className="product-card-material-note">{primarySignals}</p> : null}
-          {description ? <p>{description}</p> : null}
+          {primarySignals ? <p className={styles.materialNote}>{primarySignals}</p> : null}
+          {description ? <p className={styles.description}>{description}</p> : null}
         </div>
       </div>
-      <div className="product-bottom product-card-footer">
-        <div className="product-card-footer-copy">
-          <div className="product-card-stats-row">
+      <div className={styles.footer}>
+        <div className={styles.footerCopy}>
+          <div className={styles.statsRow}>
             <span>{stockLabel}</span>
             {affinity ? <span>{affinity}% afinidad</span> : null}
           </div>
         </div>
-        <ActionRow className="product-card-actions" justify="end">
-          {product.archetypes.primary?.slug ? <Link href={`/identity/${product.archetypes.primary.slug}`} className="product-inline-link">Portal</Link> : null}
-          <LinkButton href={`/products/${product.slug}`}>Abrir pieza</LinkButton>
+        <ActionRow className={styles.actions} justify="end">
+          {product.archetypes.primary?.slug ? <Link href={`/identity/${product.archetypes.primary.slug}`} className={styles.inlineLink}>Portal</Link> : null}
+          <LinkButton href={`/products/${product.slug}`} size="md" className={styles.cta}>Abrir pieza</LinkButton>
         </ActionRow>
       </div>
     </EditorialCard>

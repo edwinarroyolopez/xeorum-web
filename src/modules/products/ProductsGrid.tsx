@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import type { ProductSort } from '@xeorum/contracts';
-import { ActiveFilterChips, EmptyState, ErrorState, FilterBar, Kicker, LoadingState, Select, SupportingText, Toolbar, ToolbarGroup } from '../design-system';
+import { ActiveFilterChips, EmptyState, ErrorState, FilterBar, LoadingState, Select, SegmentedGroup, Toolbar, ToolbarGroup } from '../design-system';
 import { ProductCard } from './ProductCard';
 import { useProducts } from './products.queries';
 
@@ -35,6 +35,13 @@ const sortOptions = [
   { label: 'Mas elegidas', value: 'best_selling' },
   { label: 'Afinidad de identidad', value: 'identity_match' },
 ] satisfies Array<{ label: string; value: ProductSort }>;
+
+const categoryTabs = [
+  { label: 'Todo', value: 'all' },
+  { label: 'Tees', value: 'tees' },
+  { label: 'Hoodies', value: 'hoodies' },
+  { label: 'Outerwear', value: 'outerwear' },
+] satisfies Array<{ label: string; value: string }>;
 
 export function ProductsGrid({ archetype, drop }: Readonly<{ archetype?: string; drop?: string }>) {
   const [category, setCategory] = useState('');
@@ -71,25 +78,32 @@ export function ProductsGrid({ archetype, drop }: Readonly<{ archetype?: string;
 
   return (
     <section className="section-stack">
-      <div className="product-grid-intro">
-        <Kicker>Selección abierta</Kicker>
-        <SupportingText className="product-grid-editorial-copy">Usa los filtros para recortar la seleccion, no para descifrar la pagina.</SupportingText>
-        <SupportingText className="product-grid-count">{query.data.length} piezas en circulacion.</SupportingText>
-      </div>
       <FilterBar
-        title="Refina por linea, talla, disponibilidad o criterio de lectura."
-        description="La seleccion sigue abierta. Tu refinamiento solo la vuelve mas precisa."
+        kicker="Selección abierta"
+        title="Mercado abierto"
+        description="Usa los filtros para recortar la selección, no para descifrar la página."
         controls={
-          <Toolbar className="product-filters">
-            <ToolbarGroup>
-              <Select label="Linea" aria-label="Filtrar por linea" size="sm" value={category} onChange={(event) => setCategory(event.target.value)} options={categoryOptions} />
-              <Select label="Talla" aria-label="Filtrar por talla" size="sm" value={size} onChange={(event) => setSize(event.target.value)} options={sizeOptions} />
-              <Select label="Disponibilidad" aria-label="Filtrar por disponibilidad" size="sm" value={availability} onChange={(event) => setAvailability(event.target.value as 'in_stock' | 'out_of_stock' | '')} options={availabilityOptions} />
-              <Select label="Leer por" aria-label="Ordenar productos" size="sm" value={sort} onChange={(event) => setSort(event.target.value as ProductSort)} options={sortOptions} />
-            </ToolbarGroup>
-          </Toolbar>
+          <SegmentedGroup
+            label="Filtrar por linea"
+            size="sm"
+            value={category || 'all'}
+            options={categoryTabs}
+            onChange={(value) => setCategory(value === 'all' ? '' : value)}
+          />
         }
-        summary={<ActiveFilterChips items={activeFilters} onClear={resetFilters} />}
+        summary={
+          <div className="product-filters-summary-shell">
+            <Toolbar className="product-filters product-filters-advanced">
+              <ToolbarGroup>
+                <Select label="Linea" aria-label="Filtrar por linea" size="sm" value={category} onChange={(event) => setCategory(event.target.value)} options={categoryOptions} />
+                <Select label="Talla" aria-label="Filtrar por talla" size="sm" value={size} onChange={(event) => setSize(event.target.value)} options={sizeOptions} />
+                <Select label="Disponibilidad" aria-label="Filtrar por disponibilidad" size="sm" value={availability} onChange={(event) => setAvailability(event.target.value as 'in_stock' | 'out_of_stock' | '')} options={availabilityOptions} />
+                <Select label="Leer por" aria-label="Ordenar productos" size="sm" value={sort} onChange={(event) => setSort(event.target.value as ProductSort)} options={sortOptions} />
+              </ToolbarGroup>
+            </Toolbar>
+            <ActiveFilterChips items={activeFilters} onClear={resetFilters} />
+          </div>
+        }
       />
       {query.data.length === 0 ? <EmptyState>No hay piezas disponibles bajo ese criterio.</EmptyState> : (
         <section className="product-grid">

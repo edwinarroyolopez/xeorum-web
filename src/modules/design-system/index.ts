@@ -47,5 +47,6 @@ export * from './patterns/ProductSummaryPanel';
 export * from './patterns/ProductTitleBlock';
 export * from './patterns/ProductVariantPanel';
 export * from './patterns/ProductVisualFrame';
+export * from './patterns/PageHeader';
 export * from './patterns/SectionHeader';
 export * from './patterns/SignalRow';
