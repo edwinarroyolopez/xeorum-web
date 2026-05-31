@@ -15,7 +15,7 @@ vi.mock('../ai-recommendations/recommendations.queries', () => ({
 }));
 
 vi.mock('../cart/AddToCartButton', () => ({
-  AddToCartButton: ({ availableSizes }: { availableSizes: string[] }) => <div>AddToCart:{availableSizes.join(',')}</div>,
+  AddToCartButton: ({ size, disabled }: { size?: string; disabled?: boolean }) => <div>AddToCart:{size ?? 'none'}:{disabled ? 'disabled' : 'active'}</div>,
 }));
 
 vi.mock('../ai-recommendations/RecommendationProducts', () => ({ RecommendationProducts: () => null }));
@@ -28,7 +28,7 @@ const product = {
   description: 'Description first',
   narrative: 'Narrative later',
   pricing: { price: 120, salePrice: 92, currency: 'USD' },
-  media: { coverImage: { url: 'cover-image', alt: 'Front', type: 'image' as const, role: 'cover' as const }, gallery: [{ url: 'cover-image', alt: 'Front', type: 'image' as const, role: 'cover' as const }] },
+  media: { coverImage: { url: 'https://cdn.example.com/cover-image.jpg', alt: 'Front', type: 'image' as const, role: 'cover' as const }, gallery: [{ url: 'https://cdn.example.com/cover-image.jpg', alt: 'Front', type: 'image' as const, role: 'cover' as const }, { url: 'https://cdn.example.com/detail-image.jpg', alt: 'Detail', type: 'image' as const, role: 'detail' as const }] },
   taxonomy: { collectionSlugs: [], marketTags: [], dropSlug: 'obsidian-throne' },
   archetypes: { primary: { slug: 'hades', score: 100 }, affinities: [{ slug: 'hades', score: 100, role: 'primary' as const }] },
   productDetails: { material: 'Cotton', fit: 'Oversized', gsm: 280 },
@@ -48,8 +48,11 @@ describe('ProductDetail', () => {
     useRecommendationsForProduct.mockReturnValue({ data: null });
 
     const html = renderToStaticMarkup(<ProductDetail slug="hades-heavy-tee" />);
-    expect(html.indexOf('92 USD')).toBeLessThan(html.indexOf('Narrative later'));
-    expect(html).toContain('AddToCart:M');
+    expect(html.indexOf('92')).toBeLessThan(html.indexOf('Narrative later'));
+    expect(html).toContain('AddToCart:M:active');
+    expect(html).toContain('Talla y disponibilidad');
+    expect(html).toContain('disabled=""');
+    expect(html).toContain('Agotado');
     expect(html).not.toContain('ratingAverage');
   });
 });

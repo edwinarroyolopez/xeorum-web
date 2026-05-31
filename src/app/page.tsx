@@ -1,118 +1,102 @@
 import { BrandMark } from '../components/ui/BrandMark';
+import { CuratedProductsRail } from '../modules/products/CuratedProductsRail';
 import { PantheonGrid } from '../modules/pantheon/PantheonGrid';
-import { LinkButton, SectionHeader } from '../modules/design-system';
+import { EditorialHero, LinkButton, SectionHeader } from '../modules/design-system';
 
-const customerFlow = [
+const entryPoints = [
   {
-    step: '01',
-    title: 'Descubre',
-    body: 'El cliente entra por una experiencia inmersiva, sobria y simbolica.',
+    title: 'Ver productos',
+    body: 'Entrada directa al mercado curado: piezas premium, disponibilidad real y compra sin prerrequisitos.',
+    href: '/products',
+    cta: 'Entrar al mercado',
   },
   {
-    step: '02',
-    title: 'Se conoce',
-    body: 'Responde el test de identidad y activa una lectura guiada por IA.',
+    title: 'Explorar portales',
+    body: 'Recorre fuerzas, simbolos y atmosferas sin perder salida comercial. Cada portal conduce a piezas reales.',
+    href: '/pantheon',
+    cta: 'Abrir portales',
   },
   {
-    step: '03',
-    title: 'Descubre sus dioses',
-    body: 'Recibe su composicion arquetipica, afinidades y energia dominante.',
-  },
-  {
-    step: '04',
-    title: 'Explora su territorio',
-    body: 'Entra al universo visual de cada dios y reconoce su estetica.',
-  },
-  {
-    step: '05',
-    title: 'Elige su expresion',
-    body: 'Ve piezas con significado y selecciona simbolos alineados a su perfil.',
-  },
-  {
-    step: '06',
-    title: 'Vive el ritual',
-    body: 'Compra con una experiencia clara, elegante y ceremonial.',
-  },
-  {
-    step: '07',
-    title: 'Profundiza y evoluciona',
-    body: 'Su perfil persiste, evoluciona y desbloquea nuevas capas de identidad.',
+    title: 'Descubrir mi fuerza',
+    body: 'Un test breve para traducir deseo, presencia y simbolo en una lectura util para elegir mejor.',
+    href: '/identity',
+    cta: 'Hacer el test',
   },
 ] as const;
 
-const systemCapabilities = [
-  {
-    title: 'AI & Identity Engine',
-    body: 'Procesa respuestas, detecta patrones y convierte senales en lectura arquetipica.',
-  },
-  {
-    title: 'Pantheon System',
-    body: 'Organiza dioses, mitos, atributos, territorios y relaciones entre arquetipos.',
-  },
-  {
-    title: 'Content & Theme Engine',
-    body: 'Entrega contenido y atmosfera visual con un tono consistente por contexto.',
-  },
-  {
-    title: 'Product & Drop System',
-    body: 'Conecta identidad con piezas, colecciones y lanzamientos de edicion limitada.',
-  },
-  {
-    title: 'Commerce & Fulfillment',
-    body: 'Sostiene pagos, inventario, checkout, ordenes y trazabilidad operativa.',
-  },
-  {
-    title: 'User Profile & Evolution',
-    body: 'Guarda el historial del usuario y habilita recorridos de identidad mas profundos.',
-  },
-] as const;
+const homeSignals = ['Streetwear premium', 'Compra directa sin test', 'Identidad cuando aporta criterio'] as const;
 
 export default function HomePage() {
   return (
     <main className="page-shell xeorum-home">
       <section className="hero-shell xeorum-home-hero">
         <div className="xeorum-home-frame">
-          <div className="xeorum-home-heading">
-            <p className="xeorum-home-eyebrow">El flujo del cliente</p>
-            <BrandMark />
-            <h2 className="xeorum-home-title">Del autoconocimiento a la expresion.</h2>
-            <p className="xeorum-home-copy">
-              XEORUM no es una tienda. Es un sistema de identidad estetica donde cada paso revela al cliente y cada
-              pieza convierte esa lectura en presencia.
-            </p>
-          </div>
-          <div className="portal-actions xeorum-home-actions">
-            <LinkButton href="/identity" variant="primary">Iniciar test de identidad</LinkButton>
-            <LinkButton href="/pantheon" variant="ghost">Explorar panteon</LinkButton>
-          </div>
-          <section className="xeorum-flow-grid" aria-label="Flujo de experiencia XEORUM">
-            {customerFlow.map((item) => (
-              <article key={item.step} className="xeorum-flow-card">
-                <p className="xeorum-flow-step">{item.step}</p>
+          <BrandMark />
+          <EditorialHero
+            kicker="XEORUM"
+            title="Piezas premium con identidad profunda."
+            description="XEORUM une producto deseable, simbolo y lectura arquetipica sin bloquear la compra. Puedes entrar por mercado abierto, por portales o por tu propia fuerza."
+            align="center"
+            actions={
+              <>
+                <LinkButton href="/products" variant="primary">Ver productos</LinkButton>
+                <LinkButton href="/identity" variant="ghost">Descubrir mi fuerza</LinkButton>
+              </>
+            }
+            supporting={
+              <div className="hero-signal-row" aria-label="Senales clave de la experiencia XEORUM">
+                {homeSignals.map((signal) => <span key={signal}>{signal}</span>)}
+              </div>
+            }
+          />
+          <section className="xeorum-flow-grid" aria-label="Entradas principales de XEORUM">
+            {entryPoints.map((item) => (
+              <article key={item.title} className="xeorum-flow-card xeorum-entry-card">
+                <p className="xeorum-flow-step">Entrada</p>
                 <h3>{item.title}</h3>
                 <p>{item.body}</p>
+                <LinkButton href={item.href} variant={item.href === '/products' ? 'primary' : 'ghost'}>{item.cta}</LinkButton>
               </article>
             ))}
           </section>
-          <p className="xeorum-home-mantra">Cada paso revela. Cada eleccion afirma. Cada pieza te recuerda quien eres.</p>
         </div>
       </section>
 
       <section className="section-stack xeorum-home-systems">
-        <SectionHeader kicker="Lo que hace posible la experiencia" title="Backstage del sistema XEORUM" />
-        <div className="xeorum-capability-grid">
-          {systemCapabilities.map((item) => (
-            <article key={item.title} className="xeorum-capability-card">
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </article>
-          ))}
-        </div>
+        <SectionHeader
+          kicker="Entrada comercial"
+          title="Producto visible desde el primer recorrido."
+          description="El deseo no necesita una explicacion larga. Empieza viendo piezas reales y profundiza en identidad solo cuando te aporte contexto."
+        />
+        <CuratedProductsRail
+          kicker="Seleccion abierta"
+          title="Piezas para entrar ahora."
+          description="Una primera lectura sobria del mercado XEORUM: presencia, materialidad y compra clara."
+        />
       </section>
 
       <section className="section-stack xeorum-home-pantheon">
-        <SectionHeader kicker="Territorios vivos" title="Explora los dioses y sus cambios sutiles." />
+        <SectionHeader
+          kicker="Profundidad editorial"
+          title="El panteon organiza fuerzas, no decoracion."
+          description="Cada portal traduce una energia en simbolo, tono y piezas curadas sin romper la arquitectura base de la experiencia."
+        />
         <PantheonGrid />
+      </section>
+
+      <section className="section-stack xeorum-home-ritual">
+        <SectionHeader
+          kicker="Promesa XEORUM"
+          title="Primero claridad. Despues deseo. Despues identidad."
+          description="Si aun no sabes que fuerza te define, empieza por producto. Si quieres mas precision, el test y los portales convierten esa intuicion en criterio real de seleccion."
+          align="center"
+          actions={
+              <>
+              <LinkButton href="/identity" variant="primary">Descubrir mi fuerza</LinkButton>
+              <LinkButton href="/pantheon" variant="ghost">Explorar el pantheon</LinkButton>
+            </>
+          }
+        />
       </section>
     </main>
   );

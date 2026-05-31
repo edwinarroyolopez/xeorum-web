@@ -21,7 +21,7 @@ export function PortalCard({ archetype }: Readonly<{ archetype: PantheonArchetyp
         <p>{archetype.shortManifesto}</p>
       </div>
       <div className="portal-card-footer">
-        <LinkButton href={`/pantheon/${archetype.slug}`}>{archetype.ctaLabel}</LinkButton>
+        <LinkButton href={`/identity/${archetype.slug}`}>Entrar al portal</LinkButton>
       </div>
     </Card>
   );

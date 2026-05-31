@@ -10,15 +10,15 @@ export function PantheonGrid() {
   const query = usePantheonArchetypes();
 
   if (query.isLoading) {
-    return <p className="section-state">Loading portals.</p>;
+    return <p className="section-state">Cargando portales.</p>;
   }
 
   if (query.isError || !query.data) {
-    return <p className="section-state">Portals unavailable.</p>;
+    return <p className="section-state">Los portales no estan disponibles.</p>;
   }
 
   if (query.data.length === 0) {
-    return <EmptyState>No public archetypes are published yet.</EmptyState>;
+    return <EmptyState>Todavia no hay fuerzas publicadas.</EmptyState>;
   }
 
   const archetypes = orderPantheonArchetypes(query.data);

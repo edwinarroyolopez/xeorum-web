@@ -34,7 +34,8 @@ describe('IdentityResultPanel', () => {
     );
 
     expect(html).toContain('ZEUS');
-    expect(html).toContain('Confidence 92%');
+    expect(html).toContain('Afinidad 92%');
     expect(html).toContain('Sovereign Storm');
+    expect(html).toContain('Entrar a mi portal');
   });
 });

@@ -15,5 +15,8 @@ export * from './components/ProductCard';
 export * from './components/PortalCard';
 export * from './components/DropCard';
 export * from './patterns/CheckoutTrustPanel';
+export * from './patterns/EditorialHero';
+export * from './patterns/FilterBar';
 export * from './patterns/IdentityResultPanel';
+export * from './patterns/ProductSignalStrip';
 export * from './patterns/SectionHeader';

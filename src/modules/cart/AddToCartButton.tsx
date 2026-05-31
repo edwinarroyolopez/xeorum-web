@@ -1,26 +1,20 @@
 'use client';
 
-import { useState } from 'react';
 import { useAddCartItem } from './cart.queries';
-import { Button, Select } from '../design-system';
+import { Button } from '../design-system';
 
 export function AddToCartButton({
   productSlug,
-  availableSizes,
-}: Readonly<{ productSlug: string; availableSizes: string[] }>) {
-  const [size, setSize] = useState(availableSizes[0] ?? 'M');
+  size,
+  disabled = false,
+}: Readonly<{ productSlug: string; size?: string; disabled?: boolean }>) {
   const addItem = useAddCartItem();
+  const isDisabled = disabled || !size;
 
   return (
     <div className="add-to-cart-shell">
-      <Select
-        label="Talla"
-        value={size}
-        onChange={(event) => setSize(event.target.value)}
-        options={availableSizes.map((option) => ({ label: option, value: option }))}
-      />
-      <Button type="button" onClick={() => addItem.mutate({ productSlug, size, quantity: 1 })} loading={addItem.isPending}>
-        {addItem.isPending ? 'Agregando' : 'Agregar al carrito'}
+      <Button type="button" variant="primary" onClick={() => size && addItem.mutate({ productSlug, size, quantity: 1 })} loading={addItem.isPending} disabled={isDisabled}>
+        {isDisabled ? 'Selecciona una talla disponible' : addItem.isPending ? 'Agregando pieza' : `Agregar talla ${size}`}
       </Button>
     </div>
   );

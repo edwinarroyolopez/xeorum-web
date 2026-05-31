@@ -18,7 +18,7 @@ describe('PantheonGrid', () => {
 
     const html = renderToStaticMarkup(<PantheonGrid />);
 
-    expect(html).toContain('Loading portals.');
+    expect(html).toContain('Cargando portales.');
   });
 
   it('renders error state', () => {
@@ -26,7 +26,7 @@ describe('PantheonGrid', () => {
 
     const html = renderToStaticMarkup(<PantheonGrid />);
 
-    expect(html).toContain('Portals unavailable.');
+    expect(html).toContain('Los portales no estan disponibles.');
   });
 
   it('renders empty state when no public archetypes exist', () => {
@@ -38,7 +38,7 @@ describe('PantheonGrid', () => {
 
     const html = renderToStaticMarkup(<PantheonGrid />);
 
-    expect(html).toContain('No public archetypes are published yet.');
+    expect(html).toContain('Todavia no hay fuerzas publicadas.');
   });
 
   it('renders published portals and puts Zeus first when present', () => {

@@ -10,7 +10,7 @@ const product = {
   description: 'Description',
   shortDescription: 'Short description',
   pricing: { price: 120, salePrice: 92, compareAtPrice: 120, currency: 'USD' },
-  media: { coverImage: { url: 'cover-image', alt: 'Front', type: 'image' as const, role: 'cover' as const }, gallery: [{ url: 'cover-image', alt: 'Front', type: 'image' as const, role: 'cover' as const }] },
+  media: { coverImage: { url: 'https://cdn.example.com/cover-image.jpg', alt: 'Front', type: 'image' as const, role: 'cover' as const }, gallery: [{ url: 'https://cdn.example.com/cover-image.jpg', alt: 'Front', type: 'image' as const, role: 'cover' as const }] },
   taxonomy: { collectionIds: [], collectionSlugs: [], marketTags: [] },
   archetypes: { primary: { slug: 'hades', score: 100 }, affinities: [{ slug: 'hades', score: 100, role: 'primary' as const }] },
   productDetails: { material: 'Cotton', fit: 'Oversized' },
@@ -22,10 +22,28 @@ const product = {
 };
 
 describe('ProductCard', () => {
-  it('renders price and cover information', () => {
+  it('renders cover and sale price information', () => {
     const html = renderToStaticMarkup(<ProductCard product={product} />);
     expect(html).toContain('Hades Heavy Tee');
     expect(html).toContain('92');
-    expect(html).toContain('cover-image');
+    expect(html).toContain('120');
+    expect(html).toContain('cdn.example.com/cover-image.jpg');
+  });
+
+  it('does not render placeholder media urls as final imagery', () => {
+    const html = renderToStaticMarkup(
+      <ProductCard
+        product={{
+          ...product,
+          media: {
+            coverImage: { url: 'editorial-front', alt: 'Front', type: 'image', role: 'cover' },
+            gallery: [{ url: 'editorial-front', alt: 'Front', type: 'image', role: 'cover' }],
+          },
+        }}
+      />,
+    );
+
+    expect(html).toContain('Media pendiente de publicacion');
+    expect(html).not.toContain('src="editorial-front"');
   });
 });

@@ -28,16 +28,16 @@ function RelationGroup({ title, items }: Readonly<{ title: string; items: Panthe
   }
 
   return (
-    <Card className="section-stack xeorum-archetype-panel">
-      <h3>{title}</h3>
-      {items.map((item) => (
-        <div key={`${title}-${item.slug}`} className="section-stack xeorum-archetype-relation">
-          <strong>{item.name}</strong>
-          <p>{item.reason}</p>
-          <LinkButton href={`/identity/${item.slug}`} variant="ghost">Explore {item.name}</LinkButton>
-        </div>
-      ))}
-    </Card>
+      <Card className="section-stack xeorum-archetype-panel">
+        <h3>{title}</h3>
+        {items.map((item) => (
+          <div key={`${title}-${item.slug}`} className="section-stack xeorum-archetype-relation">
+            <strong>{item.name}</strong>
+            <p>{item.reason}</p>
+            <LinkButton href={`/identity/${item.slug}`} variant="ghost">Entrar a {item.name}</LinkButton>
+          </div>
+        ))}
+      </Card>
   );
 }
 
@@ -92,7 +92,7 @@ function ArchetypeHeroStage({ archetype }: Readonly<{ archetype: PantheonArchety
         )}
       </div>
       <div className="archetype-hero-floating archetype-hero-profile-chip">
-        <strong>{archetype.name} is active</strong>
+        <strong>{archetype.name} activa esta lectura</strong>
         <span>{archetype.narrative.modernInterpretation}</span>
         <span>{archetype.psychology.dominantTraits.slice(0, 2).join(' · ')}</span>
       </div>
@@ -132,81 +132,78 @@ export function ArchetypeLanding({ archetype }: Readonly<{ archetype: PantheonAr
             <p>{archetype.identity.oneLineDefinition}</p>
             <p>{archetype.visualSystem.mood}</p>
           </div>
-          {archetype.slug === 'zeus' ? <Badge tone="accent">Zeus pilot active</Badge> : null}
+          {archetype.slug === 'zeus' ? <Badge tone="accent">Piloto visual activo</Badge> : null}
           <ArchetypeHeroStage archetype={archetype} />
           <div className="portal-actions xeorum-archetype-actions">
-            <LinkButton href={archetype.cta.primaryHref}>{archetype.cta.primaryLabel}</LinkButton>
-            <LinkButton href={archetype.cta.secondaryHref} variant="ghost">{archetype.cta.secondaryLabel}</LinkButton>
-            <LinkButton href="/pantheon" variant="ghost">Back to Pantheon</LinkButton>
+            <LinkButton href={archetype.cta.primaryHref}>Ver piezas de esta fuerza</LinkButton>
+            <LinkButton href={archetype.cta.secondaryHref} variant="ghost">Descubrir mi fuerza</LinkButton>
+            <LinkButton href="/pantheon" variant="ghost">Volver al pantheon</LinkButton>
           </div>
         </Card>
 
         <div className="section-stack xeorum-archetype-section">
-          <SectionHeader kicker="Core Identity Statement" title={archetype.identity.title} />
+          <SectionHeader kicker="Esencia" title={archetype.identity.title} description="La definicion central, el deseo humano y el manifiesto corto de esta fuerza." />
           <Card className="section-stack xeorum-archetype-panel">
             <p>{archetype.identity.oneLineDefinition}</p>
             <p>{archetype.identity.humanDesire}</p>
             <p>{archetype.identity.emotionalPromise}</p>
-            <TagList items={archetype.identity.secondaryEnergies} emptyLabel="No secondary energies were published yet." />
-          </Card>
-        </div>
-
-        <div className="section-stack xeorum-archetype-section">
-          <SectionHeader kicker="Manifesto" title={archetype.narrative.shortManifesto} />
-          <Card className="section-stack xeorum-archetype-panel">
             <p className="portal-manifesto">{archetype.narrative.shortManifesto}</p>
             <p>{archetype.narrative.longManifesto}</p>
+            <TagList items={archetype.identity.secondaryEnergies} emptyLabel="Todavia no hay energias secundarias publicadas." />
           </Card>
         </div>
 
         <div className="section-stack xeorum-archetype-section">
-          <SectionHeader kicker="Traits" title="Signals of this force." />
+          <SectionHeader kicker="Expresion" title="Como se reconoce esta fuerza." description="Rasgos, motivaciones y tension interna traducidos a una lectura util y sobria." />
           <div className="grid-cards">
-            <Card className="section-stack xeorum-archetype-panel"><h3>Dominant traits</h3><TagList items={archetype.psychology.dominantTraits} emptyLabel="No dominant traits were published yet." /></Card>
-            <Card className="section-stack xeorum-archetype-panel"><h3>Behavioral signals</h3><TagList items={archetype.psychology.behavioralSignals} emptyLabel="No behavioral signals were published yet." /></Card>
-            <Card className="section-stack xeorum-archetype-panel"><h3>Motivations</h3><TagList items={archetype.psychology.motivations} emptyLabel="No motivations were published yet." /></Card>
-            <Card className="section-stack xeorum-archetype-panel"><h3>Aspirations</h3><TagList items={archetype.psychology.aspirations} emptyLabel="No aspirations were published yet." /></Card>
+            <Card className="section-stack xeorum-archetype-panel"><h3>Rasgos dominantes</h3><TagList items={archetype.psychology.dominantTraits} emptyLabel="Todavia no hay rasgos dominantes publicados." /></Card>
+            <Card className="section-stack xeorum-archetype-panel"><h3>Senales de comportamiento</h3><TagList items={archetype.psychology.behavioralSignals} emptyLabel="Todavia no hay senales publicadas." /></Card>
+            <Card className="section-stack xeorum-archetype-panel"><h3>Motivaciones</h3><TagList items={archetype.psychology.motivations} emptyLabel="Todavia no hay motivaciones publicadas." /></Card>
+            <Card className="section-stack xeorum-archetype-panel"><h3>Aspiraciones</h3><TagList items={archetype.psychology.aspirations} emptyLabel="Todavia no hay aspiraciones publicadas." /></Card>
           </div>
         </div>
 
         <div className="section-stack xeorum-archetype-section">
-          <SectionHeader kicker="Shadow" title="The force under pressure." />
+          <SectionHeader kicker="Maduracion" title="Lo que esta fuerza sostiene bajo presion." />
           <Card className="section-stack xeorum-archetype-panel">
             <p>{archetype.narrative.shadow}</p>
-            <TagList items={archetype.psychology.fears} emptyLabel="No public fears were published yet." />
-          </Card>
-        </div>
-
-        <div className="section-stack xeorum-archetype-section">
-          <SectionHeader kicker="Transformation" title="How the force matures." />
-          <Card className="section-stack xeorum-archetype-panel">
             <p>{archetype.narrative.transformationArc}</p>
             <p>{archetype.narrative.modernInterpretation}</p>
             <p>{archetype.identity.symbolicRole}</p>
+            <TagList items={archetype.psychology.fears} emptyLabel="Todavia no hay tensiones publicadas." />
           </Card>
         </div>
 
         <div className="section-stack xeorum-archetype-section">
-          <SectionHeader kicker="Visual Mood" title={archetype.visualSystem.artDirection} />
+          <SectionHeader kicker="Piezas curadas" title={archetype.commerce.productHeading} description={archetype.commerce.productSubheading} />
+          <Card className="section-stack xeorum-archetype-panel">
+            <p>{archetype.commerce.openMarketAngle}</p>
+            <TagList items={archetype.commerce.productCategories} emptyLabel="Todavia no hay categorias publicadas para esta fuerza." />
+          </Card>
+          {archetype.products.length === 0 ? <EmptyState>Todavia no hay piezas publicadas para esta fuerza.</EmptyState> : <section className="product-grid">{archetype.products.map((product) => <ProductCard key={product.slug} product={product} />)}</section>}
+        </div>
+
+        <div className="section-stack xeorum-archetype-section">
+          <SectionHeader kicker="Sistema visual" title={archetype.visualSystem.artDirection} description="Paleta, simbolos, texturas y atmósfera aprobada para sostener una identidad coherente." />
           <div className="grid-cards">
             <Card className="section-stack xeorum-archetype-panel">
-              <h3>Palette</h3>
+              <h3>Paleta</h3>
               <div className="portal-card-palette">
                 {archetype.visualSystem.palette.map((color) => (
                   <span key={`${color.name}-${color.hex}`} style={{ '--swatch-background': color.hex } as CSSProperties} title={`${color.name} ${color.hex}`} />
                 ))}
               </div>
             </Card>
-            <Card className="section-stack xeorum-archetype-panel"><h3>Symbols</h3><TagList items={archetype.visualSystem.symbols} emptyLabel="No symbols were published yet." /></Card>
-            <Card className="section-stack xeorum-archetype-panel"><h3>Textures</h3><TagList items={archetype.visualSystem.textures} emptyLabel="No textures were published yet." /></Card>
-            <Card className="section-stack xeorum-archetype-panel"><h3>Environments</h3><TagList items={archetype.visualSystem.environments} emptyLabel="No environments were published yet." /></Card>
+            <Card className="section-stack xeorum-archetype-panel"><h3>Simbolos</h3><TagList items={archetype.visualSystem.symbols} emptyLabel="Todavia no hay simbolos publicados." /></Card>
+            <Card className="section-stack xeorum-archetype-panel"><h3>Texturas</h3><TagList items={archetype.visualSystem.textures} emptyLabel="Todavia no hay texturas publicadas." /></Card>
+            <Card className="section-stack xeorum-archetype-panel"><h3>Entornos</h3><TagList items={archetype.visualSystem.environments} emptyLabel="Todavia no hay entornos publicados." /></Card>
           </div>
         </div>
 
         <div className="section-stack xeorum-archetype-section">
-          <SectionHeader kicker="Gallery" title="Approved visual atmosphere." />
+          <SectionHeader kicker="Galeria" title="Atmosfera visual aprobada." />
           {archetype.galleryPreview.length === 0 ? (
-            <EmptyState>No approved gallery preview is available for this archetype yet.</EmptyState>
+            <EmptyState>Todavia no hay galeria aprobada para esta fuerza.</EmptyState>
           ) : (
             <section className="portal-gallery-grid">
               {archetype.galleryPreview.map((item) => (
@@ -214,8 +211,8 @@ export function ArchetypeLanding({ archetype }: Readonly<{ archetype: PantheonAr
                   {item.imageUrl ? <img src={item.imageUrl} alt={item.altText} className="portal-gallery-image" /> : null}
                   <div className="section-stack">
                     <h2>{item.title}</h2>
-                    {!item.imageUrl ? <p className="section-state">Editorial fallback remains available while approved imagery is curated.</p> : null}
-                    <TagList items={item.tags} emptyLabel="No public gallery tags were published yet." />
+                    {!item.imageUrl ? <p className="section-state">La vista editorial sigue disponible mientras se curan imagenes aprobadas.</p> : null}
+                    <TagList items={item.tags} emptyLabel="Todavia no hay tags publicos para esta galeria." />
                   </div>
                 </Card>
               ))}
@@ -224,41 +221,31 @@ export function ArchetypeLanding({ archetype }: Readonly<{ archetype: PantheonAr
         </div>
 
         <div className="section-stack xeorum-archetype-section">
-          <SectionHeader kicker="Products" title={archetype.commerce.productHeading} />
-          <Card className="section-stack xeorum-archetype-panel">
-            <p>{archetype.commerce.productSubheading}</p>
-            <p>{archetype.commerce.openMarketAngle}</p>
-            <TagList items={archetype.commerce.productCategories} emptyLabel="No public product categories were published yet." />
-          </Card>
-          {archetype.products.length === 0 ? <EmptyState>No published products express this force yet.</EmptyState> : <section className="product-grid">{archetype.products.map((product) => <ProductCard key={product.slug} product={product} />)}</section>}
-        </div>
-
-        <div className="section-stack xeorum-archetype-section">
-          <SectionHeader kicker="Drops" title={archetype.commerce.dropHeading} />
+          <SectionHeader kicker="Drops" title={archetype.commerce.dropHeading} description={archetype.commerce.dropSubheading} />
           <Card className="section-stack xeorum-archetype-panel"><p>{archetype.commerce.dropSubheading}</p></Card>
-          {archetype.drops.length === 0 ? <EmptyState>No published drops are aligned to this force right now.</EmptyState> : <section className="drop-grid">{archetype.drops.map((drop) => <DropCard key={drop.slug} drop={drop} />)}</section>}
+          {archetype.drops.length === 0 ? <EmptyState>No hay drops publicados alineados a esta fuerza ahora mismo.</EmptyState> : <section className="drop-grid">{archetype.drops.map((drop) => <DropCard key={drop.slug} drop={drop} />)}</section>}
         </div>
 
         <div className="section-stack xeorum-archetype-section">
-          <SectionHeader kicker="Related archetypes" title="Explore the wider pantheon." />
+          <SectionHeader kicker="Relaciones" title="Explora el pantheon ampliado." />
           {relatedCount === 0 ? (
-            <EmptyState>No public related archetypes were published yet.</EmptyState>
+            <EmptyState>Todavia no hay relaciones publicadas para esta fuerza.</EmptyState>
           ) : (
             <div className="grid-cards">
-              <RelationGroup title="Allies" items={archetype.relationships.allies} />
-              <RelationGroup title="Contrasts" items={archetype.relationships.contrasts} />
-              <RelationGroup title="Tensions" items={archetype.relationships.tensions} />
+              <RelationGroup title="Aliados" items={archetype.relationships.allies} />
+              <RelationGroup title="Contrastes" items={archetype.relationships.contrasts} />
+              <RelationGroup title="Tensiones" items={archetype.relationships.tensions} />
             </div>
           )}
         </div>
 
         <div className="section-stack xeorum-archetype-section">
-          <SectionHeader kicker="Identity Test CTA" title="Discover your force." />
+          <SectionHeader kicker="Profundizar" title="Descubre tu fuerza." />
           <Card className="section-stack portal-commerce-card xeorum-archetype-panel">
-            <p>Use the identity test to discover which XEORUM force feels most native to you.</p>
+            <p>Haz el test si quieres descubrir que fuerza de XEORUM se siente mas natural para ti antes de seguir refinando producto.</p>
             <div className="portal-actions">
-              <LinkButton href="/identity">Run Identity Test</LinkButton>
-              <LinkButton href={archetype.cta.primaryHref} variant="ghost">Shop this force</LinkButton>
+              <LinkButton href="/identity">Descubrir mi fuerza</LinkButton>
+              <LinkButton href={archetype.cta.primaryHref} variant="ghost">Ver piezas de esta fuerza</LinkButton>
             </div>
           </Card>
         </div>

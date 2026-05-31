@@ -37,7 +37,7 @@ export function CheckoutTrustPanel({ reservedUntil, paymentStatus, orderStatus }
       <Text tone="muted" className="portal-card-kicker">
         Confianza de checkout
       </Text>
-      <h2>Claridad primero a traves de reserva, pago y estado de orden.</h2>
+      <h2>Reserva, pago y estado visibles en todo momento.</h2>
       <div className="checkout-trust-badges" aria-label="Resumen de estado del checkout">
         <Badge tone={normalizeStatusTone(paymentStatus)}>Pago {paymentStatus ?? 'pending'}</Badge>
         <Badge tone={normalizeStatusTone(orderStatus)}>Orden {orderStatus ?? 'pending_payment'}</Badge>
@@ -48,7 +48,7 @@ export function CheckoutTrustPanel({ reservedUntil, paymentStatus, orderStatus }
       <ul className="checkout-trust-list">
         <li>La sesion segura se crea de forma explicita antes del pago.</li>
         <li>Pago y orden permanecen visibles como texto, no solo como color.</li>
-        <li>El checkout se mantiene sobrio aunque exista tematizacion arquetipica en otras vistas.</li>
+        <li>El checkout reduce atmosfera para priorizar confianza y lectura inmediata.</li>
       </ul>
     </Card>
   );

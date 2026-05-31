@@ -150,19 +150,18 @@ describe('PantheonDetailClient', () => {
     const html = renderToStaticMarkup(<PantheonDetailClient slug="zeus" />);
 
     expect(html).toContain('Built To Lead.');
-    expect(html).toContain('Core Identity Statement');
-    expect(html).toContain('Manifesto');
-    expect(html).toContain('Shadow');
-    expect(html).toContain('Transformation');
+    expect(html).toContain('Esencia');
+    expect(html).toContain('Expresion');
+    expect(html).toContain('Maduracion');
     expect(html).toContain('Premium strong-presence pieces for people drawn to visible authority.');
     expect(html).toContain('Editorial visual reference showing a dark premium outfit.');
     expect(html).toContain('Zeus Coat');
     expect(html).toContain('Zeus Night');
-    expect(html).toContain('Enter Zeus Portal');
-    expect(html).toContain('Zeus pilot active');
+    expect(html).toContain('Ver piezas de esta fuerza');
+    expect(html).toContain('Piloto visual activo');
     expect(html).toContain('Imperial Electric');
     expect(html).toContain('data-effect-profile="imperial-electric"');
-    expect(html.indexOf('Manifesto')).toBeLessThan(html.indexOf('Pieces shaped by Zeus'));
+    expect(html.indexOf('Esencia')).toBeLessThan(html.indexOf('Pieces shaped by Zeus'));
   });
 
   it('degrades gracefully when gallery preview has no image and products or drops are empty', () => {
@@ -251,9 +250,9 @@ describe('PantheonDetailClient', () => {
 
     const html = renderToStaticMarkup(<PantheonDetailClient slug="athena" />);
 
-    expect(html).toContain('Editorial fallback remains available while approved imagery is curated.');
-    expect(html).toContain('No published products express this force yet.');
-    expect(html).toContain('No published drops are aligned to this force right now.');
+    expect(html).toContain('La vista editorial sigue disponible mientras se curan imagenes aprobadas.');
+    expect(html).toContain('Todavia no hay piezas publicadas para esta fuerza.');
+    expect(html).toContain('No hay drops publicados alineados a esta fuerza ahora mismo.');
     expect(html).not.toContain('<img');
   });
 });

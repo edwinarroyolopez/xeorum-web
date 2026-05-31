@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { productsApi } from './products.api';
+import { productsApi, type ProductListFilters } from './products.api';
 
 export const productsQueryKeys = {
-  list: (filters: { archetype?: string; drop?: string; category?: string; size?: string; sort?: string } = {}) => ['products', 'list', filters] as const,
+  list: (filters: ProductListFilters = {}) => ['products', 'list', filters] as const,
   detail: (slug: string) => ['products', 'detail', slug] as const,
 };
 
-export function useProducts(input: { archetype?: string; drop?: string; category?: string; size?: string; sort?: string } = {}) {
+export function useProducts(input: ProductListFilters = {}) {
   return useQuery({
     queryKey: productsQueryKeys.list(input),
     queryFn: () => productsApi.getProducts(input),
