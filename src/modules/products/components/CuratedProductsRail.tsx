@@ -2,9 +2,9 @@
 
 import React from 'react';
 import type { ProductSort } from '@xeorum/contracts';
-import { EmptyState, EditorialCollectionIntro, LoadingState, SectionHeader } from '../design-system';
+import { EmptyState, EditorialCollectionIntro, LoadingState, SectionHeader } from '../../design-system';
 import { ProductCard } from './ProductCard';
-import { useProducts } from './products.queries';
+import { useProducts } from '../hooks/products.queries';
 
 export function CuratedProductsRail({
   kicker,

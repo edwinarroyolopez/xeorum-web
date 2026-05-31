@@ -1,7 +1,5 @@
 import React from 'react';
 import type { ProductContract } from '@xeorum/contracts';
-import Link from 'next/link';
-import { ActionRow } from './ActionRow';
 import { EditorialCard } from './EditorialCard';
 import { LinkButton } from './Button';
 import styles from './ProductCard.module.css';
@@ -13,9 +11,8 @@ import {
   formatProductPrice,
   getDisplayPrice,
   getHoverProductMedia,
-  getMerchandisingBadges,
   getPrimaryProductMedia,
-} from '../../products/product.helpers';
+} from '../../products/services/product.helpers';
 
 export function ProductCard({ product }: Readonly<{ product: ProductContract }>) {
   const coverImage = getPrimaryProductMedia(product);
@@ -24,21 +21,15 @@ export function ProductCard({ product }: Readonly<{ product: ProductContract }>)
   const variants = product.variants ?? [];
   const defaultVariant = variants.find((variant) => variant.available) ?? variants[0];
   const archetypeLabel = product.archetypes.primary?.slug ? `Fuerza ${formatProductLabel(product.archetypes.primary.slug)}` : 'Seleccion abierta';
-  const badges = getMerchandisingBadges(product);
-  const primarySignals = [product.productDetails?.fit, product.productDetails?.material, product.productDetails?.color]
-    .filter(Boolean)
-    .map((value) => formatProductLabel(value as string))
-    .join(' · ');
+  const compactSignals = 'Poder · Dominio · Liderazgo';
   const description = product.shortDescription ?? product.subtitle ?? product.narrative ?? product.description ?? '';
   const affinity = product.archetypes.primary?.score;
-  const primaryBadge = badges[0] ?? null;
   const stockLabel = defaultVariant ? `${Math.max(defaultVariant.stockAvailable, 0)} piezas` : 'Sin stock';
 
   return (
     <EditorialCard className={styles.card}>
       <ProductVisualFrame
-        className={styles.visualFrame}
-        badge={primaryBadge}
+        {...(styles.visualFrame ? { className: styles.visualFrame } : {})}
         meta={<div className={styles.visualMetaRow}>{product.productDetails?.color ? <span>{product.productDetails.color}</span> : <span>Seleccion XEORUM</span>}<strong>{formatProductPrice(price.basePrice, price.currency)}</strong><span hidden>{formatProductPrice(price.currentPrice, price.currency)}</span></div>}
         >
         {coverImage ? (
@@ -56,21 +47,20 @@ export function ProductCard({ product }: Readonly<{ product: ProductContract }>)
           <div className={styles.titleRow}>
             <h3 className={styles.title}>{product.name}</h3>
           </div>
-          {primarySignals ? <p className={styles.materialNote}>{primarySignals}</p> : null}
+          <p className={styles.materialNote}>{compactSignals}</p>
           {description ? <p className={styles.description}>{description}</p> : null}
         </div>
-      </div>
-      <div className={styles.footer}>
-        <div className={styles.footerCopy}>
-          <div className={styles.statsRow}>
-            <span>{stockLabel}</span>
-            {affinity ? <span>{affinity}% afinidad</span> : null}
+        <div className={styles.footer}>
+          <div className={styles.footerCopy}>
+            <div className={styles.statsRow}>
+              <span>{stockLabel}</span>
+              {affinity ? <span>afinidad {affinity}%</span> : null}
+            </div>
+          </div>
+          <div className={styles.actions}>
+            <LinkButton href={`/products/${product.slug}`} size="md" {...(styles.cta ? { className: styles.cta } : {})}>Ver pieza</LinkButton>
           </div>
         </div>
-        <ActionRow className={styles.actions} justify="end">
-          {product.archetypes.primary?.slug ? <Link href={`/identity/${product.archetypes.primary.slug}`} className={styles.inlineLink}>Portal</Link> : null}
-          <LinkButton href={`/products/${product.slug}`} size="md" className={styles.cta}>Abrir pieza</LinkButton>
-        </ActionRow>
       </div>
     </EditorialCard>
   );

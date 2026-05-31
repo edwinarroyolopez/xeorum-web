@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import type { ProductContract } from '@xeorum/contracts';
-import { ProductVisualFrame } from '../design-system';
+import { ProductVisualFrame } from '../../design-system';
 import { ProductMediaRail } from './ProductMediaRail';
 
 export function ProductGallery({ media }: Readonly<{ media: ProductContract['media']['gallery'] }>) {

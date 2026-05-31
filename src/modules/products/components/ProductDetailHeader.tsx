@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProductTitleBlock } from '../design-system';
+import { ProductTitleBlock } from '../../design-system';
 
 export function ProductDetailHeader({
   kicker,

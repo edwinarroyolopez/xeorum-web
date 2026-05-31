@@ -9,7 +9,7 @@ vi.mock('./drops.queries', () => ({
   useDrop: (...args: unknown[]) => useDrop(...args),
 }));
 
-vi.mock('../products/ProductsGrid', () => ({
+vi.mock('../products/components/ProductsGrid', () => ({
   ProductsGrid: ({ drop }: { drop: string }) => <div>ProductsGrid:{drop}</div>,
 }));
 

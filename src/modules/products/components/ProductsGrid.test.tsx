@@ -5,7 +5,7 @@ import { ProductsGrid } from './ProductsGrid';
 
 const useProducts = vi.fn();
 
-vi.mock('./products.queries', () => ({
+vi.mock('../hooks/products.queries', () => ({
   useProducts: (...args: unknown[]) => useProducts(...args),
 }));
 

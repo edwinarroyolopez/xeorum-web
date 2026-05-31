@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useDrop } from './drops.queries';
-import { ProductsGrid } from '../products/ProductsGrid';
+import { ProductsGrid } from '../products/components/ProductsGrid';
 import { Card, EditorialBody, EditorialCollectionIntro, ErrorState, LinkButton, LoadingState, ProductTitleBlock } from '../design-system';
 
 export function DropDetail({ slug }: Readonly<{ slug: string }>) {

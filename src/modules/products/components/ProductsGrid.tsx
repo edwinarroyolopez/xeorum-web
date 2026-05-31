@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import type { ProductSort } from '@xeorum/contracts';
-import { ActiveFilterChips, EmptyState, ErrorState, FilterBar, LoadingState, Select, SegmentedGroup, Toolbar, ToolbarGroup } from '../design-system';
+import { ActiveFilterChips, EmptyState, ErrorState, FilterBar, LoadingState, Select, SegmentedGroup, Toolbar, ToolbarGroup } from '../../design-system';
 import { ProductCard } from './ProductCard';
-import { useProducts } from './products.queries';
+import { useProducts } from '../hooks/products.queries';
 
 const categoryOptions = [
   { label: 'Todas las lineas', value: '' },

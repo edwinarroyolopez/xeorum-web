@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge } from '../design-system';
+import { Badge } from '../../design-system';
 
 export function ProductAvailabilityBadge({
   label,

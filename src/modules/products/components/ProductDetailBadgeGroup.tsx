@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionRow, Badge } from '../design-system';
+import { ActionRow, Badge } from '../../design-system';
 
 type ProductDetailBadgeGroupItem = {
   label: string;

@@ -6,20 +6,20 @@ import { ProductDetail } from './ProductDetail';
 const useProduct = vi.fn();
 const useRecommendationsForProduct = vi.fn();
 
-vi.mock('./products.queries', () => ({
+vi.mock('../hooks/products.queries', () => ({
   useProduct: (...args: unknown[]) => useProduct(...args),
 }));
 
-vi.mock('../ai-recommendations/recommendations.queries', () => ({
+vi.mock('../../ai-recommendations/recommendations.queries', () => ({
   useRecommendationsForProduct: (...args: unknown[]) => useRecommendationsForProduct(...args),
 }));
 
-vi.mock('../cart/AddToCartButton', () => ({
+vi.mock('../../cart/AddToCartButton', () => ({
   AddToCartButton: ({ size, disabled }: { size?: string; disabled?: boolean }) => <div>AddToCart:{size ?? 'none'}:{disabled ? 'disabled' : 'active'}</div>,
 }));
 
-vi.mock('../ai-recommendations/RecommendationProducts', () => ({ RecommendationProducts: () => null }));
-vi.mock('../ai-recommendations/RecommendationDrops', () => ({ RecommendationDrops: () => null }));
+vi.mock('../../ai-recommendations/RecommendationProducts', () => ({ RecommendationProducts: () => null }));
+vi.mock('../../ai-recommendations/RecommendationDrops', () => ({ RecommendationDrops: () => null }));
 
 const product = {
   id: 'product-1',

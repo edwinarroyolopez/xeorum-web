@@ -3,12 +3,12 @@ import { describe, expect, it, vi } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { CuratedProductsRail } from './CuratedProductsRail';
 import { RelatedProductsRail } from './RelatedProductsRail';
-import { RecommendationProducts } from '../ai-recommendations/RecommendationProducts';
-import { RecommendationDrops } from '../ai-recommendations/RecommendationDrops';
+import { RecommendationProducts } from '../../ai-recommendations/RecommendationProducts';
+import { RecommendationDrops } from '../../ai-recommendations/RecommendationDrops';
 
 const useProducts = vi.fn();
 
-vi.mock('./products.queries', () => ({
+vi.mock('../hooks/products.queries', () => ({
   useProducts: (...args: unknown[]) => useProducts(...args),
 }));
 

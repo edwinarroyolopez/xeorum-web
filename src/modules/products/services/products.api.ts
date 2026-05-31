@@ -1,4 +1,4 @@
-import { apiClient } from '../../lib/api';
+import { apiClient } from '../../../lib/api';
 import type { ListPublicProductsQueryContract } from '@xeorum/contracts';
 import type { Product } from './products.types';
 

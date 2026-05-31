@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useProduct } from './products.queries';
-import { AddToCartButton } from '../cart/AddToCartButton';
-import { useRecommendationsForProduct } from '../ai-recommendations/recommendations.queries';
-import { RecommendationDrops } from '../ai-recommendations/RecommendationDrops';
-import { ActionRow, Card, ErrorState, LinkButton, LoadingState, ProductPresenceGrid, ProductPriceBlock, ProductSignalStrip, SectionHeader, SectionLabel, SupportingText } from '../design-system';
+import { useProduct } from '../hooks/products.queries';
+import { AddToCartButton } from '../../cart/AddToCartButton';
+import { useRecommendationsForProduct } from '../../ai-recommendations/recommendations.queries';
+import { RecommendationDrops } from '../../ai-recommendations/RecommendationDrops';
+import { ActionRow, Card, ErrorState, LinkButton, LoadingState, ProductPresenceGrid, ProductPriceBlock, ProductSignalStrip, SectionHeader, SectionLabel, SupportingText } from '../../design-system';
 import { ProductGallery } from './ProductGallery';
 import { ProductPrice } from './ProductPrice';
 import { VariantSelector } from './VariantSelector';
@@ -21,9 +21,9 @@ import {
   getDisplayPrice,
   formatProductLabel,
   getProductGallery,
-} from './product.helpers';
-import { ThemeCssVariables } from '../theme/providers/ThemeCssVariables';
-import { resolvePageTheme } from '../theme';
+} from '../services/product.helpers';
+import { ThemeCssVariables } from '../../theme/providers/ThemeCssVariables';
+import { resolvePageTheme } from '../../theme';
 
 function dedupeProducts<T extends { slug: string }>(products: T[], currentSlug: string) {
   return products.filter((item, index, list) => item.slug !== currentSlug && list.findIndex((entry) => entry.slug === item.slug) === index);

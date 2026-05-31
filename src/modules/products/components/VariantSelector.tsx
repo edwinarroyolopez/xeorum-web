@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ProductVariant } from '@xeorum/contracts';
-import { ProductVariantPanel, SegmentedGroup } from '../design-system';
+import { ProductVariantPanel, SegmentedGroup } from '../../design-system';
 import { ProductVariantOptionLabel } from './ProductVariantOptionLabel';
 
 export function VariantSelector({

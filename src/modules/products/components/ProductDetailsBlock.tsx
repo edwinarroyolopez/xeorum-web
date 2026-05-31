@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ProductDetails } from '@xeorum/contracts';
-import { ProductConstructionPanel } from '../design-system';
+import { ProductConstructionPanel } from '../../design-system';
 
 export function ProductDetailsBlock({ details }: Readonly<{ details: ProductDetails }>) {
   const careInstructions = Array.isArray(details.careInstructions)

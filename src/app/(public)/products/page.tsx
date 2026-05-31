@@ -1,4 +1,4 @@
-import { ProductsGrid } from '../../../modules/products/ProductsGrid';
+import { ProductsGrid } from '../../../modules/products/components/ProductsGrid';
 import { PageHeader } from '../../../modules/design-system';
 
 export default function ProductsPage() {

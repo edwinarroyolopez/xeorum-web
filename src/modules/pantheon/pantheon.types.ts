@@ -1,5 +1,5 @@
 import type { Drop } from '../drops/drops.types';
-import type { Product } from '../products/products.types';
+import type { Product } from '../products/services/products.types';
 
 export type PantheonGalleryPreviewItem = {
   title: string;

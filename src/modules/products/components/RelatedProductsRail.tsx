@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ProductContract } from '@xeorum/contracts';
-import { EditorialCollectionIntro, SectionHeader } from '../design-system';
+import { EditorialCollectionIntro, SectionHeader } from '../../design-system';
 import { ProductCard } from './ProductCard';
 
 export function RelatedProductsRail({

@@ -3,6 +3,8 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { BrandMark } from '../components/ui/BrandMark';
 import '../styles/reset.css';
+import '../modules/home/styles/home.css';
+import '../modules/products/styles/products.css';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {

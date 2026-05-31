@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { ProductDetail } from '../../../../modules/products/ProductDetail';
+import { ProductDetail } from '../../../../modules/products/components/ProductDetail';
 import {
   buildProductMetadata,
   fallbackProductMetadata,
   getPublicProductServer,
-} from '../../../../modules/products/products.metadata';
+} from '../../../../modules/products/services/products.metadata';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolved = await params;

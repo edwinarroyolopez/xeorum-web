@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatProductPrice } from './product.helpers';
+import { formatProductPrice } from '../services/product.helpers';
 
 export function ProductPrice({
   price,

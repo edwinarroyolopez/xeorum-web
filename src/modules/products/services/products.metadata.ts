@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { cache } from 'react';
 import type { ProductContract } from '@xeorum/contracts';
-import { apiClient } from '../../lib/api';
+import { apiClient } from '../../../lib/api';
 import { getPrimaryProductMedia } from './product.helpers';
 
 export const getPublicProductServer = cache(async (slug: string) => {
