@@ -1,0 +1,23 @@
+.card {
+  composes: ds-card from global;
+  display: grid;
+  gap: var(--xe-space-4);
+  padding: var(--xe-space-5);
+  border: 1px solid var(--xe-semantic-border-subtle);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--xe-semantic-surface) 90%, transparent), color-mix(in srgb, var(--xe-semantic-background) 96%, transparent));
+  border-radius: var(--xe-radius-lg);
+  box-shadow: var(--xe-elevation-soft);
+}
+
+.default {
+}
+
+.soft {
+  composes: ds-card-soft from global;
+  background: color-mix(in srgb, var(--xe-semantic-surface) 82%, transparent);
+}
+
+.emphasis {
+  composes: ds-card-emphasis from global;
+  border-color: color-mix(in srgb, var(--xe-semantic-accent) 18%, var(--xe-semantic-border-subtle));
+}

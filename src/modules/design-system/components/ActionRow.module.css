@@ -1,0 +1,46 @@
+.row {
+  composes: ds-action-row from global;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--xe-space-3);
+}
+
+.alignStart {
+  composes: ds-action-row-align-start from global;
+  align-items: flex-start;
+}
+
+.alignCenter {
+  composes: ds-action-row-align-center from global;
+  align-items: center;
+}
+
+.alignEnd {
+  composes: ds-action-row-align-end from global;
+  align-items: flex-end;
+}
+
+.justifyStart {
+  composes: ds-action-row-justify-start from global;
+  justify-content: flex-start;
+}
+
+.justifyCenter {
+  composes: ds-action-row-justify-center from global;
+  justify-content: center;
+}
+
+.justifyBetween {
+  composes: ds-action-row-justify-between from global;
+  justify-content: space-between;
+}
+
+.justifyEnd {
+  composes: ds-action-row-justify-end from global;
+  justify-content: flex-end;
+}
+
+.nowrap {
+  composes: ds-action-row-nowrap from global;
+  flex-wrap: nowrap;
+}

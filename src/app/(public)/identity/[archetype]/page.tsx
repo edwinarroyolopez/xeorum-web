@@ -6,6 +6,8 @@ import {
   getPantheonArchetypeLandingServer,
 } from '../../../../modules/pantheon/pantheon.metadata';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({ params }: { params: Promise<{ archetype: string }> }): Promise<Metadata> {
   const resolved = await params;
 

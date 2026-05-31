@@ -1,0 +1,42 @@
+.textarea {
+  composes: ds-textarea from global;
+  min-height: 8rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--xe-semantic-border-subtle);
+  border-radius: var(--xe-radius-md);
+  background: color-mix(in srgb, var(--xe-semantic-surface) 88%, transparent);
+  color: var(--xe-semantic-text-primary);
+  resize: vertical;
+}
+
+.textarea:focus-visible {
+  outline: 2px solid var(--xe-semantic-focus-ring);
+  outline-offset: 2px;
+}
+
+.default {
+}
+
+.subtle {
+  composes: ds-textarea-subtle from global;
+  background: color-mix(in srgb, var(--xe-semantic-background-elevated) 82%, transparent);
+}
+
+.sm {
+  composes: ds-textarea-sm from global;
+  min-height: 2.5rem;
+  padding: 0.7rem 0.9rem;
+}
+
+.md {
+}
+
+.lg {
+  composes: ds-textarea-lg from global;
+  min-height: 3rem;
+  padding: 0.95rem 1.05rem;
+}
+
+.loading {
+  composes: is-loading from global;
+}

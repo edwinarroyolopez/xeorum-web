@@ -1,0 +1,99 @@
+.button {
+  composes: ds-button from global;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  gap: var(--xe-space-2);
+  min-height: 3rem;
+  padding: 0.9rem 1.35rem;
+  border: 1px solid var(--xe-semantic-border-subtle);
+  border-radius: var(--xe-radius-pill);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--xe-semantic-surface) 94%, transparent), color-mix(in srgb, var(--xe-semantic-background-elevated) 98%, transparent));
+  color: var(--xe-semantic-text-primary);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  transition:
+    background-color var(--xe-motion-duration-base) var(--xe-motion-easing-standard),
+    border-color var(--xe-motion-duration-base) var(--xe-motion-easing-standard),
+    color var(--xe-motion-duration-fast) var(--xe-motion-easing-standard),
+    transform var(--xe-motion-duration-fast) var(--xe-motion-easing-standard),
+    box-shadow var(--xe-motion-duration-fast) var(--xe-motion-easing-standard);
+}
+
+.button:hover {
+  border-color: var(--xe-semantic-accent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--xe-semantic-accent) 12%, var(--xe-semantic-surface)), color-mix(in srgb, var(--xe-semantic-background-elevated) 96%, transparent));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--xe-semantic-accent) 14%, transparent), var(--xe-elevation-soft);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:disabled,
+.button[aria-busy='true'],
+.loading {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--xe-semantic-focus-ring);
+  outline-offset: 2px;
+}
+
+.primary {
+  composes: ds-button-primary from global;
+  border-color: var(--xe-semantic-accent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--xe-semantic-accent) 86%, white 14%), var(--xe-semantic-accent));
+  color: var(--xe-semantic-background);
+}
+
+.primary:hover {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--xe-semantic-accent) 74%, white 26%), var(--xe-semantic-accent));
+  color: var(--xe-semantic-background);
+}
+
+.secondary {
+  composes: ds-button-secondary from global;
+  background: var(--xe-semantic-surface);
+}
+
+.ghost {
+  composes: ds-button-ghost from global;
+  background: transparent;
+  border-color: color-mix(in srgb, var(--xe-semantic-accent) 28%, var(--xe-semantic-border-subtle));
+  color: color-mix(in srgb, var(--xe-semantic-accent) 72%, white 28%);
+}
+
+.toneDefault {
+}
+
+.toneDanger {
+  composes: ds-button-tone-danger from global;
+  border-color: color-mix(in srgb, var(--xe-semantic-danger) 40%, var(--xe-semantic-border-subtle));
+  color: color-mix(in srgb, var(--xe-semantic-danger) 70%, white 30%);
+}
+
+.sm {
+  composes: ds-button-sm from global;
+  min-height: 2.5rem;
+  padding: 0.7rem 1rem;
+  font-size: 0.72rem;
+}
+
+.md {
+}
+
+.lg {
+  composes: ds-button-lg from global;
+  min-height: 3.25rem;
+  padding: 1rem 1.5rem;
+}
+
+.fullWidth {
+  composes: ds-button-full-width from global;
+  width: 100%;
+}

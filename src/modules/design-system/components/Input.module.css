@@ -1,0 +1,41 @@
+.input {
+  composes: ds-input from global;
+  min-height: 2.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--xe-semantic-border-subtle);
+  border-radius: var(--xe-radius-md);
+  background: color-mix(in srgb, var(--xe-semantic-surface) 88%, transparent);
+  color: var(--xe-semantic-text-primary);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--xe-semantic-focus-ring);
+  outline-offset: 2px;
+}
+
+.default {
+}
+
+.subtle {
+  composes: ds-input-subtle from global;
+  background: color-mix(in srgb, var(--xe-semantic-background-elevated) 82%, transparent);
+}
+
+.sm {
+  composes: ds-input-sm from global;
+  min-height: 2.5rem;
+  padding: 0.7rem 0.9rem;
+}
+
+.md {
+}
+
+.lg {
+  composes: ds-input-lg from global;
+  min-height: 3rem;
+  padding: 0.95rem 1.05rem;
+}
+
+.loading {
+  composes: is-loading from global;
+}

@@ -1,0 +1,19 @@
+.skeleton {
+  composes: ds-skeleton from global;
+  display: block;
+  min-height: 1rem;
+  border-radius: var(--xe-radius-sm);
+  background: linear-gradient(90deg, var(--xe-semantic-surface) 0%, var(--xe-semantic-surface-glass) 50%, var(--xe-semantic-surface) 100%);
+  background-size: 200% 100%;
+  animation: pulse var(--xe-motion-duration-slow) var(--xe-motion-easing-standard) infinite;
+}
+
+@keyframes pulse {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}

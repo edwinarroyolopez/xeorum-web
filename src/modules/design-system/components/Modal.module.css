@@ -1,0 +1,58 @@
+.backdrop {
+  composes: ds-dialog-backdrop from global;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  padding: var(--xe-space-4);
+  background: var(--xe-semantic-surface-glass);
+  backdrop-filter: blur(10px);
+}
+
+.modal {
+  composes: ds-modal from global;
+  width: min(100%, 36rem);
+  border: 1px solid var(--xe-semantic-border-subtle);
+  border-radius: var(--xe-radius-lg);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--xe-semantic-surface) 94%, transparent), color-mix(in srgb, var(--xe-semantic-background) 98%, transparent));
+  box-shadow: var(--xe-elevation-overlay);
+}
+
+.header {
+  composes: ds-dialog-header from global;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--xe-space-4);
+  padding: var(--xe-space-4);
+  border-bottom: 1px solid var(--xe-semantic-border-subtle);
+}
+
+.heading {
+  composes: ds-dialog-heading from global;
+  display: grid;
+  gap: var(--xe-space-2);
+}
+
+.heading h2,
+.heading p {
+  margin: 0;
+}
+
+.heading p {
+  color: var(--xe-semantic-text-secondary);
+}
+
+.body {
+  composes: ds-dialog-body from global;
+  display: grid;
+  gap: var(--xe-space-4);
+  padding: var(--xe-space-4);
+}
+
+.footer {
+  composes: ds-dialog-footer from global;
+  border-top: 1px solid var(--xe-semantic-border-subtle);
+}

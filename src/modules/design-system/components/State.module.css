@@ -1,0 +1,29 @@
+.state {
+  composes: ds-state from global;
+  display: grid;
+  gap: var(--xe-space-3);
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--xe-semantic-border-subtle);
+  border-radius: var(--xe-radius-md);
+  background: var(--xe-semantic-background-elevated);
+}
+
+.panel {
+  composes: ds-state-panel from global;
+  background: color-mix(in srgb, var(--xe-semantic-surface) 86%, transparent);
+}
+
+.default {
+}
+
+.toneDanger {
+  composes: ds-state-tone-danger from global;
+}
+
+.title {
+  composes: ds-state-title from global;
+}
+
+.actions {
+  composes: ds-state-actions from global;
+}

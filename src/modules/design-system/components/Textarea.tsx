@@ -1,6 +1,8 @@
 import React from 'react';
 import type { ComponentPropsWithoutRef } from 'react';
 import { Field } from './Field';
+import styles from './Textarea.module.css';
+import { cn } from '../../../lib/ui/cn';
 
 export function Textarea({
   label,
@@ -22,19 +24,21 @@ export function Textarea({
   loading?: boolean;
 } & ComponentPropsWithoutRef<'textarea'>>) {
   const textareaId = id ?? (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
-  const classes = ['ds-textarea', `ds-textarea-${variant}`, `ds-textarea-${size}`];
-
-  if (loading) {
-    classes.push('is-loading');
-  }
-
-  if (className) {
-    classes.push(className);
-  }
 
   return (
     <Field htmlFor={textareaId} label={label} hint={hint} error={error} {...(props.required ? { required: true } : {})}>
-      <textarea {...props} id={textareaId} disabled={disabled || loading} aria-invalid={Boolean(error) || undefined} aria-busy={loading || undefined} className={classes.join(' ')} />
+      <textarea {...props} id={textareaId} disabled={disabled || loading} aria-invalid={Boolean(error) || undefined} aria-busy={loading || undefined} className={cn(styles.textarea, 'ds-textarea', variantClass[variant], `ds-textarea-${variant}`, sizeClass[size], `ds-textarea-${size}`, loading && styles.loading, loading && 'is-loading', className)} />
     </Field>
   );
 }
+
+const variantClass = {
+  default: styles.default,
+  subtle: styles.subtle,
+};
+
+const sizeClass = {
+  sm: styles.sm,
+  md: styles.md,
+  lg: styles.lg,
+};

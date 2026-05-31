@@ -1,5 +1,7 @@
 import React from 'react';
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+import styles from './SegmentedGroup.module.css';
+import { cn } from '../../../lib/ui/cn';
 
 export type SegmentedOption<TValue extends string = string> = {
   label: ReactNode;
@@ -24,19 +26,13 @@ export function SegmentedGroup<TValue extends string = string>({
   className,
   ...props
 }: Readonly<SegmentedGroupProps<TValue>>) {
-  const classes = ['ds-segmented-group', `ds-segmented-group-${size}`];
-
-  if (className) {
-    classes.push(className);
-  }
-
   return (
-    <div {...props} className={classes.join(' ')} role="group" aria-label={label}>
+    <div {...props} className={cn(styles.group, 'ds-segmented-group', sizeClass[size], `ds-segmented-group-${size}`, className)} role="group" aria-label={label}>
       {options.map((option) => (
         <button
           key={option.value}
           type="button"
-          className={option.value === value ? 'ds-segmented-option is-selected' : 'ds-segmented-option'}
+          className={cn(styles.option, 'ds-segmented-option', option.value === value && styles.selected, option.value === value && 'is-selected')}
           aria-pressed={option.value === value}
           disabled={option.disabled}
           onClick={() => onChange(option.value)}
@@ -47,3 +43,8 @@ export function SegmentedGroup<TValue extends string = string>({
     </div>
   );
 }
+
+const sizeClass = {
+  sm: styles.sm,
+  md: styles.md,
+};

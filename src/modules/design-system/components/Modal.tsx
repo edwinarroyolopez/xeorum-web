@@ -5,6 +5,8 @@ import type { ReactNode } from 'react';
 import { Button } from './Button';
 import { useDialogAccessibility } from './dialog.shared';
 import { ActionRow } from './ActionRow';
+import styles from './Modal.module.css';
+import { cn } from '../../../lib/ui/cn';
 
 export function Modal({
   open,
@@ -22,18 +24,18 @@ export function Modal({
   }
 
   return (
-    <div className="ds-dialog-backdrop" onClick={onClose}>
+    <div className={cn(styles.backdrop, 'ds-dialog-backdrop')} onClick={onClose}>
       <div
         ref={containerRef as React.RefObject<HTMLDivElement>}
-        className="ds-modal"
+        className={cn(styles.modal, 'ds-modal')}
         role="dialog"
         aria-modal="true"
         aria-label={title}
         tabIndex={-1}
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="ds-dialog-header">
-          <div className="ds-dialog-heading">
+        <div className={cn(styles.header, 'ds-dialog-header')}>
+          <div className={cn(styles.heading, 'ds-dialog-heading')}>
             <h2>{title}</h2>
             {description ? <p>{description}</p> : null}
           </div>
@@ -41,8 +43,8 @@ export function Modal({
             {closeLabel}
           </Button>
         </div>
-        <div className="ds-dialog-body">{children}</div>
-        {footer ? <ActionRow className="ds-dialog-footer" justify="end">{footer}</ActionRow> : null}
+        <div className={cn(styles.body, 'ds-dialog-body')}>{children}</div>
+        {footer ? <ActionRow className={cn(styles.footer, 'ds-dialog-footer')} justify="end">{footer}</ActionRow> : null}
       </div>
     </div>
   );

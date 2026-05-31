@@ -1,0 +1,49 @@
+.badge {
+  composes: ds-badge from global;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xe-space-2);
+  width: fit-content;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--xe-semantic-border-subtle);
+  border-radius: var(--xe-radius-pill);
+  background: color-mix(in srgb, var(--xe-semantic-surface) 82%, transparent);
+  color: var(--xe-semantic-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+}
+
+.default {
+}
+
+.sm {
+  composes: ds-badge-sm from global;
+  padding: 0.32rem 0.6rem;
+  font-size: 0.68rem;
+}
+
+.accent {
+  composes: ds-badge-accent from global;
+  border-color: var(--xe-semantic-accent-muted);
+  background: var(--xe-semantic-accent-muted);
+  color: var(--xe-semantic-text-primary);
+}
+
+.success {
+  composes: ds-badge-success from global;
+  border-color: var(--xe-semantic-success);
+  color: var(--xe-semantic-success);
+}
+
+.warning {
+  composes: ds-badge-warning from global;
+  border-color: var(--xe-semantic-warning);
+  color: var(--xe-semantic-warning);
+}
+
+.danger {
+  composes: ds-badge-danger from global;
+  border-color: var(--xe-semantic-danger);
+  color: var(--xe-semantic-danger);
+}

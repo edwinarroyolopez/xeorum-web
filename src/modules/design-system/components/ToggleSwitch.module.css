@@ -1,0 +1,49 @@
+.toggle {
+  composes: ds-toggle-switch from global;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xe-space-2);
+  gap: var(--xe-space-3);
+  min-height: 2.75rem;
+  padding: 0.4rem 0.75rem 0.4rem 0.4rem;
+  border: 1px solid var(--xe-semantic-border-subtle);
+  border-radius: var(--xe-radius-pill);
+  background: color-mix(in srgb, var(--xe-semantic-surface) 88%, transparent);
+  color: var(--xe-semantic-text-primary);
+}
+
+.handle {
+  composes: ds-toggle-switch-handle from global;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  background: var(--xe-semantic-text-secondary);
+  transform: translateX(0);
+  transition: transform var(--xe-motion-duration-fast) var(--xe-motion-easing-standard), background-color var(--xe-motion-duration-fast) var(--xe-motion-easing-standard);
+}
+
+.label {
+  composes: ds-toggle-switch-label from global;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+}
+
+.active {
+  composes: is-active from global;
+  border-color: color-mix(in srgb, var(--xe-semantic-accent) 28%, var(--xe-semantic-border-subtle));
+  color: var(--xe-semantic-text-primary);
+}
+
+.active .handle {
+  transform: translateX(0.15rem);
+  background: var(--xe-semantic-accent);
+}
+
+.sm {
+  composes: ds-toggle-switch-sm from global;
+  min-height: 2.45rem;
+}
+
+.md {
+}

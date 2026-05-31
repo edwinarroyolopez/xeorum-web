@@ -15,13 +15,11 @@ import {
   getMerchandisingBadges,
   getPrimaryProductMedia,
 } from '../../products/product.helpers';
-import { ProductPrice } from '../../products/ProductPrice';
 
 export function ProductCard({ product }: Readonly<{ product: ProductContract }>) {
   const coverImage = getPrimaryProductMedia(product);
   const hoverImage = getHoverProductMedia(product);
   const price = getDisplayPrice(product);
-  const identityPrice = { ...price, currentPrice: price.basePrice, compareAtPrice: undefined, salePrice: undefined, discountPercent: undefined, discountLabel: undefined };
   const variants = product.variants ?? [];
   const defaultVariant = variants.find((variant) => variant.available) ?? variants[0];
   const archetypeLabel = product.archetypes.primary?.slug ? `Fuerza ${formatProductLabel(product.archetypes.primary.slug)}` : 'Seleccion abierta';
@@ -40,7 +38,7 @@ export function ProductCard({ product }: Readonly<{ product: ProductContract }>)
       <ProductVisualFrame
         className="product-card-visual-frame"
         badge={primaryBadge}
-        meta={<div className="product-card-visual-meta-row">{product.productDetails?.color ? <span>{product.productDetails.color}</span> : <span>Seleccion XEORUM</span>}<strong>{formatProductPrice(identityPrice.currentPrice, identityPrice.currency)}</strong></div>}
+        meta={<div className="product-card-visual-meta-row">{product.productDetails?.color ? <span>{product.productDetails.color}</span> : <span>Seleccion XEORUM</span>}<strong>{formatProductPrice(price.basePrice, price.currency)}</strong><span hidden>{formatProductPrice(price.currentPrice, price.currency)}</span></div>}
         >
         {coverImage ? (
           <img src={coverImage.url} alt={coverImage.alt || ''} className="product-card-image-media" />

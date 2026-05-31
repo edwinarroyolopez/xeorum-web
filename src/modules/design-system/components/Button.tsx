@@ -1,6 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+import styles from './Button.module.css';
+import { cn } from '../../../lib/ui/cn';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
 export type ButtonTone = 'default' | 'danger';
@@ -21,22 +23,39 @@ function buttonClassName({
   fullWidth: boolean;
   className: string | undefined;
 }>) {
-  const classes = ['ds-button', `ds-button-${variant}`, `ds-button-${size}`, `ds-button-tone-${tone}`];
-
-  if (loading) {
-    classes.push('is-loading');
-  }
-
-  if (fullWidth) {
-    classes.push('ds-button-full-width');
-  }
-
-  if (className) {
-    classes.push(className);
-  }
-
-  return classes.join(' ');
+  return cn(
+    styles.button,
+    'ds-button',
+    variantClass[variant],
+    `ds-button-${variant}`,
+    sizeClass[size],
+    `ds-button-${size}`,
+    toneClass[tone],
+    `ds-button-tone-${tone}`,
+    loading && styles.loading,
+    loading && 'is-loading',
+    fullWidth && styles.fullWidth,
+    fullWidth && 'ds-button-full-width',
+    className,
+  );
 }
+
+const variantClass = {
+  primary: styles.primary,
+  secondary: styles.secondary,
+  ghost: styles.ghost,
+};
+
+const sizeClass = {
+  sm: styles.sm,
+  md: styles.md,
+  lg: styles.lg,
+};
+
+const toneClass = {
+  default: styles.toneDefault,
+  danger: styles.toneDanger,
+};
 
 type ButtonProps = {
   variant?: ButtonVariant;

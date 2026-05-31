@@ -1,0 +1,39 @@
+.group {
+  composes: ds-segmented-group from global;
+  display: inline-flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.3rem;
+  border: 1px solid var(--xe-semantic-border-subtle);
+  border-radius: var(--xe-radius-pill);
+  background: color-mix(in srgb, var(--xe-semantic-surface) 78%, transparent);
+}
+
+.option {
+  composes: ds-segmented-option from global;
+  min-height: 2.4rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--xe-semantic-border-subtle);
+  border-radius: var(--xe-radius-pill);
+  background: var(--xe-semantic-background-elevated);
+  color: var(--xe-semantic-text-secondary);
+}
+
+.selected {
+  composes: is-selected from global;
+  border-color: var(--xe-semantic-accent);
+  color: var(--xe-semantic-text-primary);
+}
+
+.sm {
+  composes: ds-segmented-group-sm from global;
+}
+
+.md {
+}
+
+.sm .option {
+  min-height: 2.1rem;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.78rem;
+}

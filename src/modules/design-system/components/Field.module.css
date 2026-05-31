@@ -1,0 +1,42 @@
+.field {
+  composes: ds-field from global;
+  display: grid;
+  gap: var(--xe-space-2);
+}
+
+.invalid {
+  composes: ds-field-invalid from global;
+}
+
+.invalid :global(.ds-input),
+.invalid :global(.ds-select),
+.invalid :global(.ds-textarea) {
+  border-color: color-mix(in srgb, var(--xe-semantic-danger) 55%, var(--xe-semantic-border-subtle));
+}
+
+.label {
+  composes: ds-field-label from global;
+  color: var(--xe-semantic-text-secondary);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.required {
+  composes: ds-field-required from global;
+}
+
+.hint,
+.error {
+  font-size: 0.85rem;
+}
+
+.hint {
+  composes: ds-field-hint from global;
+  color: var(--xe-semantic-text-muted);
+}
+
+.error {
+  composes: ds-field-error from global;
+  color: var(--xe-semantic-danger);
+}

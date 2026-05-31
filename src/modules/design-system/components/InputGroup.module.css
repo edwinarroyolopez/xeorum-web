@@ -1,0 +1,32 @@
+.group {
+  composes: ds-input-group from global;
+  display: flex;
+  align-items: stretch;
+  align-items: center;
+  gap: var(--xe-space-2);
+  padding-inline: 0.95rem;
+  border: 1px solid var(--xe-semantic-border-subtle);
+  border-radius: var(--xe-radius-md);
+  background: color-mix(in srgb, var(--xe-semantic-surface) 88%, transparent);
+}
+
+.adornment {
+  composes: ds-input-group-adornment from global;
+  color: var(--xe-semantic-text-secondary);
+  white-space: nowrap;
+}
+
+.group :global(.ds-input) {
+  border: 0;
+  background: transparent;
+  padding-inline: 0;
+}
+
+.group :global(.ds-input:focus-visible) {
+  outline: 0;
+}
+
+.group:focus-within {
+  outline: 2px solid var(--xe-semantic-focus-ring);
+  outline-offset: 2px;
+}
