@@ -143,6 +143,39 @@ describe('pantheonApi', () => {
     ]);
   });
 
+  it('accepts public gallery video previews', async () => {
+    vi.mocked(apiClient.get).mockResolvedValueOnce({
+      slug: 'zeus',
+      name: 'Zeus',
+      coreEnergy: 'Leadership with visible order and force.',
+      corePhrase: 'Built To Lead.',
+      shortManifesto: 'Presence is established before it is explained.',
+      visualMood: 'Storm-lit authority over marble order.',
+      palette: ['#0B0B0D'],
+      symbols: ['lightning'],
+      ctaLabel: 'Enter Zeus Portal',
+      galleryPreview: [
+        {
+          title: 'Hero Motion',
+          videoUrl: 'https://cdn.example.com/zeus.mp4',
+          altText: 'Motion preview.',
+          tags: ['zeus'],
+        },
+      ],
+      commerce: {
+        openMarketAngle: 'Premium strong-presence pieces for people drawn to visible authority.',
+        productCategories: ['hoodies'],
+        marketTags: ['premium'],
+      },
+    });
+
+    await expect(pantheonApi.getArchetype('zeus')).resolves.toEqual(
+      expect.objectContaining({
+        galleryPreview: [expect.objectContaining({ videoUrl: 'https://cdn.example.com/zeus.mp4' })],
+      }),
+    );
+  });
+
   it('rejects forbidden admin fields in public payloads', async () => {
     vi.mocked(apiClient.get).mockResolvedValueOnce({
       slug: 'zeus',

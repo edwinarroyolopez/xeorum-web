@@ -3,7 +3,7 @@
 import React from 'react';
 import { EmptyState, ErrorState, LoadingState } from '../design-system';
 import { useProducts } from '../products/hooks/products.queries';
-import { usePantheonArchetypes } from '../pantheon/pantheon.queries';
+import { usePantheonArchetypes } from '../pantheon/hooks';
 import { orderPantheonArchetypes } from '../pantheon/pantheon.types';
 import { useHomeFeaturedProduct } from './hooks/useHomeFeaturedProduct';
 import { homePortalFallbacks } from './services/home.content';

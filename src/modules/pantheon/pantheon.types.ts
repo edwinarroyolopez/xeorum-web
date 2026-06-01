@@ -4,6 +4,7 @@ import type { Product } from '../products/services/products.types';
 export type PantheonGalleryPreviewItem = {
   title: string;
   imageUrl?: string;
+  videoUrl?: string;
   altText: string;
   tags: string[];
 };
@@ -151,6 +152,10 @@ function readOptionalString(value: unknown) {
   return typeof value === 'string' && value.trim() ? value.trim() : undefined;
 }
 
+function readStringWithFallback(value: unknown, fallback: string) {
+  return typeof value === 'string' && value.trim() ? value.trim() : fallback;
+}
+
 function assertNoForbiddenFields(payload: Record<string, unknown>) {
   for (const field of forbiddenPublicFields) {
     if (field in payload) {
@@ -165,11 +170,14 @@ function parseGalleryPreviewItem(value: unknown, index: number): PantheonGallery
   }
 
   const imageUrl = readOptionalString(value.imageUrl);
+  const videoUrl = readOptionalString(value.videoUrl);
+  const altText = readString(value.altText, `galleryPreview[${index}].altText`);
 
   return {
-    title: readString(value.title, `galleryPreview[${index}].title`),
+    title: readStringWithFallback(value.title, altText || `Pantheon preview ${index + 1}`),
     ...(imageUrl ? { imageUrl } : {}),
-    altText: readString(value.altText, `galleryPreview[${index}].altText`),
+    ...(videoUrl ? { videoUrl } : {}),
+    altText,
     tags: readStringArray(value.tags, `galleryPreview[${index}].tags`),
   };
 }
@@ -180,13 +188,16 @@ function parseLandingGalleryItem(value: unknown, index: number): PantheonLanding
   }
 
   const imageUrl = readOptionalString(value.imageUrl);
+  const videoUrl = readOptionalString(value.videoUrl);
+  const altText = readString(value.altText, `galleryPreview[${index}].altText`);
 
   return {
     id: readString(value.id, `galleryPreview[${index}].id`),
-    title: readString(value.title, `galleryPreview[${index}].title`),
+    title: readStringWithFallback(value.title, altText || `Pantheon preview ${index + 1}`),
     type: readString(value.type, `galleryPreview[${index}].type`) as PantheonLandingGalleryItem['type'],
     ...(imageUrl ? { imageUrl } : {}),
-    altText: readString(value.altText, `galleryPreview[${index}].altText`),
+    ...(videoUrl ? { videoUrl } : {}),
+    altText,
     tags: readStringArray(value.tags, `galleryPreview[${index}].tags`),
     sortOrder: typeof value.sortOrder === 'number' ? value.sortOrder : index,
   };

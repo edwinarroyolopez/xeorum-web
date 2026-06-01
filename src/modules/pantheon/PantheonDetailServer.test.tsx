@@ -2,9 +2,9 @@ import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { PantheonDetailServer } from './PantheonDetailServer';
-import { getPantheonArchetypeLandingServer } from './pantheon.metadata';
+import { getPantheonArchetypeLandingServer } from './services';
 
-vi.mock('./pantheon.metadata', () => ({
+vi.mock('./services', () => ({
   getPantheonArchetypeLandingServer: vi.fn(),
 }));
 

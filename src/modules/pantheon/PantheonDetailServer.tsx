@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPantheonArchetypeLandingServer } from './pantheon.metadata';
+import { getPantheonArchetypeLandingServer } from './services';
 import { PantheonDetailClient } from './PantheonDetailClient';
 import type { PantheonArchetypeLanding } from './pantheon.types';
 

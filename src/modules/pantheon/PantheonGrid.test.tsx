@@ -58,7 +58,7 @@ describe('PantheonGrid', () => {
           palette: ['#220909'],
           symbols: ['spear'],
           ctaLabel: 'Enter Ares Portal',
-          galleryPreview: [],
+          galleryPreview: [{ title: 'Ares portrait', imageUrl: 'https://cdn.example.com/ares.jpg', altText: 'Ares editorial portrait', tags: ['ares'] }],
           commerce: { openMarketAngle: 'Sharp pieces.', productCategories: [], marketTags: [] },
         },
         {
@@ -71,7 +71,7 @@ describe('PantheonGrid', () => {
           palette: ['#0B0B0D'],
           symbols: ['lightning'],
           ctaLabel: 'Enter Zeus Portal',
-          galleryPreview: [],
+          galleryPreview: [{ title: 'Zeus portrait', imageUrl: 'https://cdn.example.com/zeus.jpg', altText: 'Zeus editorial portrait', tags: ['zeus'] }],
           commerce: { openMarketAngle: 'Premium strong-presence pieces.', productCategories: [], marketTags: [] },
         },
       ],
@@ -79,7 +79,12 @@ describe('PantheonGrid', () => {
 
     const html = renderToStaticMarkup(<PantheonGrid />);
 
+    expect(html).toContain('Elige la fuerza que ya te esta mirando.');
     expect(html).toContain('Built To Lead.');
+    expect(html).toContain('https://cdn.example.com/zeus.jpg');
+    expect(html).toContain('/identity/zeus');
+    expect(html).toContain('/identity/ares');
+    expect(html).toContain('aria-pressed="true"');
     expect(html.indexOf('Zeus')).toBeLessThan(html.indexOf('Ares'));
   });
 });

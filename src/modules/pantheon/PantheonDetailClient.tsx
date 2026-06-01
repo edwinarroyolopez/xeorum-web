@@ -8,14 +8,19 @@ import type { PantheonArchetypeLanding } from './pantheon.types';
 
 export function PantheonDetailClient({ slug, initialData }: Readonly<{ slug: string; initialData?: PantheonArchetypeLanding }>) {
   const query = usePantheonArchetypeLanding(slug, initialData);
+  const resolvedData = query.data ?? initialData;
 
-  if (query.isLoading) {
+  if (query.isLoading && !resolvedData) {
     return <LoadingState title="Preparando el portal" description="Cargando narrativa, producto curado y sistema visual." />;
   }
 
-  if (query.isError || !query.data) {
+  if (query.isError && !resolvedData) {
     return <ErrorState title="Portal no disponible" description="El portal no esta disponible ahora." />;
   }
 
-  return <ArchetypeLanding archetype={query.data} />;
+  if (!resolvedData) {
+    return <ErrorState title="Portal no disponible" description="El portal no esta disponible ahora." />;
+  }
+
+  return <ArchetypeLanding archetype={resolvedData} />;
 }

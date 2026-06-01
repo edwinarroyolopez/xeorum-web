@@ -4,7 +4,7 @@ import {
   buildArchetypeMetadata,
   fallbackArchetypeMetadata,
   getPantheonArchetypeLandingServer,
-} from '../../../../modules/pantheon/pantheon.metadata';
+} from '../../../../modules/pantheon/services';
 
 export const dynamic = 'force-dynamic';
 

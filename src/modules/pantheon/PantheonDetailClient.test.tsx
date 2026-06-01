@@ -30,6 +30,73 @@ describe('PantheonDetailClient', () => {
     expect(html).toContain('El portal no esta disponible ahora.');
   });
 
+  it('keeps rendering initial data when client revalidation fails', () => {
+    mockPantheonArchetypeQuery({ isLoading: false, isError: true, data: undefined });
+
+    const html = renderToStaticMarkup(<PantheonDetailClient slug="afrodita" initialData={{
+      slug: 'afrodita',
+      name: 'Afrodita',
+      identity: {
+        title: 'Afrodita',
+        oneLineDefinition: 'Dominio suave.',
+        coreEnergy: 'Magnetismo estetico.',
+        secondaryEnergies: [],
+        humanDesire: 'Presencia.',
+        emotionalPromise: 'Influencia.',
+        symbolicRole: 'Muse.',
+      },
+      narrative: {
+        corePhrase: 'Beauty becomes influence.',
+        shortManifesto: 'Short manifesto.',
+        longManifesto: 'Long manifesto.',
+        shadow: 'Vanity.',
+        transformationArc: 'From validation to agency.',
+        modernInterpretation: 'Modern magnetism.',
+      },
+      psychology: {
+        dominantTraits: ['magnetica'],
+        behavioralSignals: ['elegancia'],
+        motivations: ['deseo'],
+        fears: ['vulgaridad'],
+        aspirations: ['influencia'],
+      },
+      visualSystem: {
+        mood: 'Pearl glow.',
+        artDirection: 'Liquid luxury.',
+        palette: [{ name: 'Pearl', hex: '#E8DED2', usage: 'accent' }],
+        symbols: [],
+        textures: [],
+        lighting: [],
+        environments: [],
+      },
+      galleryPreview: [],
+      commerce: {
+        productHeading: 'Pieces shaped by Afrodita',
+        productSubheading: 'Published products aligned.',
+        dropHeading: 'Afrodita drops',
+        dropSubheading: 'Drops aligned.',
+        openMarketAngle: 'Premium presence.',
+        productCategories: [],
+        marketTags: [],
+      },
+      relationships: { allies: [], contrasts: [], tensions: [] },
+      cta: { primaryLabel: 'Explore archetype', primaryHref: '/products?archetype=afrodita', secondaryLabel: 'Run Identity Test', secondaryHref: '/identity' },
+      seo: { title: 'Afrodita', description: 'Afrodita', keywords: ['afrodita'], openGraphTitle: 'Afrodita', openGraphDescription: 'Afrodita' },
+      theme: {
+        overlaySlug: 'afrodita',
+        intensityDefault: 'subtle',
+        allowedContexts: ['pantheon'],
+        heroEffectProfile: 'editorial-float',
+        heroEffect: { auraColor: 'rgba(120, 180, 255, 0.18)', floatDistance: 2, portraitTilt: 1, profileLift: 1, signalLift: 1 },
+      },
+      products: [],
+      drops: [],
+    }} />);
+
+    expect(html).toContain('Afrodita');
+    expect(html).not.toContain('El portal no esta disponible ahora.');
+  });
+
   it('renders the mature archetype landing in the documented order', () => {
     mockPantheonArchetypeQuery({
       isLoading: false,
@@ -151,18 +218,23 @@ describe('PantheonDetailClient', () => {
     const html = renderToStaticMarkup(<PantheonDetailClient slug="zeus" />);
 
     expect(html).toContain('Built To Lead.');
-    expect(html).toContain('Esencia');
-    expect(html).toContain('Expresion');
-    expect(html).toContain('Maduracion');
+    expect(html).toContain('Identidad');
+    expect(html).toContain('Manifesto');
+    expect(html).toContain('Psicologia editorial');
+    expect(html).toContain('Sombra');
+    expect(html).toContain('Transformacion');
     expect(html).toContain('Premium strong-presence pieces for people drawn to visible authority.');
     expect(html).toContain('Editorial visual reference showing a dark premium outfit.');
     expect(html).toContain('Zeus Coat');
     expect(html).toContain('Zeus Night');
-    expect(html).toContain('Ver piezas de esta fuerza');
-    expect(html).toContain('Piloto visual activo');
+    expect(html).toContain('Enter Zeus Portal');
+    expect(html).toContain('Run Identity Test');
+    expect(html).not.toContain('Piloto visual activo');
     expect(html).toContain('Imperial Electric');
     expect(html).toContain('data-effect-profile="imperial-electric"');
-    expect(html.indexOf('Esencia')).toBeLessThan(html.indexOf('Pieces shaped by Zeus'));
+    expect(html).toContain('data-zeus-pilot="false"');
+    expect(html.indexOf('Identidad')).toBeLessThan(html.indexOf('Pieces shaped by Zeus'));
+    expect(html.indexOf('Sistema visual')).toBeLessThan(html.indexOf('Pieces shaped by Zeus'));
   });
 
   it('degrades gracefully when gallery preview has no image and products or drops are empty', () => {
@@ -255,5 +327,85 @@ describe('PantheonDetailClient', () => {
     expect(html).toContain('Todavia no hay piezas publicadas para esta fuerza.');
     expect(html).toContain('No hay drops publicados alineados a esta fuerza ahora mismo.');
     expect(html).not.toContain('<img');
+  });
+
+  it('renders video when gallery preview includes approved motion media', () => {
+    mockPantheonArchetypeQuery({
+      isLoading: false,
+      isError: false,
+      data: {
+        slug: 'hades',
+        name: 'Hades',
+        identity: {
+          title: 'Hades',
+          oneLineDefinition: 'Dark magnetism.',
+          coreEnergy: 'Contained power.',
+          secondaryEnergies: [],
+          humanDesire: 'Depth.',
+          emotionalPromise: 'Control.',
+          symbolicRole: 'Keeper.',
+        },
+        narrative: {
+          corePhrase: 'Enter the depth.',
+          shortManifesto: 'Depth before display.',
+          longManifesto: 'Long Hades manifesto.',
+          shadow: 'Isolation.',
+          transformationArc: 'From secrecy to mastery.',
+          modernInterpretation: 'Luxury under restraint.',
+        },
+        psychology: {
+          dominantTraits: ['magnetic'],
+          behavioralSignals: ['silent'],
+          motivations: ['control'],
+          fears: ['exposure'],
+          aspirations: ['mastery'],
+        },
+        visualSystem: {
+          mood: 'Black velvet void.',
+          artDirection: 'Shadow architecture.',
+          palette: [{ name: 'Black', hex: '#111111', usage: 'background' }],
+          symbols: [],
+          textures: [],
+          lighting: [],
+          environments: [],
+        },
+        galleryPreview: [
+          {
+            id: 'gallery-video-1',
+            title: 'Underworld Motion',
+            type: 'campaign_mood',
+            videoUrl: 'https://cdn.example.com/hades.mp4',
+            altText: 'Dark editorial motion sequence.',
+            tags: ['hades'],
+            sortOrder: 1,
+          },
+        ],
+        commerce: {
+          productHeading: 'Pieces shaped by Hades',
+          productSubheading: 'Products follow identity.',
+          dropHeading: 'Hades drops',
+          dropSubheading: 'Drops follow identity.',
+          openMarketAngle: 'Depth-led product.',
+          productCategories: [],
+          marketTags: [],
+        },
+        relationships: { allies: [], contrasts: [], tensions: [] },
+        cta: { primaryLabel: 'Enter', primaryHref: '/products?archetype=hades', secondaryLabel: 'Test', secondaryHref: '/identity' },
+        seo: { title: 'Hades', description: 'Hades', keywords: ['hades'], openGraphTitle: 'Hades', openGraphDescription: 'Hades' },
+        theme: {
+          intensityDefault: 'subtle',
+          allowedContexts: ['pantheon'],
+          heroEffectProfile: 'underworld-drift',
+          heroEffect: { auraColor: 'rgba(80, 80, 120, 0.2)', floatDistance: 10, portraitTilt: 0.5, profileLift: 10, signalLift: 12 },
+        },
+        products: [],
+        drops: [],
+      },
+    });
+
+    const html = renderToStaticMarkup(<PantheonDetailClient slug="hades" />);
+
+    expect(html).toContain('<video');
+    expect(html).toContain('https://cdn.example.com/hades.mp4');
   });
 });
