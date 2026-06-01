@@ -47,7 +47,8 @@ describe('frontend smoke', () => {
 
     const html = renderToStaticMarkup(<ProductDetail slug="hades-heavy-tee" />);
     expect(html).toContain('Hades Heavy Tee');
-    expect(html).toContain('Esenciales tecnicos');
+    expect(html).toContain('Detalles sin ruido.');
     expect(html).toContain('Contexto comercial');
+    expect(html).not.toContain('Esenciales tecnicos');
   });
 });

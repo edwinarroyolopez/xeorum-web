@@ -1,7 +1,9 @@
 .xeorum-home-page {
   align-content: start;
+  place-items: stretch;
   gap: 3.5rem;
   padding: 2rem 1.5rem 5rem;
+  text-align: left;
   background:
     radial-gradient(circle at 18% 10%, rgba(216, 183, 107, 0.12), transparent 28%),
     radial-gradient(circle at 82% 8%, rgba(98, 76, 46, 0.12), transparent 24%),
@@ -10,6 +12,7 @@
 
 .home-shell {
   width: min(1240px, 100%);
+  justify-self: center;
 }
 
 .home-kicker,
@@ -60,8 +63,9 @@
 }
 
 .home-hero-grid {
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr) minmax(18rem, 0.8fr);
-  align-items: center;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 1.75rem;
 }
 
 .home-hero-copy,
@@ -75,12 +79,27 @@
 }
 
 .home-hero-copy {
-  max-width: 42rem;
-  padding-top: 1rem;
+  max-width: none;
+  padding-top: 0.25rem;
+  justify-items: start;
+  text-align: left;
+}
+
+.home-hero-showcase {
+  width: 100%;
+  display: grid;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+@media (min-width: 1101px) {
+  .home-hero-showcase {
+    grid-template-columns: minmax(0, 1.18fr) minmax(20rem, 0.9fr);
+  }
 }
 
 .home-hero-copy > p {
-  max-width: 38rem;
+  max-width: 42rem;
 }
 
 .home-hero-side {
@@ -105,13 +124,14 @@
 
 .home-hero-copy h1 {
   max-width: none;
-  font-size: clamp(2rem, 3.6vw, 3.15rem);
-  line-height: 0.96;
+  font-size: clamp(2.65rem, 4.6vw, 3.95rem);
+  line-height: 0.92;
   letter-spacing: 0.03em;
 }
 
 .home-hero-copy h1 span {
   display: block;
+  white-space: nowrap;
 }
 
 .home-hero-copy p,
@@ -127,6 +147,24 @@
   margin: 0;
   color: rgba(255, 255, 255, 0.6);
   line-height: 1.75;
+}
+
+.home-hero-copy p {
+  text-align: left;
+}
+
+.home-hero-side,
+.home-hero-stage {
+  max-width: 100%;
+}
+
+.home-hero-stage,
+.home-hero-side {
+  width: min(100%, 58rem);
+}
+
+.home-hero-side {
+  justify-items: stretch;
 }
 
 .home-ornamental-line {
@@ -194,6 +232,7 @@
 .home-entry-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 0.55rem;
+  width: 100%;
 }
 
 .home-entry-pill,
@@ -209,9 +248,14 @@
 
 .home-hero-stage {
   position: relative;
-  min-height: 34rem;
+  min-height: 24rem;
   display: grid;
   align-items: center;
+}
+
+.home-hero-stage .home-product-visual {
+  min-height: 24rem;
+  border-radius: 2rem;
 }
 
 .home-stage-aura {
@@ -435,7 +479,10 @@
 }
 
 .home-identity-panel {
-  width: min(100%, 22rem);
+  width: 100%;
+  max-width: 58rem;
+  display: grid;
+  gap: 0.85rem;
 }
 
 .home-identity-topline,
@@ -493,6 +540,14 @@
 .home-questions-list {
   display: grid;
   gap: 0.85rem;
+}
+
+.home-identity-card {
+  margin-bottom: 0.35rem;
+}
+
+.home-route-card {
+  margin-top: 0.35rem;
 }
 
 .home-identity-signal,
@@ -623,18 +678,21 @@
 
 .home-journey-panel {
   display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  grid-template-columns: 1fr;
   gap: 1.5rem;
   border-color: rgba(216, 183, 107, 0.2);
   background: linear-gradient(135deg, rgba(216, 183, 107, 0.08), rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.4));
 }
 
 .home-journey-copy {
-  align-content: center;
-  max-width: 35rem;
+  align-content: start;
+  max-width: none;
 }
 
-.home-journey-copy .home-section-title,
+.home-journey-copy .home-section-title {
+  max-width: none;
+}
+
 .home-ritual-panel .home-section-title,
 .home-product-story-copy .home-section-title,
 .home-live-result-title {
@@ -665,6 +723,8 @@
 
 .home-journey-card p {
   margin: 0;
+  font-family: var(--xe-typography-font-family);
+  font-weight: 700;
   font-size: 1.75rem;
   color: #d8b76b;
 }
@@ -848,10 +908,6 @@
     max-width: none;
   }
 
-  .home-hero-side {
-    justify-items: stretch;
-  }
-
   .home-identity-panel {
     width: 100%;
   }
@@ -907,7 +963,11 @@
   }
 
   .home-hero-copy h1 {
-    font-size: 2.45rem;
+    font-size: 2.3rem;
+  }
+
+  .home-hero-copy h1 span {
+    white-space: normal;
   }
 
   .home-section-title,

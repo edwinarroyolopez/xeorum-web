@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ReactNode } from 'react';
-import { ActionRow, EditorialBody, EditorialPanel, OrnamentalMark, SectionLabel } from '../../design-system';
+import { ActionRow, EditorialBody, EditorialPanel, OrnamentalMark } from '../../design-system';
 
 export function ProductStoryCard({
   symbol,
@@ -15,9 +15,9 @@ export function ProductStoryCard({
 }>) {
   return (
     <EditorialPanel className="xeorum-product-story-card">
+      <OrnamentalMark align="start" {...(symbol ? { symbol } : {})} />
       <div className="xeorum-product-story-card-header">
-        <SectionLabel>{title}</SectionLabel>
-        <OrnamentalMark align="start" {...(symbol ? { symbol } : {})} />
+        <h2>{title}</h2>
       </div>
       <EditorialBody as="div" className="xeorum-product-story-card-copy">{description}</EditorialBody>
       {actions ? <ActionRow className="xeorum-product-story-card-actions">{actions}</ActionRow> : null}

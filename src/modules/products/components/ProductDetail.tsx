@@ -22,7 +22,6 @@ import { ProductHeroGallery } from './ProductHeroGallery';
 import { ProductQuickReadCard } from './ProductQuickReadCard';
 import { ProductDecisionCard } from './ProductDecisionCard';
 import { ProductPurchaseHero } from './ProductPurchaseHero';
-import { ProductEssentialsGrid } from './ProductEssentialsGrid';
 import { ProductStoryCard } from './ProductStoryCard';
 import { ProductCommercialContext } from './ProductCommercialContext';
 import { ProductIdentityLink } from './ProductIdentityLink';
@@ -72,25 +71,21 @@ export function ProductDetail({ slug }: Readonly<{ slug: string }>) {
                   title={viewModel.purchaseHero.title}
                   kicker={viewModel.purchaseHero.kicker}
                   subtitle={viewModel.purchaseHero.subtitle}
-                  presenceItems={viewModel.presenceItems}
                   price={<ProductPrice price={viewModel.price} />}
-                  signals={viewModel.productSignals}
-                  selectionIntro={viewModel.purchaseHero.selectionIntro}
                   variantSelector={<VariantSelector variants={product.variants} {...(selectedVariant?.id ? { selectedVariantId: selectedVariant.id } : {})} onSelectVariant={setSelectedVariantId} />}
                   availability={(
-                    <div className="product-availability-row">
+                    <div className={`product-availability-row product-availability-row-${availability.tone}`}>
                       <ProductAvailabilityBadge label={availability.label} tone={availability.tone} />
                       <span>{availability.detail}</span>
                     </div>
                   )}
                   cta={<AddToCartButton productSlug={product.slug} disabled={!selectedVariant?.available} {...(selectedVariant?.available ? { size: selectedVariant.size } : {})} />}
+                  footer={viewModel.storyCard.archetypeHref && viewModel.storyCard.archetypeLabel ? (
+                    <ProductIdentityLink href={viewModel.storyCard.archetypeHref}>
+                      Ver por que esta pieza pertenece a {viewModel.storyCard.archetypeLabel}
+                    </ProductIdentityLink>
+                  ) : null}
                 />
-                <ProductEssentialsGrid items={viewModel.essentialItems} />
-                {viewModel.storyCard.archetypeHref && viewModel.storyCard.archetypeLabel ? (
-                  <ProductIdentityLink href={viewModel.storyCard.archetypeHref}>
-                    Ver por que esta pieza pertenece a {viewModel.storyCard.archetypeLabel}
-                  </ProductIdentityLink>
-                ) : null}
               </ProductDecisionCard>
             )}
           />

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ProductBadgeItem } from '../services/product-detail.viewmodel';
-import { ProductSummaryPanel } from '../../design-system';
+import { EditorialBody, SectionLabel } from '../../design-system';
 import { ProductDetailBadgeGroup } from './ProductDetailBadgeGroup';
 
 export function ProductCommercialContext({
@@ -15,8 +15,12 @@ export function ProductCommercialContext({
   if (badges.length === 0 && !description) return null;
 
   return (
-    <ProductSummaryPanel label={label} description={description} className="xeorum-product-commercial-context">
-      <ProductDetailBadgeGroup items={badges} />
-    </ProductSummaryPanel>
+    <section className="xeorum-product-commercial-context">
+      <div className="xeorum-product-commercial-context-copy">
+        <SectionLabel>{label}</SectionLabel>
+        <EditorialBody>{description}</EditorialBody>
+      </div>
+      <ProductDetailBadgeGroup items={badges} className="xeorum-product-commercial-context-badges" />
+    </section>
   );
 }

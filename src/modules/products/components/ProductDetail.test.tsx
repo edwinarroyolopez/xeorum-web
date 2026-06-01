@@ -51,10 +51,12 @@ describe('ProductDetail', () => {
     expect(html.indexOf('92')).toBeLessThan(html.indexOf('Narrative later'));
     expect(html).toContain('AddToCart:M:active');
     expect(html).toContain('Talla y disponibilidad');
-    expect(html).toContain('Esenciales tecnicos');
     expect(html).toContain('Ver por que esta pieza pertenece a Hades');
     expect(html).toContain('Detalles sin ruido.');
+    expect(html).toContain('Detalles');
     expect(html).toContain('Contexto comercial');
+    expect(html).not.toContain('Eleccion activa');
+    expect(html).not.toContain('Esenciales tecnicos');
     expect(html).not.toContain('ratingAverage');
   });
 

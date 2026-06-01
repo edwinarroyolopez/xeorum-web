@@ -32,10 +32,12 @@ export function HomeHero({ product }: Readonly<{ product: HomeFeaturedProduct }>
           <div className="home-entry-grid">
             {homeEntryPoints.map((item) => <div key={item.label} className="home-entry-pill">{item.label}</div>)}
           </div>
-        </div>
-        <HomeHeroProductSpotlight product={product} />
-        <div className="home-hero-side">
-          <HomeIdentityPanel product={product} />
+          <div className="home-hero-showcase">
+            <HomeHeroProductSpotlight product={product} />
+            <div className="home-hero-side">
+              <HomeIdentityPanel product={product} />
+            </div>
+          </div>
         </div>
       </div>
     </section>

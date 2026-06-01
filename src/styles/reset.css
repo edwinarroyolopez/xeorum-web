@@ -43,13 +43,13 @@ body {
   grid-template-columns: minmax(12rem, 14rem) minmax(0, 1fr) minmax(9rem, 12rem);
   align-items: center;
   gap: 1rem;
-  padding: 0.95rem 1.35rem;
-  margin-top: 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--xe-semantic-accent) 18%, var(--xe-semantic-border-subtle));
-  border-radius: var(--xe-radius-pill);
-  background: color-mix(in srgb, var(--xe-semantic-background) 72%, transparent);
-  backdrop-filter: blur(1.25rem);
-  box-shadow: var(--xe-elevation-soft);
+  padding: 1.4rem 0 1.15rem;
+  margin-top: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
 }.site-brand,
 .site-nav a {
   text-transform: uppercase;
@@ -1081,8 +1081,8 @@ select {
 
 @media (max-width: 720px) {.site-header {
     width: calc(100% - 1rem);
-    margin-top: 0.5rem;
-    padding: 0.9rem 1rem;
+    margin-top: 0;
+    padding: 1rem 0 0.85rem;
     grid-template-columns: 1fr;
     justify-items: center;
   }.site-nav {

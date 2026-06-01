@@ -71,15 +71,6 @@ export function buildProductDetailViewModel(product: ProductContract, selectedVa
     ...(taxonomy?.marketTags ?? []).map((tag) => formatProductLabel(tag)),
   ].filter(Boolean).slice(0, 3) as string[];
 
-  const essentialItems = [
-    buildFactItem('Material', product.productDetails.material),
-    buildFactItem('Fit', product.productDetails.fit),
-    buildFactItem('Color', product.productDetails.color),
-    buildFactItem('Weight', product.productDetails.gsm ? `${product.productDetails.gsm} GSM` : null),
-    buildFactItem('Origen', product.productDetails.origin),
-    buildFactItem('Tecnica', product.productDetails.printTechnique),
-  ].filter(Boolean).slice(0, 6) as ProductFactItem[];
-
   const contextBadges = [
     taxonomy?.dropSlug ? { label: formatProductLabel(taxonomy.dropSlug) } : null,
     ...(taxonomy?.marketTags ?? []).map((tag) => ({ label: formatProductLabel(tag) })),
@@ -112,11 +103,7 @@ export function buildProductDetailViewModel(product: ProductContract, selectedVa
       kicker: archetypeName ? `Fuerza ${archetypeName}` : 'Seleccion abierta',
       title: product.name,
       subtitle: product.subtitle ?? null,
-      selectionIntro: selectedVariant?.available
-        ? `La talla ${selectedVariant.size} define precio, disponibilidad y entrada inmediata al carrito.`
-        : 'Elige una talla disponible para abrir la compra con total claridad.',
     },
-    essentialItems,
     technicalTabs,
     storyCard: {
       title: 'Marco identitario',
