@@ -20,11 +20,9 @@ export function PantheonStage({ archetypes, activeArchetype, reducedMotion, onAc
   return (
     <section className={cn(styles.stage, reducedMotion && styles.reducedMotion)} style={getPantheonStageStyle(activeArchetype)}>
       <PantheonAmbientLayer archetype={activeArchetype} />
-      <div className={styles.heroPreviewGrid}>
-        <PantheonHeroCopy archetype={activeArchetype} />
-        <PantheonGodPreview archetype={activeArchetype} reducedMotion={reducedMotion} />
-      </div>
+      <PantheonHeroCopy archetype={activeArchetype} />
       <PantheonSelector archetypes={archetypes} activeSlug={activeArchetype.slug} onActiveChange={onActiveChange} />
+      <PantheonGodPreview archetype={activeArchetype} reducedMotion={reducedMotion} />
       <PantheonMobileSelector archetypes={archetypes} activeSlug={activeArchetype.slug} onActiveChange={onActiveChange} />
     </section>
   );

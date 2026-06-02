@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import type { PantheonArchetype } from '../pantheon.types';
 import styles from '../PantheonExperience.module.css';
-import { getPantheonEntryHref, getPantheonPalette, getPantheonPreviewLine, getPantheonSymbol } from '../services';
+import { getPantheonEntryHref, getPantheonPalette, getPantheonPreviewAsset, getPantheonPreviewLine, getPantheonSymbol, isPantheonAvatarVideoAsset } from '../services';
 
 type PantheonGodCardProps = {
   archetype: PantheonArchetype;
@@ -12,6 +12,8 @@ type PantheonGodCardProps = {
 
 export function PantheonGodCard({ archetype, active, onActiveChange }: Readonly<PantheonGodCardProps>) {
   const palette = getPantheonPalette(archetype);
+  const asset = getPantheonPreviewAsset(archetype);
+  const useAvatarVideo = isPantheonAvatarVideoAsset(asset);
 
   return (
     <article
@@ -29,14 +31,28 @@ export function PantheonGodCard({ archetype, active, onActiveChange }: Readonly<
         onFocus={() => onActiveChange(archetype.slug)}
         onClick={() => onActiveChange(archetype.slug)}
       >
-        <div className={styles.selectorCardTop}>
-          <span className={styles.selectorSymbol} aria-hidden="true">{getPantheonSymbol(archetype)}</span>
-          <span className={styles.selectorStatus}>{active ? 'Activo' : 'Seleccionar'}</span>
+        <div className={styles.selectorCardVisual}>
+          <div className={styles.selectorCardAura} aria-hidden="true" />
+          {useAvatarVideo && asset?.videoUrl ? (
+            <video className={styles.selectorCardImage} aria-label={asset.altText} src={asset.videoUrl} muted playsInline loop autoPlay preload="metadata" poster={asset.imageUrl} />
+          ) : asset?.imageUrl ? (
+            <img className={styles.selectorCardImage} alt={asset.altText} src={asset.imageUrl} loading="lazy" />
+          ) : asset?.videoUrl ? (
+            <video className={styles.selectorCardImage} aria-label={asset.altText} src={asset.videoUrl} muted playsInline loop autoPlay preload="metadata" />
+          ) : (
+            <div className={styles.selectorCardFallback}>
+              <span className={styles.selectorSymbol} aria-hidden="true">{getPantheonSymbol(archetype)}</span>
+              <strong>{archetype.name}</strong>
+            </div>
+          )}
+          <div className={styles.selectorCardScrim} aria-hidden="true" />
         </div>
-        <h3 className={styles.selectorName}>{archetype.name}</h3>
-        <p className={styles.selectorPhrase} id={`pantheon-card-copy-${archetype.slug}`}>{getPantheonPreviewLine(archetype)}</p>
+        <div className={styles.selectorCardBody}>
+          <h3 className={styles.selectorName}>{archetype.name}</h3>
+          <p className={styles.selectorPhrase} id={`pantheon-card-copy-${archetype.slug}`}>{getPantheonPreviewLine(archetype)}</p>
+        </div>
       </button>
-      <div className={styles.selectorCardTop}>
+      <div className={styles.selectorCardFooter}>
         <div className={styles.selectorPalette} aria-hidden="true">
           {palette.map((color) => <span key={color} style={{ background: color }} />)}
         </div>

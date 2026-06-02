@@ -7,6 +7,13 @@ export type ArchetypeLandingCta = {
 
 export type ArchetypeLandingViewModel = {
   gallery: PantheonLandingGalleryItem[];
+  heroMedia?: {
+    source: 'avatar-video' | 'gallery-avatar-video' | 'hero-video' | 'hero-image' | 'gallery-video' | 'gallery-image';
+    title: string;
+    altText: string;
+    imageUrl?: string;
+    videoUrl?: string;
+  };
   heroSignals: string[];
   primaryCta: ArchetypeLandingCta;
   secondaryCta: ArchetypeLandingCta;
@@ -40,9 +47,64 @@ function sortLandingGallery(gallery: PantheonLandingGalleryItem[]) {
   return [...gallery].sort((left, right) => left.sortOrder - right.sortOrder);
 }
 
+function isRenderableMedia(media: { imageUrl?: string; videoUrl?: string } | undefined) {
+  return Boolean(media?.videoUrl || media?.imageUrl);
+}
+
+function resolveHeroMedia(archetype: PantheonArchetypeLanding) {
+  const gallery = sortLandingGallery(archetype.galleryPreview);
+  const avatarVideo = archetype.avatarVideo && isRenderableMedia(archetype.avatarVideo)
+    ? {
+        source: 'avatar-video' as const,
+        title: archetype.avatarVideo.title,
+        altText: archetype.avatarVideo.altText,
+        ...(archetype.avatarVideo.imageUrl ? { imageUrl: archetype.avatarVideo.imageUrl } : {}),
+        ...(archetype.avatarVideo.videoUrl ? { videoUrl: archetype.avatarVideo.videoUrl } : {}),
+      }
+    : undefined;
+  const avatarGalleryItem = gallery.find((item) => item.role === 'avatar-video' && isRenderableMedia(item));
+  const heroMedia = archetype.hero && isRenderableMedia(archetype.hero)
+    ? {
+        source: archetype.hero.videoUrl ? 'hero-video' as const : 'hero-image' as const,
+        title: archetype.hero.title,
+        altText: archetype.hero.altText,
+        ...(archetype.hero.imageUrl ? { imageUrl: archetype.hero.imageUrl } : {}),
+        ...(archetype.hero.videoUrl ? { videoUrl: archetype.hero.videoUrl } : {}),
+      }
+    : undefined;
+  const galleryMediaItem = gallery.find((item) => isRenderableMedia(item));
+
+  if (avatarVideo) return avatarVideo;
+  if (avatarGalleryItem) {
+    return {
+      source: 'gallery-avatar-video' as const,
+      title: avatarGalleryItem.title,
+      altText: avatarGalleryItem.altText,
+      ...(avatarGalleryItem.imageUrl ? { imageUrl: avatarGalleryItem.imageUrl } : {}),
+      ...(avatarGalleryItem.videoUrl ? { videoUrl: avatarGalleryItem.videoUrl } : {}),
+    };
+  }
+  if (heroMedia) return heroMedia;
+  if (galleryMediaItem) {
+    return {
+      source: galleryMediaItem.videoUrl ? 'gallery-video' as const : 'gallery-image' as const,
+      title: galleryMediaItem.title,
+      altText: galleryMediaItem.altText,
+      ...(galleryMediaItem.imageUrl ? { imageUrl: galleryMediaItem.imageUrl } : {}),
+      ...(galleryMediaItem.videoUrl ? { videoUrl: galleryMediaItem.videoUrl } : {}),
+    };
+  }
+
+  return undefined;
+}
+
 export function buildArchetypeLandingViewModel(archetype: PantheonArchetypeLanding): ArchetypeLandingViewModel {
+  const gallery = sortLandingGallery(archetype.galleryPreview).filter((item) => item.role !== 'avatar-video');
+  const heroMedia = resolveHeroMedia(archetype);
+
   return {
-    gallery: sortLandingGallery(archetype.galleryPreview),
+    gallery,
+    ...(heroMedia ? { heroMedia } : {}),
     heroSignals: buildHeroSignals(archetype),
     primaryCta: buildPrimaryCta(archetype),
     secondaryCta: buildSecondaryCta(archetype),

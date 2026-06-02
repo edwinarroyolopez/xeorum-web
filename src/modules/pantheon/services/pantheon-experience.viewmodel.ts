@@ -30,8 +30,19 @@ export function getPantheonSymbol(archetype: PantheonArchetype) {
   return symbolKey ? symbolicMap[symbolKey] ?? rawSymbol.slice(0, 2).toUpperCase() : rawSymbol.slice(0, 2).toUpperCase();
 }
 
+export function isPantheonAvatarVideoAsset(asset: PantheonGalleryPreviewItem | undefined) {
+  if (!asset?.videoUrl) return false;
+
+  return asset.role === 'avatar-video'
+    || asset.title.trim().toLowerCase() === 'avatar video'
+    || asset.tags.some((tag) => tag.trim().toLowerCase() === 'avatar-video');
+}
+
 export function getPantheonPreviewAsset(archetype: PantheonArchetype): PantheonGalleryPreviewItem | undefined {
-  return archetype.galleryPreview.find((item) => item.imageUrl) ?? archetype.galleryPreview.find((item) => item.videoUrl) ?? archetype.galleryPreview[0];
+  return archetype.galleryPreview.find((item) => isPantheonAvatarVideoAsset(item))
+    ?? archetype.galleryPreview.find((item) => item.imageUrl)
+    ?? archetype.galleryPreview.find((item) => item.videoUrl)
+    ?? archetype.galleryPreview[0];
 }
 
 export function getPantheonTags(archetype: PantheonArchetype) {

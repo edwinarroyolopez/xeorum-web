@@ -105,6 +105,58 @@ describe('buildArchetypeLandingViewModel', () => {
     expect(viewModel.zeusPilotActive).toBe(true);
   });
 
+  it('prioritizes avatar media over hero media and gallery previews', () => {
+    const viewModel = buildArchetypeLandingViewModel(buildLanding({
+      hero: {
+        assetId: 'hero-asset',
+        title: 'Hero fallback',
+        type: 'campaign_mood',
+        imageUrl: 'https://cdn.example.com/hero.jpg',
+        altText: 'Hero fallback image',
+        sortOrder: 0,
+      },
+      avatarVideo: {
+        assetId: 'avatar-video-asset',
+        title: 'Avatar motion',
+        videoUrl: 'https://cdn.example.com/avatar.mp4',
+        altText: 'Avatar motion video',
+      },
+      galleryPreview: [
+        { id: 'gallery-avatar', title: 'Avatar gallery', type: 'campaign_mood', videoUrl: 'https://cdn.example.com/gallery-avatar.mp4', altText: 'Gallery avatar', tags: ['avatar'], role: 'avatar-video', sortOrder: 0 },
+        { id: 'gallery-image', title: 'Gallery image', type: 'campaign_mood', imageUrl: 'https://cdn.example.com/gallery.jpg', altText: 'Gallery image', tags: ['gallery'], sortOrder: 1 },
+      ],
+    }));
+
+    expect(viewModel.heroMedia).toEqual(expect.objectContaining({
+      source: 'avatar-video',
+      videoUrl: 'https://cdn.example.com/avatar.mp4',
+      altText: 'Avatar motion video',
+    }));
+    expect(viewModel.gallery.map((item) => item.id)).toEqual(['gallery-image']);
+  });
+
+  it('falls back to hero or gallery media when avatar video is absent', () => {
+    const viewModel = buildArchetypeLandingViewModel(buildLanding({
+      hero: {
+        assetId: 'hero-asset',
+        title: 'Hero image',
+        type: 'campaign_mood',
+        imageUrl: 'https://cdn.example.com/hero.jpg',
+        altText: 'Hero image',
+        sortOrder: 0,
+      },
+      galleryPreview: [
+        { id: 'gallery-video', title: 'Gallery video', type: 'campaign_mood', videoUrl: 'https://cdn.example.com/gallery.mp4', altText: 'Gallery motion', tags: ['gallery'], sortOrder: 0 },
+      ],
+    }));
+
+    expect(viewModel.heroMedia).toEqual(expect.objectContaining({
+      source: 'hero-image',
+      imageUrl: 'https://cdn.example.com/hero.jpg',
+      altText: 'Hero image',
+    }));
+  });
+
   it('falls back safely when cta labels or hrefs are empty and overlay is published', () => {
     const viewModel = buildArchetypeLandingViewModel(buildLanding({
       cta: {

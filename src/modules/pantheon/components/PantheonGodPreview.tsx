@@ -3,17 +3,22 @@ import Link from 'next/link';
 import { Badge, Kicker, LinkButton } from '../../design-system';
 import type { PantheonArchetype } from '../pantheon.types';
 import styles from '../PantheonExperience.module.css';
-import { getPantheonEntryHref, getPantheonMirrorHref, getPantheonPalette, getPantheonPreviewAsset, getPantheonPreviewLine, getPantheonSymbol, getPantheonTags } from '../services';
+import { getPantheonEntryHref, getPantheonMirrorHref, getPantheonPalette, getPantheonPreviewAsset, getPantheonPreviewLine, getPantheonSymbol, getPantheonTags, isPantheonAvatarVideoAsset } from '../services';
 
 export function PantheonGodPreview({ archetype, reducedMotion }: Readonly<{ archetype: PantheonArchetype; reducedMotion: boolean }>) {
   const asset = getPantheonPreviewAsset(archetype);
   const palette = getPantheonPalette(archetype);
   const tags = getPantheonTags(archetype);
+  const useAvatarVideo = isPantheonAvatarVideoAsset(asset);
 
   return (
     <section className={styles.preview} aria-labelledby={`pantheon-preview-${archetype.slug}`}>
       <div className={styles.previewVisual}>
-        {asset?.imageUrl ? (
+        {useAvatarVideo && asset?.videoUrl ? (
+          <div className={styles.previewVisualFrame}>
+            <video aria-label={asset.altText} src={asset.videoUrl} autoPlay={!reducedMotion} muted loop={!reducedMotion} playsInline controls={reducedMotion} poster={asset.imageUrl} />
+          </div>
+        ) : asset?.imageUrl ? (
           <div className={styles.previewVisualFrame}>
             <img alt={asset.altText} src={asset.imageUrl} loading="eager" />
           </div>
@@ -31,12 +36,6 @@ export function PantheonGodPreview({ archetype, reducedMotion }: Readonly<{ arch
           </div>
         )}
         <div className={styles.previewOverlay} />
-        {asset ? (
-          <div className={styles.previewCaption}>
-            <strong>{asset.title}</strong>
-            <p>{asset.altText}</p>
-          </div>
-        ) : null}
       </div>
       <div className={styles.previewBody}>
         <div className={styles.previewMetaRow}>

@@ -17,7 +17,7 @@ export function PantheonSelector({ archetypes, activeSlug, onActiveChange }: Rea
           <p className={styles.selectorEyebrow}>Portales activos</p>
           <h2 className={styles.selectorTitle} id="pantheon-selector-heading">Selecciona un umbral de entrada</h2>
         </div>
-        <p className={styles.selectorHint} id="pantheon-selector-heading">Hover, foco o seleccion directa cambian el portal activo.</p>
+        <p className={styles.selectorHint} id="pantheon-selector-hint">Hover, foco o seleccion directa cambian el portal activo.</p>
       </div>
       <div className={styles.selectorRail}>
         {archetypes.map((archetype) => (

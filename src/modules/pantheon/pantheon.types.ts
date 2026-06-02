@@ -1,12 +1,37 @@
 import type { Drop } from '../drops/drops.types';
 import type { Product } from '../products/services/products.types';
 
+export type PantheonLandingMediaRole = 'hero' | 'hero-loop' | 'open-graph' | 'mobile-hero' | 'avatar-video' | 'gallery';
+
 export type PantheonGalleryPreviewItem = {
   title: string;
   imageUrl?: string;
   videoUrl?: string;
   altText: string;
   tags: string[];
+  role?: PantheonLandingMediaRole;
+};
+
+export type PantheonLandingMediaItem = {
+  title: string;
+  imageUrl?: string;
+  videoUrl?: string;
+  altText: string;
+  caption?: string;
+  narrativeFunction?: string;
+};
+
+export type PantheonLandingHeroMedia = PantheonLandingMediaItem & {
+  assetId: string;
+  type: string;
+  sortOrder: number;
+  motionLoop?: PantheonLandingMediaItem & {
+    assetId: string;
+  };
+};
+
+export type PantheonLandingAvatarVideo = PantheonLandingMediaItem & {
+  assetId: string;
 };
 
 export type PantheonArchetype = {
@@ -31,6 +56,7 @@ export type PantheonLandingGalleryItem = PantheonGalleryPreviewItem & {
   id: string;
   type: 'reference' | 'ai_prompt' | 'product_mood' | 'campaign_mood' | 'symbol' | 'texture' | 'environment';
   sortOrder: number;
+  role?: PantheonLandingMediaRole;
 };
 
 export type PantheonArchetypeLanding = {
@@ -69,6 +95,8 @@ export type PantheonArchetypeLanding = {
     lighting: string[];
     environments: string[];
   };
+  hero?: PantheonLandingHeroMedia;
+  avatarVideo?: PantheonLandingAvatarVideo;
   galleryPreview: PantheonLandingGalleryItem[];
   commerce: {
     productHeading: string;
@@ -152,6 +180,14 @@ function readOptionalString(value: unknown) {
   return typeof value === 'string' && value.trim() ? value.trim() : undefined;
 }
 
+function readOptionalMediaRole(value: unknown): PantheonLandingMediaRole | undefined {
+  if (value === 'hero' || value === 'hero-loop' || value === 'open-graph' || value === 'mobile-hero' || value === 'avatar-video' || value === 'gallery') {
+    return value;
+  }
+
+  return undefined;
+}
+
 function readStringWithFallback(value: unknown, fallback: string) {
   return typeof value === 'string' && value.trim() ? value.trim() : fallback;
 }
@@ -172,6 +208,7 @@ function parseGalleryPreviewItem(value: unknown, index: number): PantheonGallery
   const imageUrl = readOptionalString(value.imageUrl);
   const videoUrl = readOptionalString(value.videoUrl);
   const altText = readString(value.altText, `galleryPreview[${index}].altText`);
+  const role = readOptionalMediaRole(value.role);
 
   return {
     title: readStringWithFallback(value.title, altText || `Pantheon preview ${index + 1}`),
@@ -179,6 +216,7 @@ function parseGalleryPreviewItem(value: unknown, index: number): PantheonGallery
     ...(videoUrl ? { videoUrl } : {}),
     altText,
     tags: readStringArray(value.tags, `galleryPreview[${index}].tags`),
+    ...(role ? { role } : {}),
   };
 }
 
@@ -190,6 +228,7 @@ function parseLandingGalleryItem(value: unknown, index: number): PantheonLanding
   const imageUrl = readOptionalString(value.imageUrl);
   const videoUrl = readOptionalString(value.videoUrl);
   const altText = readString(value.altText, `galleryPreview[${index}].altText`);
+  const role = readOptionalMediaRole(value.role);
 
   return {
     id: readString(value.id, `galleryPreview[${index}].id`),
@@ -200,6 +239,49 @@ function parseLandingGalleryItem(value: unknown, index: number): PantheonLanding
     altText,
     tags: readStringArray(value.tags, `galleryPreview[${index}].tags`),
     sortOrder: typeof value.sortOrder === 'number' ? value.sortOrder : index,
+    ...(role ? { role } : {}),
+  };
+}
+
+function parseLandingMediaItem(value: unknown, field: string) {
+  if (!isRecord(value)) {
+    throw new Error(`Invalid pantheon contract field: ${field}`);
+  }
+
+  const imageUrl = readOptionalString(value.imageUrl);
+  const videoUrl = readOptionalString(value.videoUrl);
+  const caption = readOptionalString(value.caption);
+  const narrativeFunction = readOptionalString(value.narrativeFunction);
+
+  return {
+    title: readString(value.title, `${field}.title`),
+    ...(imageUrl ? { imageUrl } : {}),
+    ...(videoUrl ? { videoUrl } : {}),
+    altText: readString(value.altText, `${field}.altText`),
+    ...(caption ? { caption } : {}),
+    ...(narrativeFunction ? { narrativeFunction } : {}),
+  };
+}
+
+function parseLandingHeroMedia(value: unknown, field: string): PantheonLandingHeroMedia {
+  if (!isRecord(value)) {
+    throw new Error(`Invalid pantheon contract field: ${field}`);
+  }
+
+  const base = parseLandingMediaItem(value, field);
+  const motionLoop = value.motionLoop;
+
+  return {
+    assetId: readString(value.assetId, `${field}.assetId`),
+    title: base.title,
+    ...(base.imageUrl ? { imageUrl: base.imageUrl } : {}),
+    ...(base.videoUrl ? { videoUrl: base.videoUrl } : {}),
+    altText: base.altText,
+    ...(base.caption ? { caption: base.caption } : {}),
+    ...(base.narrativeFunction ? { narrativeFunction: base.narrativeFunction } : {}),
+    type: readString(value.type, `${field}.type`),
+    sortOrder: typeof value.sortOrder === 'number' ? value.sortOrder : 0,
+    ...(isRecord(motionLoop) ? { motionLoop: { assetId: readString(motionLoop.assetId, `${field}.motionLoop.assetId`), ...parseLandingMediaItem(motionLoop, `${field}.motionLoop`) } } : {}),
   };
 }
 
@@ -294,8 +376,13 @@ export function parsePantheonArchetypeLanding(value: unknown): PantheonArchetype
   const seo = isRecord(value.seo) ? value.seo : {};
   const theme = isRecord(value.theme) ? value.theme : {};
   const heroEffect = isRecord(theme.heroEffect) ? theme.heroEffect : {};
+  const hero = isRecord(value.hero) ? value.hero : undefined;
+  const avatarVideo = isRecord(value.avatarVideo) ? value.avatarVideo : undefined;
   const openGraphImage = readOptionalString(seo.openGraphImage);
   const overlaySlug = readOptionalString(theme.overlaySlug);
+  const parsedAvatarVideo = avatarVideo
+    ? { assetId: readString(avatarVideo.assetId, 'avatarVideo.assetId'), ...parseLandingMediaItem(avatarVideo, 'avatarVideo') }
+    : undefined;
 
   return {
     slug: readString(value.slug, 'slug'),
@@ -345,6 +432,8 @@ export function parsePantheonArchetypeLanding(value: unknown): PantheonArchetype
       lighting: readStringArray(visualSystem.lighting ?? [], 'visualSystem.lighting'),
       environments: readStringArray(visualSystem.environments ?? [], 'visualSystem.environments'),
     },
+    ...(hero ? { hero: parseLandingHeroMedia(hero, 'hero') } : {}),
+    ...(parsedAvatarVideo ? { avatarVideo: parsedAvatarVideo } : {}),
     galleryPreview: Array.isArray(value.galleryPreview) ? value.galleryPreview.map((item, index) => parseLandingGalleryItem(item, index)) : [],
     commerce: {
       productHeading: readString(commerce.productHeading, 'commerce.productHeading'),

@@ -237,7 +237,107 @@ describe('PantheonDetailClient', () => {
     expect(html.indexOf('Sistema visual')).toBeLessThan(html.indexOf('Pieces shaped by Zeus'));
   });
 
-  it('degrades gracefully when gallery preview has no image and products or drops are empty', () => {
+  it('renders avatar video as the hero media when it exists', () => {
+    mockPantheonArchetypeQuery({
+      isLoading: false,
+      isError: false,
+      data: {
+        slug: 'hades',
+        name: 'Hades',
+        identity: {
+          title: 'Hades',
+          oneLineDefinition: 'Dark magnetism.',
+          coreEnergy: 'Contained power.',
+          secondaryEnergies: [],
+          humanDesire: 'Depth.',
+          emotionalPromise: 'Control.',
+          symbolicRole: 'Keeper.',
+        },
+        narrative: {
+          corePhrase: 'Enter the depth.',
+          shortManifesto: 'Depth before display.',
+          longManifesto: 'Long Hades manifesto.',
+          shadow: 'Isolation.',
+          transformationArc: 'From secrecy to mastery.',
+          modernInterpretation: 'Luxury under restraint.',
+        },
+        psychology: {
+          dominantTraits: ['magnetic'],
+          behavioralSignals: ['silent'],
+          motivations: ['control'],
+          fears: ['exposure'],
+          aspirations: ['mastery'],
+        },
+        visualSystem: {
+          mood: 'Black velvet void.',
+          artDirection: 'Shadow architecture.',
+          palette: [{ name: 'Black', hex: '#111111', usage: 'background' }],
+          symbols: [],
+          textures: [],
+          lighting: [],
+          environments: [],
+        },
+        avatarVideo: {
+          assetId: 'hades-avatar-video',
+          title: 'Hades Avatar',
+          videoUrl: 'https://cdn.example.com/hades-avatar.mp4',
+          imageUrl: 'https://cdn.example.com/hades-avatar.jpg',
+          altText: 'Dark editorial avatar motion.',
+        },
+        galleryPreview: [
+          {
+            id: 'gallery-video-1',
+            title: 'Avatar duplicate',
+            type: 'campaign_mood',
+            videoUrl: 'https://cdn.example.com/hades-gallery.mp4',
+            altText: 'Dark editorial motion sequence.',
+            tags: ['hades'],
+            role: 'avatar-video',
+            sortOrder: 1,
+          },
+          {
+            id: 'gallery-image-1',
+            title: 'Underworld Still',
+            type: 'campaign_mood',
+            imageUrl: 'https://cdn.example.com/hades-still.jpg',
+            altText: 'Dark editorial still.',
+            tags: ['hades'],
+            sortOrder: 2,
+          },
+        ],
+        commerce: {
+          productHeading: 'Pieces shaped by Hades',
+          productSubheading: 'Products follow identity.',
+          dropHeading: 'Hades drops',
+          dropSubheading: 'Drops follow identity.',
+          openMarketAngle: 'Depth-led product.',
+          productCategories: [],
+          marketTags: [],
+        },
+        relationships: { allies: [], contrasts: [], tensions: [] },
+        cta: { primaryLabel: 'Enter', primaryHref: '/products?archetype=hades', secondaryLabel: 'Test', secondaryHref: '/identity' },
+        seo: { title: 'Hades', description: 'Hades', keywords: ['hades'], openGraphTitle: 'Hades', openGraphDescription: 'Hades' },
+        theme: {
+          intensityDefault: 'subtle',
+          allowedContexts: ['pantheon'],
+          heroEffectProfile: 'underworld-drift',
+          heroEffect: { auraColor: 'rgba(80, 80, 120, 0.2)', floatDistance: 10, portraitTilt: 0.5, profileLift: 10, signalLift: 12 },
+        },
+        products: [],
+        drops: [],
+      },
+    });
+
+    const html = renderToStaticMarkup(<PantheonDetailClient slug="hades" />);
+
+    expect(html).toContain('<video');
+    expect(html).toContain('data-hero-media-source="avatar-video"');
+    expect(html).toContain('https://cdn.example.com/hades-avatar.mp4');
+    expect(html).toContain('https://cdn.example.com/hades-still.jpg');
+    expect(html).not.toContain('https://cdn.example.com/hades-gallery.mp4');
+  });
+
+  it('renders the textual fallback when no hero media is valid', () => {
     mockPantheonArchetypeQuery({
       isLoading: false,
       isError: false,
@@ -323,89 +423,8 @@ describe('PantheonDetailClient', () => {
 
     const html = renderToStaticMarkup(<PantheonDetailClient slug="athena" />);
 
-    expect(html).toContain('La vista editorial sigue disponible mientras se curan imagenes aprobadas.');
-    expect(html).toContain('Todavia no hay piezas publicadas para esta fuerza.');
-    expect(html).toContain('No hay drops publicados alineados a esta fuerza ahora mismo.');
-    expect(html).not.toContain('<img');
-  });
-
-  it('renders video when gallery preview includes approved motion media', () => {
-    mockPantheonArchetypeQuery({
-      isLoading: false,
-      isError: false,
-      data: {
-        slug: 'hades',
-        name: 'Hades',
-        identity: {
-          title: 'Hades',
-          oneLineDefinition: 'Dark magnetism.',
-          coreEnergy: 'Contained power.',
-          secondaryEnergies: [],
-          humanDesire: 'Depth.',
-          emotionalPromise: 'Control.',
-          symbolicRole: 'Keeper.',
-        },
-        narrative: {
-          corePhrase: 'Enter the depth.',
-          shortManifesto: 'Depth before display.',
-          longManifesto: 'Long Hades manifesto.',
-          shadow: 'Isolation.',
-          transformationArc: 'From secrecy to mastery.',
-          modernInterpretation: 'Luxury under restraint.',
-        },
-        psychology: {
-          dominantTraits: ['magnetic'],
-          behavioralSignals: ['silent'],
-          motivations: ['control'],
-          fears: ['exposure'],
-          aspirations: ['mastery'],
-        },
-        visualSystem: {
-          mood: 'Black velvet void.',
-          artDirection: 'Shadow architecture.',
-          palette: [{ name: 'Black', hex: '#111111', usage: 'background' }],
-          symbols: [],
-          textures: [],
-          lighting: [],
-          environments: [],
-        },
-        galleryPreview: [
-          {
-            id: 'gallery-video-1',
-            title: 'Underworld Motion',
-            type: 'campaign_mood',
-            videoUrl: 'https://cdn.example.com/hades.mp4',
-            altText: 'Dark editorial motion sequence.',
-            tags: ['hades'],
-            sortOrder: 1,
-          },
-        ],
-        commerce: {
-          productHeading: 'Pieces shaped by Hades',
-          productSubheading: 'Products follow identity.',
-          dropHeading: 'Hades drops',
-          dropSubheading: 'Drops follow identity.',
-          openMarketAngle: 'Depth-led product.',
-          productCategories: [],
-          marketTags: [],
-        },
-        relationships: { allies: [], contrasts: [], tensions: [] },
-        cta: { primaryLabel: 'Enter', primaryHref: '/products?archetype=hades', secondaryLabel: 'Test', secondaryHref: '/identity' },
-        seo: { title: 'Hades', description: 'Hades', keywords: ['hades'], openGraphTitle: 'Hades', openGraphDescription: 'Hades' },
-        theme: {
-          intensityDefault: 'subtle',
-          allowedContexts: ['pantheon'],
-          heroEffectProfile: 'underworld-drift',
-          heroEffect: { auraColor: 'rgba(80, 80, 120, 0.2)', floatDistance: 10, portraitTilt: 0.5, profileLift: 10, signalLift: 12 },
-        },
-        products: [],
-        drops: [],
-      },
-    });
-
-    const html = renderToStaticMarkup(<PantheonDetailClient slug="hades" />);
-
-    expect(html).toContain('<video');
-    expect(html).toContain('https://cdn.example.com/hades.mp4');
+    expect(html).toContain('data-hero-media-source="fallback"');
+    expect(html).toContain('Restrained strategy.');
+    expect(html).not.toContain('<video');
   });
 });

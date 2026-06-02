@@ -3,11 +3,20 @@
 import type { CSSProperties } from 'react';
 import React from 'react';
 import { ActionRow, Badge, Card, EditorialBody, IdentityInsightPanel, Kicker, LinkButton, ProductTitleBlock, SignalRow } from '../../design-system';
+import { useAppTheme } from '../../theme/providers/AppThemeProvider';
 import { resolveArchetypeHeroEffect } from '../archetype-hero-effects';
 import type { PantheonArchetypeLanding } from '../pantheon.types';
 import type { ArchetypeLandingViewModel } from '../services';
 
-function ArchetypeHeroStage({ archetype, portrait }: Readonly<{ archetype: PantheonArchetypeLanding; portrait: PantheonArchetypeLanding['galleryPreview'][number] | undefined }>) {
+function ArchetypeHeroStage({
+  archetype,
+  heroMedia,
+}: Readonly<{
+  archetype: PantheonArchetypeLanding;
+  heroMedia: ArchetypeLandingViewModel['heroMedia'];
+}>) {
+  const { accessibility } = useAppTheme();
+  const reducedMotion = Boolean(accessibility.reduceMotion);
   const heroEffect = resolveArchetypeHeroEffect(archetype.theme);
   const signalValue = Math.min(96, 68 + archetype.psychology.dominantTraits.length * 6);
   const style = {
@@ -39,6 +48,7 @@ function ArchetypeHeroStage({ archetype, portrait }: Readonly<{ archetype: Panth
     <section
       className="archetype-hero-stage"
       data-effect-profile={heroEffect.key}
+      data-hero-media-source={heroMedia?.source ?? 'fallback'}
       onPointerLeave={handlePointerLeave}
       onPointerMove={handlePointerMove}
       style={style}
@@ -46,10 +56,10 @@ function ArchetypeHeroStage({ archetype, portrait }: Readonly<{ archetype: Panth
       <div className="archetype-hero-orb" />
       <div className="archetype-hero-glow" />
       <div className="archetype-hero-portrait-card">
-        {portrait?.videoUrl ? (
-          <video aria-label={portrait.altText} className="archetype-hero-portrait" controls preload="metadata" src={portrait.videoUrl} />
-        ) : portrait?.imageUrl ? (
-          <img alt={portrait.altText} className="archetype-hero-portrait" src={portrait.imageUrl} />
+        {heroMedia?.videoUrl ? (
+          <video aria-label={heroMedia.altText} className="archetype-hero-portrait" autoPlay={!reducedMotion} controls={reducedMotion} loop={!reducedMotion} muted playsInline preload="metadata" poster={heroMedia.imageUrl} src={heroMedia.videoUrl} />
+        ) : heroMedia?.imageUrl ? (
+          <img alt={heroMedia.altText} className="archetype-hero-portrait" src={heroMedia.imageUrl} />
         ) : (
           <div className="archetype-hero-fallback">
             <Kicker>{archetype.identity.coreEnergy}</Kicker>
@@ -85,8 +95,6 @@ export function ArchetypeHero({
   archetype: PantheonArchetypeLanding;
   viewModel: ArchetypeLandingViewModel;
 }>) {
-  const portrait = viewModel.gallery.find((item) => item.videoUrl || item.imageUrl);
-
   return (
     <Card className="portal-detail pantheon-pilot-detail xeorum-archetype-intro">
       <div className="xeorum-archetype-copy">
@@ -101,7 +109,7 @@ export function ArchetypeHero({
         <IdentityInsightPanel eyebrow="Promesa emocional" title={archetype.identity.emotionalPromise} description="La presencia que esta lectura vuelve publica y legible." signals={[archetype.identity.coreEnergy]} />
         <IdentityInsightPanel eyebrow="Rol simbolico" title={archetype.identity.symbolicRole} description="La traduccion formal que sostiene el tono del portal." signals={[archetype.visualSystem.artDirection]} />
       </div>
-      <ArchetypeHeroStage archetype={archetype} portrait={portrait} />
+      <ArchetypeHeroStage archetype={archetype} heroMedia={viewModel.heroMedia} />
       <ActionRow className="portal-actions xeorum-archetype-actions">
         <LinkButton href={viewModel.primaryCta.href}>{viewModel.primaryCta.label}</LinkButton>
         <LinkButton href={viewModel.secondaryCta.href} variant="ghost">{viewModel.secondaryCta.label}</LinkButton>

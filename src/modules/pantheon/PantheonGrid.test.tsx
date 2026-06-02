@@ -87,4 +87,34 @@ describe('PantheonGrid', () => {
     expect(html).toContain('aria-pressed="true"');
     expect(html.indexOf('Zeus')).toBeLessThan(html.indexOf('Ares'));
   });
+
+  it('renders avatar video on pantheon cards when avatar-video exists', () => {
+    mockPantheonArchetypesQuery({
+      isLoading: false,
+      isError: false,
+      data: [
+        {
+          slug: 'afrodita',
+          name: 'Afrodita',
+          coreEnergy: 'Magnetismo estético.',
+          corePhrase: 'Beauty becomes influence.',
+          shortManifesto: 'Soft power.',
+          visualMood: 'Luminosa.',
+          palette: ['#220909'],
+          symbols: ['rose'],
+          ctaLabel: 'Explore archetype',
+          galleryPreview: [
+            { title: 'Afrodita cover', imageUrl: 'https://cdn.example.com/cover.jpg', altText: 'Cover image', tags: ['cover'] },
+            { title: 'Avatar Video', imageUrl: 'https://cdn.example.com/avatar.jpg', videoUrl: 'https://cdn.example.com/avatar.mp4', altText: 'Avatar video', tags: ['avatar-video'] },
+          ],
+          commerce: { openMarketAngle: 'Open market.', productCategories: [], marketTags: [] },
+        },
+      ],
+    });
+
+    const html = renderToStaticMarkup(<PantheonGrid />);
+
+    expect(html).toContain('https://cdn.example.com/avatar.mp4');
+    expect(html).toContain('<video');
+  });
 });
