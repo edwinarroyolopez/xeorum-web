@@ -48,7 +48,7 @@ describe('product PDP components', () => {
       <>
         <ProductStoryCard title="La pieza" description={<><p>Descripcion</p><p>Narrativa</p></>} />
         <ProductCommercialContext label="Contexto comercial" description="Lectura final" badges={[{ label: 'Drop Obsidian' }]} />
-        <ProductIdentityLink href="/identity/hades">Ver por que pertenece a Hades</ProductIdentityLink>
+        <ProductIdentityLink href="/pantheon/hades">Ver por que pertenece a Hades</ProductIdentityLink>
       </>,
     );
 

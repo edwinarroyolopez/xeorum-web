@@ -214,6 +214,17 @@ select {
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 }.page-shell {
   gap: 2rem;
+}.theme-css-scope {
+  width: 100%;
+  min-width: 0;
+}.page-shell.xeorum-archetype-page {
+  place-items: stretch;
+  justify-items: stretch;
+  padding: clamp(1rem, 2vw, 2rem);
+  text-align: left;
+}.page-shell.xeorum-archetype-page>.theme-css-scope {
+  width: 100%;
+  min-width: 0;
 }.hero-shell,
 .section-stack {
   width: min(1120px, 100%);

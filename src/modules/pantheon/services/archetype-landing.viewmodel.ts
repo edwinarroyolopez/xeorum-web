@@ -1,3 +1,4 @@
+import { getPantheonPath, getPantheonProductsPath } from '../pantheon.routes';
 import type { PantheonArchetypeLanding, PantheonLandingGalleryItem } from '../pantheon.types';
 
 export type ArchetypeLandingCta = {
@@ -17,13 +18,14 @@ export type ArchetypeLandingViewModel = {
   heroSignals: string[];
   primaryCta: ArchetypeLandingCta;
   secondaryCta: ArchetypeLandingCta;
-  zeusPilotActive: boolean;
+  relatedArchetypes: Array<{ slug: string; name: string; reason: string; href: string }>;
+  themeOverlay: 'published' | 'fallback';
   relatedCount: number;
 };
 
 function buildPrimaryCta(archetype: PantheonArchetypeLanding): ArchetypeLandingCta {
   return {
-    href: archetype.cta.primaryHref || `/products?archetype=${archetype.slug}`,
+    href: archetype.cta.primaryHref || getPantheonProductsPath(archetype.slug),
     label: archetype.cta.primaryLabel || 'Ver piezas de esta fuerza',
   };
 }
@@ -33,6 +35,21 @@ function buildSecondaryCta(archetype: PantheonArchetypeLanding): ArchetypeLandin
     href: archetype.cta.secondaryHref || '/identity',
     label: archetype.cta.secondaryLabel || 'Descubrir mi fuerza',
   };
+}
+
+function buildRelatedArchetypes(archetype: PantheonArchetypeLanding) {
+  const unique = new Map<string, { slug: string; name: string; reason: string }>();
+
+  for (const item of [...archetype.relationships.allies, ...archetype.relationships.contrasts, ...archetype.relationships.tensions]) {
+    if (!unique.has(item.slug)) {
+      unique.set(item.slug, item);
+    }
+  }
+
+  return [...unique.values()].slice(0, 3).map((item) => ({
+    ...item,
+    href: getPantheonPath(item.slug),
+  }));
 }
 
 function buildHeroSignals(archetype: PantheonArchetypeLanding) {
@@ -108,7 +125,8 @@ export function buildArchetypeLandingViewModel(archetype: PantheonArchetypeLandi
     heroSignals: buildHeroSignals(archetype),
     primaryCta: buildPrimaryCta(archetype),
     secondaryCta: buildSecondaryCta(archetype),
-    zeusPilotActive: archetype.slug === 'zeus' && !archetype.theme.overlaySlug,
+    relatedArchetypes: buildRelatedArchetypes(archetype),
+    themeOverlay: archetype.theme.overlaySlug ? 'published' : 'fallback',
     relatedCount: archetype.relationships.allies.length + archetype.relationships.contrasts.length + archetype.relationships.tensions.length,
   };
 }

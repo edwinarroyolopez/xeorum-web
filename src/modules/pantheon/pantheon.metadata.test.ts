@@ -81,31 +81,31 @@ const archetype: PantheonArchetypeLanding = {
 };
 
 describe('pantheon metadata', () => {
-  it('builds identity metadata as canonical primary route', () => {
+  it('builds pantheon metadata as the canonical primary route', () => {
     const metadata = buildArchetypeMetadata(archetype, {
-      path: '/identity/zeus',
-      canonicalPath: '/identity/zeus',
+      path: '/pantheon/zeus',
+      canonicalPath: '/pantheon/zeus',
     });
 
-    expect(metadata.alternates?.canonical).toBe('/identity/zeus');
-    expect(metadata.openGraph?.url).toBe('/identity/zeus');
+    expect(metadata.alternates?.canonical).toBe('/pantheon/zeus');
+    expect(metadata.openGraph?.url).toBe('/pantheon/zeus');
     expect(metadata.openGraph?.images).toEqual([{ url: 'https://cdn.example.com/zeus-og.jpg', alt: 'Zeus' }]);
   });
 
-  it('supports pantheon route with identity canonical', () => {
+  it('keeps pantheon alternates self-canonical', () => {
     const metadata = buildArchetypeMetadata(archetype, {
       path: '/pantheon/zeus',
-      canonicalPath: '/identity/zeus',
+      canonicalPath: '/pantheon/zeus',
     });
 
-    expect(metadata.alternates?.canonical).toBe('/identity/zeus');
+    expect(metadata.alternates?.canonical).toBe('/pantheon/zeus');
     expect(metadata.openGraph?.url).toBe('/pantheon/zeus');
   });
 
   it('returns safe fallback metadata', () => {
-    const metadata = fallbackArchetypeMetadata('zeus', '/identity/zeus');
+    const metadata = fallbackArchetypeMetadata('zeus', '/pantheon/zeus');
 
     expect(metadata.title).toBe('zeus Archetype | XEORUM');
-    expect(metadata.alternates?.canonical).toBe('/identity/zeus');
+    expect(metadata.alternates?.canonical).toBe('/pantheon/zeus');
   });
 });

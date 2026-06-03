@@ -97,12 +97,16 @@ describe('buildArchetypeLandingViewModel', () => {
     expect(viewModel.relatedCount).toBe(2);
   });
 
-  it('uses contract ctas when present and enables zeus pilot only without overlaySlug', () => {
+  it('uses contract ctas when present and marks fallback overlay state without a published overlay slug', () => {
     const viewModel = buildArchetypeLandingViewModel(buildLanding());
 
     expect(viewModel.primaryCta).toEqual({ href: '/products?archetype=zeus', label: 'Explore Zeus' });
     expect(viewModel.secondaryCta).toEqual({ href: '/identity', label: 'Run Identity Test' });
-    expect(viewModel.zeusPilotActive).toBe(true);
+    expect(viewModel.themeOverlay).toBe('fallback');
+    expect(viewModel.relatedArchetypes).toEqual([
+      expect.objectContaining({ slug: 'apollo', href: '/pantheon/apollo' }),
+      expect.objectContaining({ slug: 'hades', href: '/pantheon/hades' }),
+    ]);
   });
 
   it('prioritizes avatar media over hero media and gallery previews', () => {
@@ -157,7 +161,7 @@ describe('buildArchetypeLandingViewModel', () => {
     }));
   });
 
-  it('falls back safely when cta labels or hrefs are empty and overlay is published', () => {
+  it('falls back safely when cta labels or hrefs are empty and a published overlay exists', () => {
     const viewModel = buildArchetypeLandingViewModel(buildLanding({
       cta: {
         primaryLabel: '',
@@ -182,6 +186,6 @@ describe('buildArchetypeLandingViewModel', () => {
 
     expect(viewModel.primaryCta).toEqual({ href: '/products?archetype=zeus', label: 'Ver piezas de esta fuerza' });
     expect(viewModel.secondaryCta).toEqual({ href: '/identity', label: 'Descubrir mi fuerza' });
-    expect(viewModel.zeusPilotActive).toBe(false);
+    expect(viewModel.themeOverlay).toBe('published');
   });
 });

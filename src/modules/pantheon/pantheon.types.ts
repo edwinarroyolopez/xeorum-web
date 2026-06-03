@@ -156,6 +156,10 @@ const forbiddenPublicFields = [
   'importMetadata',
 ] as const;
 
+const pantheonGalleryTypes = ['reference', 'ai_prompt', 'product_mood', 'campaign_mood', 'symbol', 'texture', 'environment'] as const;
+const pantheonThemeIntensities = ['subtle', 'medium'] as const;
+const pantheonHeroEffectProfiles = ['editorial-float', 'imperial-electric', 'lucid-orbit', 'underworld-drift'] as const;
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
@@ -178,6 +182,53 @@ function readStringArray(value: unknown, field: string) {
 
 function readOptionalString(value: unknown) {
   return typeof value === 'string' && value.trim() ? value.trim() : undefined;
+}
+
+function readOptionalUrl(value: unknown) {
+  if (typeof value !== 'string' || !value.trim()) {
+    return undefined;
+  }
+
+  const normalized = value.trim();
+
+  if (normalized.startsWith('/')) {
+    return normalized;
+  }
+
+  try {
+    const url = new URL(normalized);
+    if (url.protocol === 'http:' || url.protocol === 'https:') {
+      return normalized;
+    }
+  } catch {
+    return undefined;
+  }
+
+  return undefined;
+}
+
+function readRelativeHref(value: unknown, field: string) {
+  const href = readOptionalUrl(value);
+
+  if (!href || !href.startsWith('/')) {
+    throw new Error(`Invalid pantheon contract field: ${field}`);
+  }
+
+  return href;
+}
+
+function readEnumValue<const T extends readonly string[]>(value: unknown, field: string, allowed: T): T[number] {
+  const normalized = readString(value, field);
+
+  if ((allowed as readonly string[]).includes(normalized)) {
+    return normalized as T[number];
+  }
+
+  throw new Error(`Invalid pantheon contract field: ${field}`);
+}
+
+function readNumericField(value: unknown, fallback: number) {
+  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
 }
 
 function readOptionalMediaRole(value: unknown): PantheonLandingMediaRole | undefined {
@@ -205,8 +256,8 @@ function parseGalleryPreviewItem(value: unknown, index: number): PantheonGallery
     throw new Error(`Invalid pantheon contract field: galleryPreview[${index}]`);
   }
 
-  const imageUrl = readOptionalString(value.imageUrl);
-  const videoUrl = readOptionalString(value.videoUrl);
+  const imageUrl = readOptionalUrl(value.imageUrl);
+  const videoUrl = readOptionalUrl(value.videoUrl);
   const altText = readString(value.altText, `galleryPreview[${index}].altText`);
   const role = readOptionalMediaRole(value.role);
 
@@ -225,15 +276,15 @@ function parseLandingGalleryItem(value: unknown, index: number): PantheonLanding
     throw new Error(`Invalid pantheon contract field: galleryPreview[${index}]`);
   }
 
-  const imageUrl = readOptionalString(value.imageUrl);
-  const videoUrl = readOptionalString(value.videoUrl);
+  const imageUrl = readOptionalUrl(value.imageUrl);
+  const videoUrl = readOptionalUrl(value.videoUrl);
   const altText = readString(value.altText, `galleryPreview[${index}].altText`);
   const role = readOptionalMediaRole(value.role);
 
   return {
     id: readString(value.id, `galleryPreview[${index}].id`),
     title: readStringWithFallback(value.title, altText || `Pantheon preview ${index + 1}`),
-    type: readString(value.type, `galleryPreview[${index}].type`) as PantheonLandingGalleryItem['type'],
+    type: readEnumValue(value.type, `galleryPreview[${index}].type`, pantheonGalleryTypes),
     ...(imageUrl ? { imageUrl } : {}),
     ...(videoUrl ? { videoUrl } : {}),
     altText,
@@ -248,8 +299,8 @@ function parseLandingMediaItem(value: unknown, field: string) {
     throw new Error(`Invalid pantheon contract field: ${field}`);
   }
 
-  const imageUrl = readOptionalString(value.imageUrl);
-  const videoUrl = readOptionalString(value.videoUrl);
+  const imageUrl = readOptionalUrl(value.imageUrl);
+  const videoUrl = readOptionalUrl(value.videoUrl);
   const caption = readOptionalString(value.caption);
   const narrativeFunction = readOptionalString(value.narrativeFunction);
 
@@ -310,11 +361,19 @@ function readProducts(value: unknown): Product[] {
     throw new Error('Invalid pantheon contract field: products');
   }
 
+  if (value.some((item) => !isRecord(item) || typeof item.slug !== 'string' || !item.slug.trim() || typeof item.name !== 'string' || !item.name.trim())) {
+    throw new Error('Invalid pantheon contract field: products');
+  }
+
   return value as Product[];
 }
 
 function readDrops(value: unknown): Drop[] {
   if (!Array.isArray(value)) {
+    throw new Error('Invalid pantheon contract field: drops');
+  }
+
+  if (value.some((item) => !isRecord(item) || typeof item.slug !== 'string' || !item.slug.trim() || typeof item.name !== 'string' || !item.name.trim())) {
     throw new Error('Invalid pantheon contract field: drops');
   }
 
@@ -451,9 +510,9 @@ export function parsePantheonArchetypeLanding(value: unknown): PantheonArchetype
     },
     cta: {
       primaryLabel: readString(cta.primaryLabel, 'cta.primaryLabel'),
-      primaryHref: readString(cta.primaryHref, 'cta.primaryHref'),
+      primaryHref: readRelativeHref(cta.primaryHref, 'cta.primaryHref'),
       secondaryLabel: readString(cta.secondaryLabel, 'cta.secondaryLabel'),
-      secondaryHref: readString(cta.secondaryHref, 'cta.secondaryHref'),
+      secondaryHref: readRelativeHref(cta.secondaryHref, 'cta.secondaryHref'),
     },
     seo: {
       title: readString(seo.title, 'seo.title'),
@@ -465,15 +524,15 @@ export function parsePantheonArchetypeLanding(value: unknown): PantheonArchetype
     },
     theme: {
       ...(overlaySlug ? { overlaySlug } : {}),
-      intensityDefault: (readString(theme.intensityDefault ?? 'subtle', 'theme.intensityDefault') as 'subtle' | 'medium'),
+      intensityDefault: readEnumValue(theme.intensityDefault ?? 'subtle', 'theme.intensityDefault', pantheonThemeIntensities),
       allowedContexts: readStringArray(theme.allowedContexts ?? [], 'theme.allowedContexts'),
-      heroEffectProfile: readString(theme.heroEffectProfile ?? 'editorial-float', 'theme.heroEffectProfile') as PantheonArchetypeLanding['theme']['heroEffectProfile'],
+      heroEffectProfile: readEnumValue(theme.heroEffectProfile ?? 'editorial-float', 'theme.heroEffectProfile', pantheonHeroEffectProfiles),
       heroEffect: {
         auraColor: readString(heroEffect.auraColor ?? 'rgba(120, 180, 255, 0.18)', 'theme.heroEffect.auraColor'),
-        floatDistance: typeof heroEffect.floatDistance === 'number' ? heroEffect.floatDistance : 12,
-        portraitTilt: typeof heroEffect.portraitTilt === 'number' ? heroEffect.portraitTilt : 0.8,
-        profileLift: typeof heroEffect.profileLift === 'number' ? heroEffect.profileLift : 14,
-        signalLift: typeof heroEffect.signalLift === 'number' ? heroEffect.signalLift : 18,
+        floatDistance: readNumericField(heroEffect.floatDistance, 12),
+        portraitTilt: readNumericField(heroEffect.portraitTilt, 0.8),
+        profileLift: readNumericField(heroEffect.profileLift, 14),
+        signalLift: readNumericField(heroEffect.signalLift, 18),
       },
     },
     products: readProducts(value.products),

@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { getPantheonPath } from '../../pantheon/pantheon.routes';
 import type { PantheonArchetype } from '../../pantheon/pantheon.types';
 import { ActionRow } from './ActionRow';
 import { Badge } from './Badge';
@@ -24,7 +25,7 @@ export function PortalCard({ archetype }: Readonly<{ archetype: PantheonArchetyp
   const palette = archetype.palette.slice(0, 3);
   const portrait = archetype.galleryPreview.find((item) => item.imageUrl)?.imageUrl;
   const portraitAlt = archetype.galleryPreview.find((item) => item.imageUrl)?.altText ?? `Imagen editorial de ${archetype.name}`;
-  const href = `/identity/${archetype.slug}`;
+  const href = getPantheonPath(archetype.slug);
 
   return (
     <Card className="portal-card">

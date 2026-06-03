@@ -1,4 +1,5 @@
 import type { ProductContract, ProductDetails, ProductVariant } from '@xeorum/contracts';
+import { getPantheonPath } from '../../pantheon/pantheon.routes';
 import { formatProductLabel, getAvailabilityCopy, getDisplayPrice, getProductGallery } from './product.helpers';
 
 export type ProductBadgeItem = {
@@ -109,7 +110,7 @@ export function buildProductDetailViewModel(product: ProductContract, selectedVa
       title: 'Marco identitario',
       description: product.description,
       narrative: product.narrative ?? null,
-      archetypeHref: product.archetypes.primary?.slug ? `/identity/${product.archetypes.primary.slug}` : null,
+      archetypeHref: product.archetypes.primary?.slug ? getPantheonPath(product.archetypes.primary.slug) : null,
       archetypeLabel: archetypeName,
     },
     detailPanel: {

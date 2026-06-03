@@ -1,7 +1,10 @@
+import React from 'react';
 import { ProductsGrid } from '../../../modules/products/components/ProductsGrid';
 import { PageHeader } from '../../../modules/design-system';
 
-export default function ProductsPage() {
+export default async function ProductsPage({ searchParams }: { searchParams: Promise<{ archetype?: string; drop?: string }> }) {
+  const resolved = await searchParams;
+
   return (
     <main className="page-shell xeorum-pantheon-page xeorum-listing-page">
       <section className="hero-shell xeorum-pantheon-hero xeorum-listing-hero">
@@ -12,7 +15,7 @@ export default function ProductsPage() {
         />
       </section>
       <section className="section-stack xeorum-pantheon-grid-shell xeorum-listing-grid-shell">
-        <ProductsGrid />
+        <ProductsGrid {...(resolved.archetype ? { archetype: resolved.archetype } : {})} {...(resolved.drop ? { drop: resolved.drop } : {})} />
       </section>
     </main>
   );

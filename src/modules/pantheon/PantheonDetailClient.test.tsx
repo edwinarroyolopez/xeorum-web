@@ -97,7 +97,7 @@ describe('PantheonDetailClient', () => {
     expect(html).not.toContain('El portal no esta disponible ahora.');
   });
 
-  it('renders the mature archetype landing in the documented order', () => {
+  it('renders the mature archetype landing in the documented chapter order', () => {
     mockPantheonArchetypeQuery({
       isLoading: false,
       isError: false,
@@ -218,11 +218,10 @@ describe('PantheonDetailClient', () => {
     const html = renderToStaticMarkup(<PantheonDetailClient slug="zeus" />);
 
     expect(html).toContain('Built To Lead.');
-    expect(html).toContain('Identidad');
-    expect(html).toContain('Manifesto');
-    expect(html).toContain('Psicologia editorial');
-    expect(html).toContain('Sombra');
-    expect(html).toContain('Transformacion');
+    expect(html).toContain('Entender la fuerza');
+    expect(html).toContain('Tension y transformacion');
+    expect(html).toContain('El mundo de Zeus');
+    expect(html).toContain('Piezas con esta fuerza');
     expect(html).toContain('Premium strong-presence pieces for people drawn to visible authority.');
     expect(html).toContain('Editorial visual reference showing a dark premium outfit.');
     expect(html).toContain('Zeus Coat');
@@ -230,11 +229,11 @@ describe('PantheonDetailClient', () => {
     expect(html).toContain('Enter Zeus Portal');
     expect(html).toContain('Run Identity Test');
     expect(html).not.toContain('Piloto visual activo');
-    expect(html).toContain('Imperial Electric');
     expect(html).toContain('data-effect-profile="imperial-electric"');
-    expect(html).toContain('data-zeus-pilot="false"');
-    expect(html.indexOf('Identidad')).toBeLessThan(html.indexOf('Pieces shaped by Zeus'));
-    expect(html.indexOf('Sistema visual')).toBeLessThan(html.indexOf('Pieces shaped by Zeus'));
+    expect(html).toContain('class="theme-css-scope"');
+    expect(html).toContain('data-theme-overlay="published"');
+    expect(html.indexOf('Entender la fuerza')).toBeLessThan(html.indexOf('Piezas con esta fuerza'));
+    expect(html.indexOf('El mundo de Zeus')).toBeLessThan(html.indexOf('Piezas con esta fuerza'));
   });
 
   it('renders avatar video as the hero media when it exists', () => {

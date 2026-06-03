@@ -1,5 +1,6 @@
 import React from 'react';
 import type { IdentityResult } from '../../identity/identity.types';
+import { getPantheonPath } from '../../pantheon/pantheon.routes';
 import { ActionRow } from '../components/ActionRow';
 import { EditorialCard } from '../components/EditorialCard';
 import { EditorialPill } from '../components/EditorialPill';
@@ -25,7 +26,7 @@ export function IdentityResultPanel({ result }: Readonly<{ result: IdentityResul
       {result.narrativeTitle ? <DisplayTitle as="h2">{result.narrativeTitle}</DisplayTitle> : null}
       {result.narrative ? <EditorialBody className="identity-narrative-copy">{result.narrative}</EditorialBody> : null}
       <ActionRow className="portal-actions identity-result-actions">
-        <LinkButton href={`/identity/${result.dominantArchetype}`} variant="primary">Entrar a mi portal</LinkButton>
+        <LinkButton href={getPantheonPath(result.dominantArchetype)} variant="primary">Entrar a mi portal</LinkButton>
         <LinkButton href="/products" variant="ghost">Ver piezas alineadas</LinkButton>
       </ActionRow>
       <div className="identity-result-summary-grid">

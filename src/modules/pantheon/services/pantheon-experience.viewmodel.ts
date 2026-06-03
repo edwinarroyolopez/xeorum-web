@@ -1,3 +1,4 @@
+import { getPantheonPath } from '../pantheon.routes';
 import type { CSSProperties } from 'react';
 import type { PantheonArchetype, PantheonGalleryPreviewItem } from '../pantheon.types';
 
@@ -68,9 +69,9 @@ export function getPantheonPreviewLine(archetype: PantheonArchetype) {
 }
 
 export function getPantheonMirrorHref(archetype: PantheonArchetype) {
-  return `/pantheon/${archetype.slug}`;
+  return getPantheonPath(archetype.slug);
 }
 
 export function getPantheonEntryHref(archetype: PantheonArchetype) {
-  return `/identity/${archetype.slug}`;
+  return getPantheonPath(archetype.slug);
 }

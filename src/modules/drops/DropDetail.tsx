@@ -4,6 +4,7 @@ import React from 'react';
 import { useDrop } from './drops.queries';
 import { ProductsGrid } from '../products/components/ProductsGrid';
 import { Card, EditorialBody, EditorialCollectionIntro, ErrorState, LinkButton, LoadingState, ProductTitleBlock } from '../design-system';
+import { getPantheonPath } from '../pantheon/pantheon.routes';
 
 export function DropDetail({ slug }: Readonly<{ slug: string }>) {
   const query = useDrop(slug);
@@ -23,7 +24,7 @@ export function DropDetail({ slug }: Readonly<{ slug: string }>) {
           <EditorialBody>{drop.visualMood}</EditorialBody>
         </div>
         <div className="xeorum-drop-actions">
-          <LinkButton href={`/identity/${drop.archetypeSlug}`}>Entrar al portal de {drop.archetypeSlug}</LinkButton>
+          <LinkButton href={getPantheonPath(drop.archetypeSlug)}>Entrar al portal de {drop.archetypeSlug}</LinkButton>
           <LinkButton href="/drops" variant="ghost">Volver a drops</LinkButton>
         </div>
       </Card>

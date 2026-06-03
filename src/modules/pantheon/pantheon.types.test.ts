@@ -150,4 +150,65 @@ describe('parsePantheonArchetypeLanding', () => {
 
     expect(landing.avatarVideo).toBeUndefined();
   });
+
+  it('rejects unsupported enum values and external cta hrefs', () => {
+    expect(() => parsePantheonArchetypeLanding({
+      slug: 'athena',
+      name: 'Athena',
+      identity: {
+        title: 'Athena',
+        oneLineDefinition: 'Lucid force.',
+        coreEnergy: 'Precision under pressure.',
+        secondaryEnergies: [],
+        humanDesire: 'Clarity.',
+        emotionalPromise: 'Control.',
+        symbolicRole: 'Strategist.',
+      },
+      narrative: {
+        corePhrase: 'Move with lucid force.',
+        shortManifesto: 'Clarity becomes presence.',
+        longManifesto: 'Long Athena manifesto.',
+        shadow: 'Cold detachment.',
+        transformationArc: 'From defense to wisdom.',
+        modernInterpretation: 'Strategy under pressure.',
+      },
+      psychology: {
+        dominantTraits: ['lucid'],
+        behavioralSignals: ['measured'],
+        motivations: ['clarity'],
+        fears: ['confusion'],
+        aspirations: ['mastery'],
+      },
+      visualSystem: {
+        mood: 'Controlled marble light.',
+        artDirection: 'Restrained strategy.',
+        palette: [{ name: 'Black', hex: '#111111', usage: 'background' }],
+        symbols: ['owl'],
+        textures: [],
+        lighting: [],
+        environments: [],
+      },
+      galleryPreview: [{ id: 'bad-gallery', title: 'Bad', type: 'invalid', altText: 'Bad', tags: ['bad'], sortOrder: 0 }],
+      commerce: {
+        productHeading: 'Pieces shaped by Athena',
+        productSubheading: 'Products follow identity.',
+        dropHeading: 'Athena drops',
+        dropSubheading: 'Drops follow identity.',
+        openMarketAngle: 'Sharp pieces for lucid presence.',
+        productCategories: [],
+        marketTags: [],
+      },
+      relationships: { allies: [], contrasts: [], tensions: [] },
+      cta: { primaryLabel: 'Enter Athena Portal', primaryHref: 'https://example.com', secondaryLabel: 'Run Identity Test', secondaryHref: '/identity' },
+      seo: { title: 'Athena', description: 'Athena', keywords: ['athena'], openGraphTitle: 'Athena', openGraphDescription: 'Athena' },
+      theme: {
+        intensityDefault: 'extreme',
+        allowedContexts: ['pantheon'],
+        heroEffectProfile: 'lucid-orbit',
+        heroEffect: { auraColor: 'rgba(125, 196, 255, 0.18)', floatDistance: 10, portraitTilt: 0.4, profileLift: 10, signalLift: 14 },
+      },
+      products: [],
+      drops: [],
+    })).toThrow(/Invalid pantheon contract field/);
+  });
 });

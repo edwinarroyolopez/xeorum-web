@@ -7,7 +7,7 @@ import { themeToCssVariables } from '../utils/theme-css-vars';
 
 export function ThemeCssVariables({ theme, children }: Readonly<{ theme: Theme; children: ReactNode }>) {
   return (
-    <div data-theme={theme.name} style={themeToCssVariables(theme) as CSSProperties}>
+    <div className="theme-css-scope" data-theme={theme.name} style={themeToCssVariables(theme) as CSSProperties}>
       {children}
     </div>
   );

@@ -1,33 +1,7 @@
-import type { Metadata } from 'next';
-import { PantheonDetail } from '../../../../modules/pantheon/PantheonDetail';
-import {
-  buildArchetypeMetadata,
-  fallbackArchetypeMetadata,
-  getPantheonArchetypeLandingServer,
-} from '../../../../modules/pantheon/services';
-
-export const dynamic = 'force-dynamic';
-
-export async function generateMetadata({ params }: { params: Promise<{ archetype: string }> }): Promise<Metadata> {
-  const resolved = await params;
-
-  try {
-    const archetype = await getPantheonArchetypeLandingServer(resolved.archetype);
-    return buildArchetypeMetadata(archetype, {
-      path: `/identity/${resolved.archetype}`,
-      canonicalPath: `/identity/${resolved.archetype}`,
-    });
-  } catch {
-    return fallbackArchetypeMetadata(resolved.archetype, `/identity/${resolved.archetype}`);
-  }
-}
+import { permanentRedirect } from 'next/navigation';
+import { getPantheonPath } from '../../../../modules/pantheon/pantheon.routes';
 
 export default async function IdentityArchetypePage({ params }: { params: Promise<{ archetype: string }> }) {
   const resolved = await params;
-
-  return (
-    <main className="page-shell">
-      <PantheonDetail slug={resolved.archetype} />
-    </main>
-  );
+  permanentRedirect(getPantheonPath(resolved.archetype));
 }

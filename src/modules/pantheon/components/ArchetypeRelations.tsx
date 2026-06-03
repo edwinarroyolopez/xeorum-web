@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { EditorialPanel, EmptyState, LinkButton, SectionHeader } from '../../design-system';
+import { getPantheonPath } from '../pantheon.routes';
 import type { PantheonArchetypeLanding } from '../pantheon.types';
 import type { ArchetypeLandingViewModel } from '../services';
 
@@ -17,7 +18,7 @@ function RelationGroup({ title, items }: Readonly<{ title: string; items: Panthe
         <div key={`${title}-${item.slug}`} className="section-stack xeorum-archetype-relation">
           <strong>{item.name}</strong>
           <p>{item.reason}</p>
-          <LinkButton href={`/identity/${item.slug}`} variant="ghost">Entrar a {item.name}</LinkButton>
+          <LinkButton href={getPantheonPath(item.slug)} variant="ghost">Entrar a {item.name}</LinkButton>
         </div>
       ))}
     </EditorialPanel>
