@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import type { PantheonArchetype } from '../pantheon.types';
 import styles from '../PantheonExperience.module.css';
-import { getPantheonEntryHref, getPantheonPalette, getPantheonPreviewAsset, getPantheonPreviewLine, getPantheonSymbol, isPantheonAvatarVideoAsset } from '../services';
+import { getPantheonMirrorHref, getPantheonPalette, getPantheonPreviewAsset, getPantheonPreviewLine, getPantheonSymbol, isPantheonAvatarVideoAsset } from '../services';
 
 type PantheonMobileSelectorProps = {
   archetypes: PantheonArchetype[];
@@ -20,6 +20,7 @@ export function PantheonMobileSelector({ archetypes, activeSlug, onActiveChange 
           const asset = getPantheonPreviewAsset(archetype);
           const active = archetype.slug === activeSlug;
           const useAvatarVideo = isPantheonAvatarVideoAsset(asset);
+          const portalHref = getPantheonMirrorHref(archetype);
 
           return (
             <article
@@ -28,10 +29,9 @@ export function PantheonMobileSelector({ archetypes, activeSlug, onActiveChange 
               data-active={active}
               style={{ '--pantheon-tone-start': palette[0], '--pantheon-tone-mid': palette[1], '--pantheon-tone-end': palette[2] } as React.CSSProperties}
             >
-              <button
-                type="button"
+              <Link
+                href={portalHref}
                 className={styles.mobileButton}
-                aria-pressed={active}
                 onFocus={() => onActiveChange(archetype.slug)}
                 onClick={() => onActiveChange(archetype.slug)}
               >
@@ -55,12 +55,12 @@ export function PantheonMobileSelector({ archetypes, activeSlug, onActiveChange 
                   <h3 className={styles.mobileName}>{archetype.name}</h3>
                   <p className={styles.mobilePhrase}>{getPantheonPreviewLine(archetype)}</p>
                 </div>
-              </button>
+              </Link>
               <div className={styles.mobileActions}>
                 <div className={styles.selectorPalette} aria-hidden="true">
                   {palette.map((color) => <span key={color} style={{ background: color }} />)}
                 </div>
-                <Link href={getPantheonEntryHref(archetype)} className={styles.selectorLink}>{archetype.ctaLabel}</Link>
+                <Link href={portalHref} className={styles.selectorLink}>{archetype.ctaLabel}</Link>
               </div>
             </article>
           );

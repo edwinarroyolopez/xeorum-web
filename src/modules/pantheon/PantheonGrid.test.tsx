@@ -82,9 +82,9 @@ describe('PantheonGrid', () => {
     expect(html).toContain('Elige la fuerza que ya te esta mirando.');
     expect(html).toContain('Built To Lead.');
     expect(html).toContain('https://cdn.example.com/zeus.jpg');
-    expect(html).toContain('/identity/zeus');
-    expect(html).toContain('/identity/ares');
-    expect(html).toContain('aria-pressed="true"');
+    expect(html).toContain('/pantheon/zeus');
+    expect(html).toContain('/pantheon/ares');
+    expect(html).toContain('aria-current="true"');
     expect(html.indexOf('Zeus')).toBeLessThan(html.indexOf('Ares'));
   });
 

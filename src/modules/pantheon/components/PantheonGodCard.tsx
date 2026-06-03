@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import type { PantheonArchetype } from '../pantheon.types';
 import styles from '../PantheonExperience.module.css';
-import { getPantheonEntryHref, getPantheonPalette, getPantheonPreviewAsset, getPantheonPreviewLine, getPantheonSymbol, isPantheonAvatarVideoAsset } from '../services';
+import { getPantheonMirrorHref, getPantheonPalette, getPantheonPreviewAsset, getPantheonPreviewLine, getPantheonSymbol, isPantheonAvatarVideoAsset } from '../services';
 
 type PantheonGodCardProps = {
   archetype: PantheonArchetype;
@@ -14,6 +14,7 @@ export function PantheonGodCard({ archetype, active, onActiveChange }: Readonly<
   const palette = getPantheonPalette(archetype);
   const asset = getPantheonPreviewAsset(archetype);
   const useAvatarVideo = isPantheonAvatarVideoAsset(asset);
+  const portalHref = getPantheonMirrorHref(archetype);
 
   return (
     <article
@@ -22,10 +23,9 @@ export function PantheonGodCard({ archetype, active, onActiveChange }: Readonly<
       aria-current={active ? 'true' : undefined}
       style={{ '--pantheon-tone-start': palette[0], '--pantheon-tone-mid': palette[1], '--pantheon-tone-end': palette[2] } as React.CSSProperties}
     >
-      <button
-        type="button"
+      <Link
+        href={portalHref}
         className={styles.selectorButton}
-        aria-pressed={active}
         aria-describedby={`pantheon-card-copy-${archetype.slug}`}
         onMouseEnter={() => onActiveChange(archetype.slug)}
         onFocus={() => onActiveChange(archetype.slug)}
@@ -51,12 +51,12 @@ export function PantheonGodCard({ archetype, active, onActiveChange }: Readonly<
           <h3 className={styles.selectorName}>{archetype.name}</h3>
           <p className={styles.selectorPhrase} id={`pantheon-card-copy-${archetype.slug}`}>{getPantheonPreviewLine(archetype)}</p>
         </div>
-      </button>
+      </Link>
       <div className={styles.selectorCardFooter}>
         <div className={styles.selectorPalette} aria-hidden="true">
           {palette.map((color) => <span key={color} style={{ background: color }} />)}
         </div>
-        <Link href={getPantheonEntryHref(archetype)} className={styles.selectorLink}>{archetype.ctaLabel}</Link>
+        <Link href={portalHref} className={styles.selectorLink}>{archetype.ctaLabel}</Link>
       </div>
     </article>
   );

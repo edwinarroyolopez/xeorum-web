@@ -3,13 +3,14 @@ import Link from 'next/link';
 import { Badge, Kicker, LinkButton } from '../../design-system';
 import type { PantheonArchetype } from '../pantheon.types';
 import styles from '../PantheonExperience.module.css';
-import { getPantheonEntryHref, getPantheonMirrorHref, getPantheonPalette, getPantheonPreviewAsset, getPantheonPreviewLine, getPantheonSymbol, getPantheonTags, isPantheonAvatarVideoAsset } from '../services';
+import { getPantheonMirrorHref, getPantheonPalette, getPantheonPreviewAsset, getPantheonPreviewLine, getPantheonSymbol, getPantheonTags, isPantheonAvatarVideoAsset } from '../services';
 
 export function PantheonGodPreview({ archetype, reducedMotion }: Readonly<{ archetype: PantheonArchetype; reducedMotion: boolean }>) {
   const asset = getPantheonPreviewAsset(archetype);
   const palette = getPantheonPalette(archetype);
   const tags = getPantheonTags(archetype);
   const useAvatarVideo = isPantheonAvatarVideoAsset(asset);
+  const portalHref = getPantheonMirrorHref(archetype);
 
   return (
     <section className={styles.preview} aria-labelledby={`pantheon-preview-${archetype.slug}`}>
@@ -54,12 +55,12 @@ export function PantheonGodPreview({ archetype, reducedMotion }: Readonly<{ arch
         ) : null}
         <p className={styles.previewAngle}>{archetype.commerce.openMarketAngle}</p>
         <div className={styles.previewActions}>
-          <LinkButton href={getPantheonEntryHref(archetype)}>{archetype.ctaLabel}</LinkButton>
+          <LinkButton href={portalHref}>{archetype.ctaLabel}</LinkButton>
           <LinkButton href="/identity" variant="ghost">Necesito una lectura</LinkButton>
           <LinkButton href="/products" variant="ghost">Explorar piezas</LinkButton>
         </div>
         <p className={styles.previewMeta}>
-          Entrada espejo: <Link className={styles.previewMirrorLink} href={getPantheonMirrorHref(archetype)}>{getPantheonMirrorHref(archetype)}</Link>
+          Entrada espejo: <Link className={styles.previewMirrorLink} href={portalHref}>{portalHref}</Link>
         </p>
       </div>
     </section>
