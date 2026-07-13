@@ -3,6 +3,7 @@
 import React from 'react';
 import { ThemeCssVariables } from '../theme/providers/ThemeCssVariables';
 import { resolvePageTheme } from '../theme';
+import { buildPantheonLandingSkin } from './pantheon-landing-skin';
 import type { PantheonArchetypeLanding } from './pantheon.types';
 import { ArchetypeHero, ArchetypeIdentityStatement, ArchetypeProducts, ArchetypeShadow, ArchetypeVisualSystem } from './components';
 import { buildArchetypeLandingViewModel } from './services';
@@ -16,10 +17,11 @@ export function ArchetypeLanding({ archetype }: Readonly<{ archetype: PantheonAr
     overlayStrategy: 'published',
   });
   const viewModel = buildArchetypeLandingViewModel(archetype);
+  const landingSkin = buildPantheonLandingSkin(archetype);
 
   return (
     <ThemeCssVariables theme={theme}>
-      <section className={styles.shell} data-theme-overlay={viewModel.themeOverlay}>
+      <section className={styles.shell} data-theme-overlay={viewModel.themeOverlay} style={landingSkin}>
         <ArchetypeHero archetype={archetype} viewModel={viewModel} />
         <ArchetypeIdentityStatement archetype={archetype} />
         <ArchetypeShadow archetype={archetype} />

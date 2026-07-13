@@ -151,6 +151,84 @@ describe('parsePantheonArchetypeLanding', () => {
     expect(landing.avatarVideo).toBeUndefined();
   });
 
+  it('falls back to altText when hero or avatar media titles are blank', () => {
+    const landing = parsePantheonArchetypeLanding({
+      slug: 'afrodita',
+      name: 'Afrodita',
+      identity: {
+        title: 'Afrodita',
+        oneLineDefinition: 'Magnetismo soberano.',
+        coreEnergy: 'Atraccion editorial.',
+        secondaryEnergies: ['sensualidad'],
+        humanDesire: 'Influencia.',
+        emotionalPromise: 'Presencia magnetica.',
+        symbolicRole: 'Musa.',
+      },
+      narrative: {
+        corePhrase: 'Belleza con poder.',
+        shortManifesto: 'La presencia persuade.',
+        longManifesto: 'Manifesto largo.',
+        shadow: 'Vanidad.',
+        transformationArc: 'De validacion a agencia.',
+        modernInterpretation: 'Magnetismo contemporaneo.',
+      },
+      psychology: {
+        dominantTraits: ['magnetica'],
+        behavioralSignals: ['elegante'],
+        motivations: ['influencia'],
+        fears: ['vulgaridad'],
+        aspirations: ['dominio'],
+      },
+      visualSystem: {
+        mood: 'Calido y editorial.',
+        artDirection: 'Luz perlada.',
+        palette: [{ name: 'Pearl', hex: '#E8DED2', usage: 'base-light' }],
+        symbols: ['shell'],
+        textures: ['satin'],
+        lighting: ['soft glow'],
+        environments: ['studio'],
+      },
+      hero: {
+        assetId: 'afrodita-hero',
+        title: '   ',
+        imageUrl: 'https://cdn.example.com/afrodita-hero.jpg',
+        altText: 'Afrodita hero image.',
+        type: 'reference',
+        sortOrder: 0,
+      },
+      avatarVideo: {
+        assetId: 'afrodita-avatar',
+        title: '',
+        videoUrl: 'https://cdn.example.com/afrodita-avatar.mp4',
+        altText: 'Afrodita avatar video.',
+      },
+      galleryPreview: [],
+      commerce: {
+        productHeading: 'Pieces shaped by Afrodita',
+        productSubheading: 'Published products aligned.',
+        dropHeading: 'Afrodita drops',
+        dropSubheading: 'Drops aligned.',
+        openMarketAngle: 'Premium presence.',
+        productCategories: [],
+        marketTags: [],
+      },
+      relationships: { allies: [], contrasts: [], tensions: [] },
+      cta: { primaryLabel: 'Explore Afrodita', primaryHref: '/products?archetype=afrodita', secondaryLabel: 'Run Identity Test', secondaryHref: '/identity' },
+      seo: { title: 'Afrodita', description: 'Afrodita', keywords: ['afrodita'], openGraphTitle: 'Afrodita', openGraphDescription: 'Afrodita' },
+      theme: {
+        intensityDefault: 'subtle',
+        allowedContexts: ['pantheon'],
+        heroEffectProfile: 'editorial-float',
+        heroEffect: { auraColor: 'rgba(242, 183, 203, 0.24)', floatDistance: 10, portraitTilt: 1, profileLift: 12, signalLift: 16 },
+      },
+      products: [],
+      drops: [],
+    });
+
+    expect(landing.hero).toEqual(expect.objectContaining({ title: 'Afrodita hero image.' }));
+    expect(landing.avatarVideo).toEqual(expect.objectContaining({ title: 'Afrodita avatar video.' }));
+  });
+
   it('rejects unsupported enum values and external cta hrefs', () => {
     expect(() => parsePantheonArchetypeLanding({
       slug: 'athena',

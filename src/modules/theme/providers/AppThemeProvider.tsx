@@ -1,9 +1,11 @@
 'use client';
 
+import React from 'react';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import type { AccessibilitySettings, Theme, ThemeContextName, ThemeName } from '../contracts/theme.types';
+import type { AccessibilitySettings, PublicThemeContract, Theme, ThemeContextName, ThemeName } from '../contracts/theme.types';
 import { ThemeCssVariables } from './ThemeCssVariables';
+import { setPublicThemeContract } from '../public-theme-registry';
 import { resolvePageTheme } from '../utils/compose-theme';
 import { xeorumDarkTheme } from '../utils/resolve-theme';
 
@@ -22,6 +24,7 @@ type AppThemeProviderProps = {
   context?: ThemeContextName;
   archetypeSlug?: string | null;
   accessibilityOverrides?: AccessibilitySettings;
+  initialThemeContract?: PublicThemeContract;
 };
 
 export function AppThemeProvider({
@@ -29,9 +32,12 @@ export function AppThemeProvider({
   context = 'home',
   archetypeSlug = null,
   accessibilityOverrides,
+  initialThemeContract,
 }: Readonly<AppThemeProviderProps>) {
   const [themeName, setThemeName] = useState<ThemeName>('xeorum-dark');
   const [accessibility, setAccessibility] = useState<AccessibilitySettings>({});
+
+  setPublicThemeContract(initialThemeContract ?? null);
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
@@ -51,6 +57,10 @@ export function AppThemeProvider({
 
     return () => mediaQuery.removeEventListener('change', updateAccessibility);
   }, []);
+
+  useEffect(() => {
+    setPublicThemeContract(initialThemeContract ?? null);
+  }, [initialThemeContract]);
 
   const theme = useMemo(
     () =>

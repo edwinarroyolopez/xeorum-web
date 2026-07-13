@@ -303,12 +303,13 @@ function parseLandingMediaItem(value: unknown, field: string) {
   const videoUrl = readOptionalUrl(value.videoUrl);
   const caption = readOptionalString(value.caption);
   const narrativeFunction = readOptionalString(value.narrativeFunction);
+  const altText = readString(value.altText, `${field}.altText`);
 
   return {
-    title: readString(value.title, `${field}.title`),
+    title: readStringWithFallback(value.title, altText || field),
     ...(imageUrl ? { imageUrl } : {}),
     ...(videoUrl ? { videoUrl } : {}),
-    altText: readString(value.altText, `${field}.altText`),
+    altText,
     ...(caption ? { caption } : {}),
     ...(narrativeFunction ? { narrativeFunction } : {}),
   };

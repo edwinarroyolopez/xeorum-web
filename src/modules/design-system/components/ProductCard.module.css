@@ -83,7 +83,7 @@
 
 .visualMetaRow strong {
   font-family: var(--xe-typography-font-family);
-  color: color-mix(in srgb, var(--xe-semantic-accent) 68%, white 32%);
+  color: var(--xe-semantic-accent);
   font-size: 1.05rem;
   font-weight: 700;
   line-height: 1;
@@ -140,7 +140,7 @@
 }
 
 .header :global(.ds-eyebrow-muted) {
-  color: #d8be77;
+  color: var(--xe-semantic-accent);
 }
 
 .titleRow {
@@ -150,7 +150,7 @@
 .title {
   margin: 0;
   max-width: 11ch;
-  color: #f2ede0;
+  color: var(--xe-semantic-text-primary);
   font-family: var(--xe-typography-display-family);
   font-size: clamp(1.6rem, 1.9vw, 1.9rem);
   font-weight: 500;
@@ -167,7 +167,7 @@
 .materialNote {
   margin: 0;
   max-width: 30ch;
-  color: rgba(242, 237, 224, 0.68);
+  color: var(--xe-semantic-text-secondary);
   font-size: 0.78rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -177,7 +177,7 @@
 .description {
   margin: 0;
   max-width: 31ch;
-  color: rgba(242, 237, 224, 0.44);
+  color: var(--xe-semantic-text-muted);
   font-size: 0.92rem;
   line-height: 1.58;
   display: -webkit-box;
@@ -205,7 +205,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.5rem;
-  color: rgba(242, 237, 224, 0.44);
+  color: var(--xe-semantic-text-muted);
   font-size: 0.76rem;
   letter-spacing: 0.06em;
   text-transform: lowercase;

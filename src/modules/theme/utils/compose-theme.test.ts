@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { zeusOverlay } from '../overlays/archetype-overlays';
+import { setPublicThemeContract } from '../public-theme-registry';
 import {
   composeTheme,
   getThemeContext,
@@ -7,9 +8,16 @@ import {
   resolveArchetypeOverlay,
   resolveComposedTheme,
   resolvePageTheme,
-  resolveZeusPilotOverlay,
 } from './compose-theme';
 import { xeorumDarkTheme } from './resolve-theme';
+
+setPublicThemeContract({
+  schemaVersion: 'public-theme-contract-v1',
+  contractVersion: 1,
+  baseTheme: xeorumDarkTheme,
+  overlays: [zeusOverlay],
+  fallbackThemeName: 'xeorum-dark',
+});
 
 describe('composeTheme', () => {
   it('composes base theme with a safe archetype overlay in order', () => {
@@ -87,13 +95,6 @@ describe('resolveArchetypeOverlay', () => {
     expect(resolveArchetypeOverlay('zeus')?.archetypeSlug).toBe('zeus');
     expect(resolveArchetypeOverlay('unknown')).toBeNull();
   });
-
-  it('limits the Zeus pilot to profile and pantheon', () => {
-    expect(resolveZeusPilotOverlay('zeus', 'profile')?.archetypeSlug).toBe('zeus');
-    expect(resolveZeusPilotOverlay('zeus', 'pantheon')?.archetypeSlug).toBe('zeus');
-    expect(resolveZeusPilotOverlay('zeus', 'profile')?.status).toBe('published');
-    expect(resolveZeusPilotOverlay('zeus', 'pantheon')?.status).toBe('published');
-  });
 });
 
 describe('resolveComposedTheme', () => {
@@ -103,23 +104,21 @@ describe('resolveComposedTheme', () => {
 });
 
 describe('resolvePageTheme', () => {
-  it('uses the controlled Zeus pilot only in allowed contexts', () => {
+  it('uses the published registry overlay in allowed contexts', () => {
     const profileTheme = resolvePageTheme({
       archetypeSlug: 'zeus',
       context: 'profile',
       intensity: 'medium',
-      overlayStrategy: 'zeus-pilot',
     });
 
     const productTheme = resolvePageTheme({
       archetypeSlug: 'zeus',
       context: 'product-detail',
       intensity: 'subtle',
-      overlayStrategy: 'zeus-pilot',
     });
 
     expect(profileTheme.overlay.archetype?.profilePanel).toBe(zeusOverlay.surfaces.profilePanel);
-    expect(productTheme.overlay.archetype).toBeUndefined();
+    expect(productTheme.overlay.archetype?.profilePanel).toBe(zeusOverlay.surfaces.profilePanel);
   });
 
   it('falls back to the base dark theme contract when no safe overlay resolves', () => {
@@ -127,7 +126,6 @@ describe('resolvePageTheme', () => {
       archetypeSlug: 'unknown',
       context: 'profile',
       intensity: 'medium',
-      overlayStrategy: 'zeus-pilot',
     });
 
     expect(theme.name).toBe('xeorum-dark');

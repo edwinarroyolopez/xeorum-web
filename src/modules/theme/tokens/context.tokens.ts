@@ -24,6 +24,12 @@ export const themeContextOverrides: Record<ThemeResolverContextName, ThemePartia
       backgroundElevated: '#0b0b0d',
     },
   },
+  'product-card': {
+    semantic: {
+      accentMuted: 'rgba(216, 183, 107, 0.08)',
+      surfaceGlass: 'rgba(12, 12, 14, 0.88)',
+    },
+  },
   'product-detail': {
     semantic: {
       accentMuted: 'rgba(216, 183, 107, 0.1)',

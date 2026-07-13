@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { BrandMark } from '../components/ui/BrandMark';
 import { HomeIcon } from '../modules/home/components/HomeIcon';
+import { getPublicThemeContract } from '../modules/theme/public-theme.api';
 import '../styles/reset.css';
 import '../modules/home/styles/home.css';
 import '../modules/products/styles/products.css';
@@ -14,11 +15,13 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://xeorum.com'),
 };
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const initialThemeContract = await getPublicThemeContract();
+
   return (
     <html lang="es">
       <body>
-        <Providers>
+        <Providers initialThemeContract={initialThemeContract}>
             <div className="site-shell">
               <header className="site-header">
                 <Link href="/" className="site-brand" aria-label="Ir al inicio de XEORUM">

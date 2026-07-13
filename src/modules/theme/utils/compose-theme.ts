@@ -10,7 +10,7 @@ import type {
   ThemePartial,
   ThemeResolverContextName,
 } from '../contracts/theme.types';
-import { getPublishedArchetypeOverlay, getZeusPilotOverlay } from '../overlays/archetype-overlays';
+import { getPublishedArchetypeOverlayFromRegistry } from '../public-theme-registry';
 import { themeContextOverrides } from '../tokens/context.tokens';
 import { isOverlaySafe } from '../validators/theme-accessibility';
 import { resolveTheme, xeorumDarkTheme } from './resolve-theme';
@@ -204,28 +204,15 @@ export function resolveArchetypeOverlay(slug: string | null | undefined) {
     return null;
   }
 
-  const overlay = getPublishedArchetypeOverlay(slug);
-  return isOverlaySafe(overlay) ? overlay : null;
-}
-
-export function resolveZeusPilotOverlay(slug: string | null | undefined, context: Extract<ThemeContextName, 'profile' | 'pantheon'>) {
-  const overlay = getZeusPilotOverlay(slug, context);
+  const overlay = getPublishedArchetypeOverlayFromRegistry(slug);
   return isOverlaySafe(overlay) ? overlay : null;
 }
 
 function resolveOverlayByStrategy(
   archetypeSlug: string | null | undefined,
-  context: ThemeResolverContextName,
-  strategy: OverlayResolutionStrategy
+  _context: ThemeResolverContextName,
+  _strategy: OverlayResolutionStrategy
 ) {
-  if (strategy === 'zeus-pilot') {
-    if (context === 'profile' || context === 'pantheon') {
-      return resolveZeusPilotOverlay(archetypeSlug, context);
-    }
-
-    return null;
-  }
-
   return resolveArchetypeOverlay(archetypeSlug);
 }
 
@@ -280,6 +267,8 @@ export function getThemeContext(input?: string | null): ThemeContextName {
     case 'profile':
     case '/profile':
       return 'profile';
+    case 'product-card':
+      return 'product-card';
     case 'product-detail':
     case '/products/[slug]':
       return 'product-detail';

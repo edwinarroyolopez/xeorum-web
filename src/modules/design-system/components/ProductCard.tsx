@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import type { ProductContract } from '@xeorum/contracts';
 import { EditorialCard } from './EditorialCard';
@@ -6,6 +8,9 @@ import styles from './ProductCard.module.css';
 import { Eyebrow } from '../primitives/Eyebrow';
 import { Text } from '../primitives/Text';
 import { ProductVisualFrame } from '../patterns/ProductVisualFrame';
+import { ThemeCssVariables } from '../../theme/providers/ThemeCssVariables';
+import { useArchetypeTheme } from '../../theme/hooks/useArchetypeTheme';
+import { resolvePageTheme } from '../../theme';
 import {
   formatProductLabel,
   formatProductPrice,
@@ -14,19 +19,41 @@ import {
   getPrimaryProductMedia,
 } from '../../products/services/product.helpers';
 
+function getProductSignalText(product: ProductContract) {
+  const primarySlug = product.archetypes.primary?.slug;
+  const affinitySlugs = product.archetypes.affinities
+    .map((item) => item.slug)
+    .filter((slug, index, list) => slug !== primarySlug && list.indexOf(slug) === index)
+    .slice(0, 2);
+
+  const labels = [primarySlug, ...affinitySlugs].filter(Boolean).map((slug) => formatProductLabel(String(slug)));
+  return labels.length > 0 ? labels.join(' · ') : null;
+}
+
 export function ProductCard({ product }: Readonly<{ product: ProductContract }>) {
+  const { archetypeSlug: ambientArchetypeSlug, overlay: ambientOverlay } = useArchetypeTheme();
   const coverImage = getPrimaryProductMedia(product);
   const hoverImage = getHoverProductMedia(product);
   const price = getDisplayPrice(product);
   const variants = product.variants ?? [];
   const defaultVariant = variants.find((variant) => variant.available) ?? variants[0];
   const archetypeLabel = product.archetypes.primary?.slug ? `Fuerza ${formatProductLabel(product.archetypes.primary.slug)}` : 'Seleccion abierta';
-  const compactSignals = 'Poder · Dominio · Liderazgo';
+  const signalText = getProductSignalText(product);
   const description = product.shortDescription ?? product.subtitle ?? product.narrative ?? product.description ?? '';
   const affinity = product.archetypes.primary?.score;
   const stockLabel = defaultVariant ? `${Math.max(defaultVariant.stockAvailable, 0)} piezas` : 'Sin stock';
+  const primaryArchetypeSlug = product.archetypes.primary?.slug ?? null;
+  const inheritAmbientScope = Boolean(primaryArchetypeSlug && ambientArchetypeSlug === primaryArchetypeSlug && ambientOverlay);
+  const localCardTheme = !inheritAmbientScope && primaryArchetypeSlug
+    ? resolvePageTheme({
+        archetypeSlug: primaryArchetypeSlug,
+        context: 'product-card',
+        intensity: 'subtle',
+        overlayStrategy: 'published',
+      })
+    : null;
 
-  return (
+  const cardContent = (
     <EditorialCard className={styles.card}>
       <ProductVisualFrame
         {...(styles.visualFrame ? { className: styles.visualFrame } : {})}
@@ -47,7 +74,7 @@ export function ProductCard({ product }: Readonly<{ product: ProductContract }>)
           <div className={styles.titleRow}>
             <h3 className={styles.title}>{product.name}</h3>
           </div>
-          <p className={styles.materialNote}>{compactSignals}</p>
+          {signalText ? <p className={styles.materialNote}>{signalText}</p> : null}
           {description ? <p className={styles.description}>{description}</p> : null}
         </div>
         <div className={styles.footer}>
@@ -64,4 +91,6 @@ export function ProductCard({ product }: Readonly<{ product: ProductContract }>)
       </div>
     </EditorialCard>
   );
+
+  return localCardTheme ? <ThemeCssVariables theme={localCardTheme}>{cardContent}</ThemeCssVariables> : cardContent;
 }

@@ -37,7 +37,7 @@ const zeusOverlay: ArchetypeThemeOverlay = {
     allowAmbientMotion: true,
   },
   usage: {
-    allowedContexts: ['home', 'pantheon', 'identity-result', 'profile', 'product-detail', 'recommendations'],
+    allowedContexts: ['home', 'pantheon', 'identity-result', 'profile', 'product-card', 'product-detail', 'recommendations'],
     forbiddenContexts: ['checkout-payment-critical', 'legal', 'admin'],
   },
   accessibility: {

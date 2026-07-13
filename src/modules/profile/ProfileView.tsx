@@ -22,7 +22,7 @@ function buildProfileTheme(dominantArchetype: string | null | undefined) {
     archetypeSlug: dominantArchetype ?? null,
     context: 'profile',
     intensity: dominantArchetype ? 'medium' : 'none',
-    overlayStrategy: dominantArchetype === 'zeus' ? 'zeus-pilot' : 'published',
+    overlayStrategy: 'published',
   });
 }
 
@@ -32,7 +32,6 @@ export function ProfileView() {
   const currentResult = profileQuery.data?.currentResult ?? null;
   const dominantArchetype = profileQuery.data?.currentResult?.dominantArchetype ?? null;
   const theme = useMemo(() => buildProfileTheme(dominantArchetype), [dominantArchetype]);
-  const zeusPilotActive = dominantArchetype === 'zeus';
 
   const hasIdentity = Boolean(currentResult);
 
@@ -41,7 +40,6 @@ export function ProfileView() {
       <section
         className={ambientMotionEnabled ? 'profile-shell profile-shell-ambient' : 'profile-shell'}
         data-archetype={dominantArchetype ?? 'xeorum-dark'}
-        data-zeus-pilot={zeusPilotActive}
       >
         <div className="profile-atmosphere" aria-hidden="true" />
         <div className="section-stack profile-content">
@@ -51,7 +49,6 @@ export function ProfileView() {
               <Badge tone={dominantArchetype ? 'accent' : 'default'}>
                 {dominantArchetype ? `Dominant archetype ${dominantArchetype.toUpperCase()}` : 'Base XEORUM dark theme'}
               </Badge>
-              {zeusPilotActive ? <Badge tone="accent">Zeus pilot active</Badge> : null}
               <Badge tone="default">Context profile</Badge>
             </ToolbarGroup>
             <ToolbarGroup>

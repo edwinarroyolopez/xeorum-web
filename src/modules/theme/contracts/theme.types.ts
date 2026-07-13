@@ -121,6 +121,7 @@ export type ThemeContextName =
   | 'pantheon'
   | 'identity-result'
   | 'profile'
+  | 'product-card'
   | 'product-detail'
   | 'recommendations'
   | 'checkout-payment-critical'
@@ -131,7 +132,7 @@ export type ThemeUsageContextName = ThemeContextName | 'admin';
 
 export type ThemeIntensity = 'none' | 'subtle' | 'medium';
 
-export type OverlayResolutionStrategy = 'published' | 'zeus-pilot';
+export type OverlayResolutionStrategy = 'published';
 
 export type AccessibilitySettings = {
   reduceMotion?: boolean;
@@ -273,6 +274,8 @@ export type ThemeValidationReport = {
 };
 
 export type PublicThemeContract = {
+  schemaVersion?: 'public-theme-contract-v1';
+  contractVersion?: 1;
   baseTheme: ThemeTokenContract;
   overlays: ArchetypeThemeOverlay[];
   fallbackThemeName: string;

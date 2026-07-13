@@ -60,14 +60,18 @@ describe('PantheonDetailClient', () => {
         fears: ['vulgaridad'],
         aspirations: ['influencia'],
       },
-      visualSystem: {
-        mood: 'Pearl glow.',
-        artDirection: 'Liquid luxury.',
-        palette: [{ name: 'Pearl', hex: '#E8DED2', usage: 'accent' }],
-        symbols: [],
-        textures: [],
-        lighting: [],
-        environments: [],
+        visualSystem: {
+          mood: 'Pearl glow.',
+          artDirection: 'Liquid luxury.',
+          palette: [
+            { name: 'Night Bloom', hex: '#1A1018', usage: 'base-dark' },
+            { name: 'Rose Skin', hex: '#DFA1B8', usage: 'accent-primary' },
+            { name: 'Pearl', hex: '#E8DED2', usage: 'base-light' },
+          ],
+          symbols: [],
+          textures: [],
+          lighting: [],
+          environments: [],
       },
       galleryPreview: [],
       commerce: {
@@ -95,6 +99,7 @@ describe('PantheonDetailClient', () => {
 
     expect(html).toContain('Afrodita');
     expect(html).not.toContain('El portal no esta disponible ahora.');
+    expect(html).toContain('--pantheon-accent:#DFA1B8');
   });
 
   it('renders the mature archetype landing in the documented chapter order', () => {
